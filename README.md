@@ -2,6 +2,10 @@
 
 _Project Veldt Meridian_
 
+**A local, human-supervised Python assistant prototype with a sandboxed command
+surface, persona layer, and market-pattern analysis module — no account-specific
+paths, no external services required.**
+
 Maya is a local, human-supervised Python assistant prototype. It runs from
 whichever folder contains the source — no account-specific paths are required —
 and stores its own in-memory and on-disk state beside the code, so moving or
@@ -82,6 +86,7 @@ constitutes financial advice.
 
 - **v0.1.0 — Initial public release** files and notes are published on the
   [releases page](https://github.com/blessandy9104-hue/maya-ai/releases).
+- Version history is maintained in [CHANGELOG](CHANGELOG.md).
 
 ## License
 
