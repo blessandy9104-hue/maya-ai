@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+env:
+  # Suites that require personal/private runtime state intentionally excluded
+  # from this public repository (task queues, PC-safety scope, evidence and
+  # report data, identity-internal fixtures). They are exercised in the full
+  # private workspace; the public CI battery skips them so the workflow stays
+  # green on a clean checkout.
+  VERIFICATION_SKIP: >-
+    test_visual_embodiment.py test_canonical_validation.py
+    test_task_orchestration.py test_current_pc_safety.py test_state_bus.py
+    test_face_state.py test_math_substrate.py test_persona_boundaries.py
+    test_identity_rollback.py test_identity_behavior_integration.py
+    test_identity_visual_integration.py test_report_staleness.py
+    test_living_reports.py test_evidence_drilldown.py
+    test_restoration_math_knowledge_orchestration.py
+
+jobs:
+  test:
+    name: Verification suite
+    runs-on: windows-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Run verification suite
+        shell: pwsh
+        run: |
+          $code = @'
+          import os
+          from pathlib import Path
+          from verification.manifest import SUITES
+          from verification.runner import sweep
+          skips = set(os.environ['VERIFICATION_SKIP'].split())
+          selected = [s for s in SUITES if Path(s).name not in skips]
+          r = sweep(suites=selected)
+          print('sweep: {} suites, {} ok-labels, clean={} ({} private-state suites skipped)'.format(
+              r['suite_count'], r['ok_total'], r['clean'], len(skips)))
+          for s in r['suites']:
+              if not s['clean']:
+                  print('ANOMALY ' + s['suite'] + ': ' + str(s['anomalies']))
+          raise SystemExit(0 if r['clean'] else 1)
+          '@
+          python -c $code

@@ -2,9 +2,10 @@
 
 ## Reporting a vulnerability
 
-This project is a personal prototype. If you find a security issue, please open
-a private report or email the repository owner directly (do not open a public
-issue that describes the exploit).
+This project is a personal prototype. If you find a security issue, please use
+the **Security Advisories** tab on the repository to file a private advisory,
+or email the repository owner directly (do not open a public issue that
+describes the exploit).
 
 Please include:
 

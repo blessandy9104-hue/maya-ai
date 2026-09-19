@@ -3,6 +3,35 @@
 Thanks for your interest. This is a personal, human-supervised prototype, so
 please keep changes consistent with that scope.
 
+## Local setup
+
+Requires Python 3.10 or later.
+
+```powershell
+py -3 -m venv .venv
+.\.venv\Scripts\activate
+python -m pip install -r requirements.txt
+```
+
+## Running the tests
+
+Run the public suite battery (this is what CI runs; 15 of the 86 registered
+suites are skipped because they need personal/private runtime state that is
+intentionally not published):
+
+```powershell
+python -c "from verification.runner import sweep; r=sweep(); print(r['clean'])"
+```
+
+In a full private checkout, the complete readiness harness is also available:
+
+```powershell
+py -3 -m verification
+```
+
+The sweep runs every registered suite in its own subprocess and reports the
+per-suite `ok=` counts and an overall `clean=` verdict.
+
 ## Guiding rules
 
 - **Source comes first.** Generated state (task queues, learning/presence

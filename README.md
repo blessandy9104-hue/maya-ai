@@ -2,6 +2,8 @@
 
 _Project Veldt Meridian_
 
+[![CI](https://github.com/blessandy9104-hue/maya-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/blessandy9104-hue/maya-ai/actions/workflows/ci.yml)
+
 **A local, human-supervised Python assistant prototype with a sandboxed command
 surface, persona layer, and market-pattern analysis module — no account-specific
 paths, no external services required.**
@@ -60,6 +62,16 @@ browsing are disabled by default.
 
 ## Test
 
+Run the public suite battery (71 of 86 suites; the other 15 require
+personal/private runtime state that is intentionally not published):
+
+```powershell
+python -c "from verification.runner import sweep; r=sweep(); print(r['clean'])"
+```
+
+This is the same command CI runs. In the full private workspace, the complete
+readiness harness is also available:
+
 ```powershell
 py -3 -m verification
 ```
@@ -87,6 +99,11 @@ constitutes financial advice.
 - **v0.1.0 — Initial public release** files and notes are published on the
   [releases page](https://github.com/blessandy9104-hue/maya-ai/releases).
 - Version history is maintained in [CHANGELOG](CHANGELOG.md).
+
+## Contributing & security
+
+See [CONTRIBUTING](CONTRIBUTING.md) for setup, test, and PR guidance, and
+[SECURITY](SECURITY.md) for the vulnerability reporting process.
 
 ## License
 
