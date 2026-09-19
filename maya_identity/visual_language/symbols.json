@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "note": "Maya's own symbolic visual language. Symbols are visual communication, not decoration. Colors resolve from configuration/appearance.json palette.",
+  "symbols": {
+    "convergence": { "meaning": "solution forming; chaotic components drawing together", "shapes": ["arcs_inward", "central_core", "orbit_rings"], "tone": "focused", "transient": true },
+    "exploration": { "meaning": "search spreading outward across the field", "shapes": ["radial_spokes", "expanding_rings", "scatter_nodes"], "tone": "open", "transient": true },
+    "expansion": { "meaning": "new structures growing and connecting", "shapes": ["growth_nodes", "tendril_arcs", "link_lines"], "tone": "integrative", "transient": true },
+    "illumination": { "meaning": "memory access; old pathways relighting", "shapes": ["rekindled_nodes", "pathway_links", "soft_glow_rings"], "tone": "hushed", "transient": true },
+    "redirection": { "meaning": "attention diverted; warning sign", "shapes": ["chevron_lines", "alert_arc", "pulse_ring"], "tone": "alert", "transient": true },
+    "structure": { "meaning": "idea organized into form", "shapes": ["grid_lines", "anchor_dots", "boundary_arc"], "tone": "ordered", "transient": true },
+    "attentive": { "meaning": "focused listening", "shapes": ["iris_arc", "sideline_arcs"], "tone": "attentive", "transient": true },
+    "flow": { "meaning": "creative current", "shapes": ["wave_lines", "drift_particles"], "tone": "streaming", "transient": true },
+    "calm": { "meaning": "steady presence", "shapes": ["balanced_ring"], "tone": "still", "transient": false }
+  }
+}

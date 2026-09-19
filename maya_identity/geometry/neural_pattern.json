@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "identity_rule_ref": "see geometry/maya_geometry.json -> identity_rule",
+  "seed": 21098,
+  "grid": { "rows": 9, "cols": 7, "x0": 0.18, "x1": 0.82, "y0": 0.2, "y1": 0.8 },
+  "connection_radius": 0.1,
+  "node_radius": 0.0045,
+  "energy_decay": 0.02,
+  "layers": [ "perception", "attention", "memory", "integration" ],
+  "anchor_binding": {
+    "crown": "attention",
+    "left_eye": "perception",
+    "right_eye": "perception",
+    "mouth": "integration"
+  },
+  "halo": { "enabled": true, "radius": 0.42, "segments": 48, "y_center": 0.46, "pulse_phase": 0.3 },
+  "pulse": { "base_jitter": 0.4 },
+  "statement": "The neural map is the field through which Maya expresses cognition. It animates states; it never changes the underlying geometry."
+}

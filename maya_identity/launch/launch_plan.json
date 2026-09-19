@@ -1,0 +1,148 @@
+{
+  "blueprint_version": "1.0",
+  "milestone": "phase8",
+  "launch_architecture": {
+    "transition": "Maya moves from founder-only single-deployment operation to a public platform: Studio for creators, Marketplace for listing verified personas, Cloud Runtime hosting many tenants in namespaced isolation, a read-only API for developers, and the Embed runtime as the universal web surface.",
+    "surfaces": ["studio", "marketplace", "cloud_runtime", "api", "embed"],
+    "readiness_gate": {
+      "post_isolation_audit": true,
+      "value": "platform_ready"
+    }
+  },
+  "multi_tenant_cloud": {
+    "hosting": "live_multi_tenant",
+    "namespace": "NS(t,k)",
+    "per_tenant": {
+      "cpu_budget_pct": 12,
+      "max_active_embeds_per_tenant": 4,
+      "quota_calls_per_day": 5000,
+      "token_ttl_seconds": 900
+    },
+    "scaling_rules": [
+      "add capacity only when all active slots are above 80% utilization for a committed window",
+      "capacity changes are deterministically gated, never reactive guessing"
+    ],
+    "fail_closed": ["deny_by_default", "per_tenant_kill", "no_idle_borrow"]
+  },
+  "marketplace": {
+    "creator_onboarding": {
+      "steps": [
+        "creator applies and passes the eligibility check",
+        "creator builds in Studio guided mode (ceiling-locked)",
+        "creator submits persona for verification"
+      ],
+      "listing_quota_per_creator": 10
+    },
+    "flow": ["submit", "verify", "approve", "list"],
+    "moderation_rules": [
+      { "id": "MR01", "rule": "Ceilings must stay within platform ceilings (CHANNEL_MAX)." },
+      { "id": "MR02", "rule": "Vocabulary must be closed and tone within the allowlist." },
+      { "id": "MR03", "rule": "Banned directive and financial-guarantee language is grounds for rejection." },
+      { "id": "MR04", "rule": "No PII or CORED content may appear in any listing or profile." },
+      { "id": "MR05", "rule": "Personas must be deterministic and produce bounded output in verification." },
+      { "id": "MR06", "rule": "Market-analyst-category personas must carry the financial-safety ruleset and disclaimer." },
+      { "id": "MR07", "rule": "Founder review is required before any listing; auto-verify alone is insufficient." }
+    ],
+    "governance": {
+      "verify_before_list": true,
+      "founder_review_required": true
+    },
+    "revenue_split": {
+      "creator_share_index": 0.7,
+      "platform_share_index": 0.3
+    }
+  },
+  "studio": {
+    "builder_ux": "guided persona builder: presets first, only approved knobs exposed, live schema and ceiling feedback",
+    "preset_personas": ["receptionist", "tutor", "concierge", "sales_agent", "market_analyst"],
+    "advanced_mode": {
+      "founder_only": true,
+      "requires_readiness": true
+    },
+    "ceiling_locked": true,
+    "schema_validation": true,
+    "publishing_pipeline": {
+      "guided_first": true,
+      "validate_before_publish": true
+    }
+  },
+  "developer_api": {
+    "endpoints": [
+      { "path": "/v1/interpretation", "method": "GET", "write": false, "scope": "mpm_interpret" },
+      { "path": "/v1/persona-info", "method": "GET", "write": false, "scope": "public_persona_meta" },
+      { "path": "/v1/embed-status", "method": "GET", "write": false, "scope": "embed_health_status" }
+    ],
+    "rate_limit": 60,
+    "auth": "opaque_read_token",
+    "integration_patterns": [
+      "client-side calls only with a tenant-scoped opaque read token",
+      "server-side caching of static persona-info with token rotation",
+      "no echo of user-series beyond the in-flight interpretation"
+    ],
+    "onboarding": [
+      "developer requests a read token for their tenant",
+      "token is scoped and opaque; no account or write surface",
+      "docs enforce GET-only, rate-limit, and no-PII integration"
+    ]
+  },
+  "operations": {
+    "monitoring": [
+      "per-tenant usage and quota tracking",
+      "isolation anomaly counters from audit hooks",
+      "readiness and parity health signals"
+    ],
+    "audit_cycles": "daily audit rollup plus a full re-audit at each launch-stage gate",
+    "regression_sweeps": "re-run the existing verification sweep and isolation 12-step suite on every deploy and at each stage gate",
+    "tenant_onboarding": [
+      "verify company identity and deploy domain config",
+      "issue per-tenant embed config and quota",
+      "confirm readiness before go-live"
+    ],
+    "creator_onboarding": [
+      "creator eligibility check",
+      "guided Studio orientation",
+      "first persona submitted and verified before listing"
+    ],
+    "support_model": "solo founder continues as primary support through 8.2-8.3; at 8.4 move to operator with authored runbooks and tiered escalation"
+  },
+  "launch_roadmap": {
+    "stages": [
+      {
+        "id": "8.1",
+        "name": "internal_launch",
+        "creators": 0,
+        "tenants": 0,
+        "access_model": "founder_only",
+        "kpis": ["studio_guided_deploy_time", "isolation_suite_pass_rate"],
+        "gates": ["isolation_runtime_verified", "platform_ready_gate"]
+      },
+      {
+        "id": "8.2",
+        "name": "closed_beta",
+        "creators": 10,
+        "tenants": 10,
+        "access_model": "invited",
+        "kpis": ["creator_activation_rate", "tenant_onboard_time", "support_tickets_week"],
+        "gates": ["internal_launch_ready", "invite_controls_in_place"]
+      },
+      {
+        "id": "8.3",
+        "name": "open_beta",
+        "creators": 50,
+        "tenants": 50,
+        "access_model": "approved_application",
+        "kpis": ["personas_listed", "marketplace_install_rate", "api_consumers"],
+        "gates": ["closed_beta_ready", "automation_scales", "support_ratio_safe"]
+      },
+      {
+        "id": "8.4",
+        "name": "public_launch",
+        "creators": 100,
+        "tenants": 100,
+        "access_model": "public",
+        "kpis": ["platform_recurring_ratio", "churn_rate", "multi_tenant_uptime"],
+        "gates": ["open_beta_ready", "operator_handoff", "retainer_automation"]
+      }
+    ]
+  }
+}

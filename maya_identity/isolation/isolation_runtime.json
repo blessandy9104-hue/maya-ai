@@ -1,0 +1,88 @@
+{
+  "blueprint_version": "1.0",
+  "milestone": "phase7",
+  "isolation_model": {
+    "tenant_unit": "domain_level_namespace",
+    "namespace_def": {
+      "formula": "NS(t,k) :: /t/k/*",
+      "resource_kinds": ["data", "logs", "policies", "brand", "outputs", "metadata"]
+    },
+    "boundaries": ["tenant_identity", "persona", "embed_config", "namespace"]
+  },
+  "enforcement_engine": {
+    "policy": "deny_by_default",
+    "persona_isolation": {
+      "tenant_scoped": true,
+      "cross_tenant_denied": true,
+      "core_shared_readonly": true
+    },
+    "identity_isolation": {
+      "cored_never_serialized": true,
+      "readonly_to_tenants": true,
+      "fingerprint_only": true
+    },
+    "sandbox_enforcement": [
+      "no_external_api", "no_account_access", "no_network_egress",
+      "no_process_ipc", "surface_whitelist", "fail_closed"
+    ],
+    "message_validation": {
+      "envelope": "postmessage_v1",
+      "direction_pairing": true,
+      "exact_origin": true,
+      "allowed_types": ["mount", "ready", "chat_in", "chat_out", "error", "status"]
+    }
+  },
+  "runtime_architecture": {
+    "package": "maya_runtime/isolation/",
+    "modules": [
+      "__init__", "persona", "role", "tenant", "user", "tone", "identity", "multi"
+    ],
+    "coordinator": {
+      "role": "guard.can",
+      "orders_guard_calls": true
+    },
+    "registry": {
+      "purpose": "tenant namespaces + persona/role configuration",
+      "namespaced": true
+    },
+    "validator": {
+      "purpose": "bound + quota + kill + drift + consent checks",
+      "deterministic": true
+    },
+    "audit_hooks": {
+      "record_all": true,
+      "redact_deny": true,
+      "cored_never_logged": true,
+      "anomaly_feed": true
+    },
+    "deterministic_fallback": {
+      "fail_closed_deny": true,
+      "neutral_output": true,
+      "no_partial_state": true
+    }
+  },
+  "integration_points": [
+    "embed_runtime", "persona_loader", "identity_profile_loader",
+    "cloud_runtime", "marketplace", "read_only_api"
+  ],
+  "verification_suite": {
+    "steps": [
+      "module_import",
+      "deny_by_default",
+      "tenant_namespace_disjoint",
+      "tenant_read_write_gate",
+      "persona_boundary",
+      "persona_switch_gate",
+      "identity_cored_redact",
+      "identity_token_access",
+      "sandbox_surface_whitelist",
+      "sandbox_fail_closed",
+      "message_type_direction_pairing",
+      "parity_native_headless"
+    ],
+    "count": 12,
+    "audit_hook_checks": true,
+    "regression": ["parity_native_headless", "existing_sweep", "prior_impl_readiness"],
+    "boundary_groups": ["persona_boundary", "tenant_boundary", "sandbox_boundary"]
+  }
+}

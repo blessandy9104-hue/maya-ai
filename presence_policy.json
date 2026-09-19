@@ -1,0 +1,18 @@
+{
+  "assistant": "Maya",
+  "default": "allow_only_when_presence_is_on",
+  "excluded_applications": [
+    "password-manager",
+    "banking",
+    "private-messages",
+    "health-records"
+  ],
+  "excluded_sites": [
+    "bank.example",
+    "passwords.example",
+    "private-messages.example"
+  ],
+  "never_store_screenshots": true,
+  "never_upload_observations": true,
+  "require_preference_approval": true
+}

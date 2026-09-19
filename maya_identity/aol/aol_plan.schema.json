@@ -1,0 +1,232 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Maya Phase 12 autonomous operations loop (AOL) registry",
+  "description": "Implementation-ready AOL configuration. Command system (Phase 11) provides invocation, operator mode (Phase 9) is active, platform launched (Phase 8), monetization defined (Phase 10). Maya runs continuous, autonomous operational loops that are strictly non-legal-only and non-financial-only, under operator-only autonomy with founder-only gating. Isolation runtime (Phase 7) guards every loop action.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "blueprint_version", "milestone", "aol_definition",
+    "loop_categories", "loop_architecture", "integration_points",
+    "safety_boundaries", "aol_roadmap"
+  ],
+  "properties": {
+    "blueprint_version": { "const": "1.0" },
+    "milestone": { "const": "phase12" },
+    "aol_definition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["purpose", "boundaries", "authority_map"],
+      "properties": {
+        "purpose": { "type": "string", "minLength": 1 },
+        "boundaries": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["non_legal_only", "non_financial_only"],
+          "properties": {
+            "non_legal_only": { "const": true },
+            "non_financial_only": { "const": true }
+          }
+        },
+        "authority_map": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["operator_autonomy", "founder_gating"],
+          "properties": {
+            "operator_autonomy": { "$ref": "#/definitions/authority" },
+            "founder_gating": { "$ref": "#/definitions/authority" }
+          }
+        }
+      }
+    },
+    "loop_categories": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["monitoring", "verification", "moderation", "maintenance", "deployment", "ecosystem"],
+      "properties": {
+        "monitoring": {
+          "type": "array",
+          "minItems": 4,
+          "uniqueItems": true,
+          "items": { "enum": ["runtime", "embed", "cloud", "api"] }
+        },
+        "verification": {
+          "type": "array",
+          "minItems": 3,
+          "uniqueItems": true,
+          "items": { "enum": ["persona", "identity", "isolation"] }
+        },
+        "moderation": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": { "enum": ["marketplace_prereview"] }
+        },
+        "maintenance": {
+          "type": "array",
+          "minItems": 3,
+          "uniqueItems": true,
+          "items": { "enum": ["audit", "regression", "drift_checks"] }
+        },
+        "deployment": {
+          "type": "array",
+          "minItems": 3,
+          "uniqueItems": true,
+          "items": { "enum": ["config_prep", "embed_prep", "persona_prep"] }
+        },
+        "ecosystem": {
+          "type": "array",
+          "minItems": 3,
+          "uniqueItems": true,
+          "items": { "enum": ["creator", "tenant", "kiosk"] }
+        }
+      }
+    },
+    "loop_architecture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scheduler", "registry", "executor", "validator", "audit_hooks", "fallback"],
+      "properties": {
+        "scheduler": {
+          "type": "array",
+          "minItems": 3,
+          "uniqueItems": true,
+          "items": { "enum": ["deterministic", "fixed_cadence", "no_realtime", "cooldown_on_escalate"] }
+        },
+        "registry": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["declarative", "operator_only"],
+          "properties": {
+            "declarative": { "const": true },
+            "operator_only": { "const": true }
+          }
+        },
+        "executor": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["isolation_guarded", "operator_bound"],
+          "properties": {
+            "isolation_guarded": { "const": true },
+            "operator_bound": { "const": true }
+          }
+        },
+        "validator": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["safety_ceilings", "deterministic"],
+          "properties": {
+            "safety_ceilings": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["expression", "viseme", "micro", "anatomical"],
+              "properties": {
+                "expression": { "const": 0.5 },
+                "viseme": { "const": 0.35 },
+                "micro": { "const": 0.012 },
+                "anatomical": { "const": 0.8 }
+              }
+            },
+            "deterministic": { "const": true }
+          }
+        },
+        "audit_hooks": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["founder_visible", "record_all", "no_cored_log"],
+          "properties": {
+            "founder_visible": { "const": true },
+            "record_all": { "const": true },
+            "no_cored_log": { "const": true }
+          }
+        },
+        "fallback": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": { "enum": ["fail_closed", "retry_bounded", "escalate_founder"] }
+        }
+      }
+    },
+    "integration_points": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "uniqueItems": true,
+      "items": { "enum": ["command_system", "operator_engine", "platform_surfaces", "isolation_runtime", "persona_loader", "identity_loader"] }
+    },
+    "safety_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["legal_boundaries", "business_boundaries", "safety_boundaries", "isolation_boundaries", "autonomy_cap"],
+      "properties": {
+        "legal_boundaries": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "enum": ["contracts", "payments", "liabilities", "terms"] }
+        },
+        "business_boundaries": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "enum": ["pricing", "negotiation"] }
+        },
+        "safety_boundaries": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "enum": ["financial", "medical", "legal"] }
+        },
+        "isolation_boundaries": { "const": "deny_by_default" },
+        "autonomy_cap": { "const": "operator_only_nonlegal_nonfinancial" }
+      }
+    },
+    "aol_roadmap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stages"],
+      "properties": {
+        "stages": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "items": { "$ref": "#/definitions/aol_stage" }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["owns", "cannot"],
+      "properties": {
+        "owns": { "type": "string", "minLength": 1 },
+        "cannot": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "aol_stage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "gates", "kpis"],
+      "properties": {
+        "id": { "enum": ["12.1", "12.2", "12.3", "12.4", "12.5", "12.6"] },
+        "name": { "type": "string", "minLength": 1 },
+        "gates": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "kpis": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

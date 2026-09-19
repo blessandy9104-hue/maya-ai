@@ -1,0 +1,155 @@
+{
+  "template_version": "1.0",
+  "positioning": "Websites with AI Staff",
+  "onboarding": {
+    "fields": [
+      { "id": "OB01", "label": "Business name and sector", "kind": "text", "required": true },
+      { "id": "OB02", "label": "Do you have a website today?", "kind": "single_choice", "options": ["none", "have_site", "want_new"], "required": true },
+      { "id": "OB03", "label": "Primary goal for the AI assistant", "kind": "single_choice", "options": ["answer_questions", "explain_offer", "guide_learners", "recommend_within_offers", "interpret_market_patterns"], "required": true },
+      { "id": "OB04", "label": "Who visits the site?", "kind": "multiline", "required": true },
+      { "id": "OB05", "label": "Top questions visitors ask", "kind": "multiline", "required": true },
+      { "id": "OB06", "label": "Source material available (offers, FAQs, lessons, menus)", "kind": "multiline", "required": true },
+      { "id": "OB07", "label": "Preferred embed style", "kind": "single_choice", "options": ["inline_frame", "floating_widget", "full_page"], "required": true },
+      { "id": "OB08", "label": "Live origin (domain) to embed on", "kind": "text", "required": true },
+      { "id": "OB09", "label": "Tier preference", "kind": "single_choice", "options": ["essentials", "growth", "premium"], "required": true },
+      { "id": "OB10", "label": "Consent to interpretation-only disclaimer (required for market_analyst)", "kind": "boolean", "required": true }
+    ],
+    "checklist": [
+      "Origin string is exact (https://site.com, no path, no variant).",
+      "Source material reviewed and approved by the client.",
+      "Persona selected from the web allowlist for the stated goal.",
+      "Tier quote sent as abstract one-time + recurring indices.",
+      "Disclaimer template included in the proposal for the chosen persona.",
+      "Financial-consent confirmed before any market_analyst engagement."
+    ],
+    "pii_rule": "Do not collect end-user personal data. The embed is memory-only; hold client business context only, and never copies of customer data."
+  },
+  "persona_selection": {
+    "decision_rows": [
+      { "condition": "Answers routine questions about hours, directions, and services; first contact", "persona_id": "receptionist", "reason": "Low-risk first contact that never lets a visitor leave empty-handed." },
+      { "condition": "Explains lessons or material step by step for learners", "persona_id": "tutor", "reason": "Adaptive teaching register with calm, technical explanations." },
+      { "condition": "Hospitality, events, memberships, or communities; recommends within provided offerings", "persona_id": "concierge", "reason": "Warm guidance without overpromising." },
+      { "condition": "Product or service offers on a landing page; explains and hands off", "persona_id": "sales_agent", "reason": "Information-over-persuasion explainer, no urgency or pressure." },
+      { "condition": "Content site about charts or market structure; interpretation of user-provided data", "persona_id": "market_analyst", "reason": "Interpretation-only MPM persona with financial-safety ruleset." }
+    ],
+    "mode_map": {
+      "receptionist": "A",
+      "tutor": "B",
+      "concierge": "B",
+      "sales_agent": "C",
+      "market_analyst": "B"
+    }
+  },
+  "outreach": {
+    "pilot": [
+      {
+        "name": "small_business_email",
+        "subject": "A first-contact assistant for your website",
+        "script": "Hi [Name], I build simple websites with an AI receptionist that answers your visitors' routine questions any time. No new tech on your side - it embeds like a widget. If you'd like, I can set up a free demo on your current site. No contracts, just a try."
+      },
+      {
+        "name": "market_analyst_email",
+        "subject": "Chart interpretation for your content readers",
+        "script": "Hi [Name], you run content where readers discuss charts and market structure. I deploy an AI assistant that gives pattern and volatility interpretations on user-provided data - clearly labeled as interpretation, never trading advice or a bot. Happy to show a live example if useful."
+      }
+    ],
+    "diversification": [
+      {
+        "name": "tutor_school_email",
+        "subject": "An AI tutor for your learners",
+        "script": "Hi [Name], I build websites with an AI tutor that walks learners through steps and answers practice questions from the course material you already have. Setup is a short call and a few documents; the assistant goes live on your landing page after verification."
+      },
+      {
+        "name": "sales_explainer_email",
+        "subject": "An offer explainer, not a pushy script",
+        "script": "Hi [Name], I add an AI explainer to product landing pages that answers pricing and feature questions from your own material and hands visitors a clean path to you. Calm, factual, no pressure language. A demo page takes a few days."
+      }
+    ],
+    "scaling": [
+      {
+        "name": "recurring_retainer_email",
+        "subject": "Keep your AI staff current",
+        "script": "Hi [Name], your assistant's answers depend on your content staying fresh. I can keep offers, FAQs, and menus updated on a monthly plan, plus tune the persona's wording within your allowance. It keeps the assistant useful instead of stale."
+      }
+    ],
+    "referral": {
+      "name": "referral_note",
+      "subject": "One month credited for a referral",
+      "script": "Hi [Name], if someone you know could use a website with AI staff, an intro that leads to a build credits one month of your hosting. No pressure - only send names you'd vouch for."
+    }
+  },
+  "deployment_checklist": {
+    "stages": [
+      {
+        "stage": "requirements intake",
+        "steps": [
+          "Send the onboarding template (fields + checklist).",
+          "Confirm origin string and tier.",
+          "Confirm persona from the selection guide."
+        ],
+        "verify_gate": { "kind": "none" }
+      },
+      {
+        "stage": "persona selection",
+        "steps": [
+          "Map goal to decision row.",
+          "Pull persona profile and ceiling from registries.",
+          "For market_analyst: confirm disclaimer consent."
+        ],
+        "verify_gate": { "kind": "none" }
+      },
+      {
+        "stage": "website build",
+        "steps": [
+          "AI-generate the static site from intake content.",
+          "Deploy to static host; confirm the embed trap is ready."
+        ],
+        "verify_gate": { "kind": "none" }
+      },
+      {
+        "stage": "embed runtime integration",
+        "steps": [
+          "Emit snippet for the chosen mode (A/B/C).",
+          "Pin exact origin; set token TTL and quota.",
+          "Verify envelope MSG.v1 handshake on a staging page."
+        ],
+        "verify_gate": { "kind": "handshake" }
+      },
+      {
+        "stage": "persona configuration",
+        "steps": [
+          "Set register from persona profile.",
+          "Wire source material as provided context.",
+          "Enable persona safety rules (financial blocklist if market_analyst)."
+        ],
+        "verify_gate": { "kind": "none" }
+      },
+      {
+        "stage": "verification and readiness",
+        "steps": [
+          "Run the verification sweep (18 suites).",
+          "Confirm external_clean and internal_stable and the mount-to-ready gate."
+        ],
+        "verify_gate": { "kind": "readiness" }
+      },
+      {
+        "stage": "client handover",
+        "steps": [
+          "Deliver site access and the embed admin summary.",
+          "Provide a support contact and update allowance.",
+          "Close with the loaded disclaimer and contract signed."
+        ],
+        "verify_gate": { "kind": "handover" }
+      },
+      {
+        "stage": "support loop",
+        "steps": [
+          "Batch content updates within tier SLA.",
+          "Run periodic re-verification.",
+          "Re-quote anything beyond the tweak allowance."
+        ],
+        "verify_gate": { "kind": "sweep_clean" }
+      }
+    ]
+  }
+}

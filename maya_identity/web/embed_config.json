@@ -1,0 +1,48 @@
+{
+  "schema_kind": "embed_config",
+  "config_version": "1.0",
+  "runtime_mode": "A",
+  "allowed_origins": ["https://example.com"],
+  "persona_allowlist": ["receptionist", "tutor", "concierge", "sales_agent", "market_analyst"],
+  "mode_defaults": {
+    "A": {
+      "endpoint": "/embed",
+      "surface": "iframe_embed",
+      "comm": "postMessage",
+      "features": ["chat", "identity_badge"]
+    },
+    "B": {
+      "endpoint": "/embed",
+      "widget": "maya.js",
+      "comm": "postMessage",
+      "features": ["chat", "floating", "toggle"]
+    },
+    "C": {
+      "endpoint": "/assistant",
+      "comm": "same-origin_page",
+      "features": ["full_page", "chat"]
+    }
+  },
+  "tenant": {
+    "max_active_slots": 8,
+    "invocation_quota_per_slot": 200,
+    "kill_switch": true,
+    "token_ttl_seconds": 900
+  },
+  "memory": {
+    "policy": "memory_only",
+    "persistence": false,
+    "cross_session": false
+  },
+  "sandbox_deny_all": [
+    "outbound_http", "local_storage", "indexed_db", "cookie_write",
+    "clipboard_write", "window_top_navigation", "external_apis", "account_access"
+  ],
+  "comm": {
+    "envelope_version": "MSG.v1",
+    "channel": "postMessage",
+    "origin_check": "exact",
+    "allowed_event_types": ["maya:mount", "maya:ready", "maya:message", "maya:reply", "maya:error", "maya:status"],
+    "max_payload_kb": 16
+  }
+}

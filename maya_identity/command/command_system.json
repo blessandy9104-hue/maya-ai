@@ -1,0 +1,119 @@
+{
+  "blueprint_version": "1.0",
+  "milestone": "phase11",
+  "command_layer": {
+    "purpose": "A unified, deterministic founder command interface to issue, run, and audit Maya operations: deployments, onboarding, project setup, operator tasks, platform, ecosystem, and maintenance — with legal commands gated founder-only.",
+    "boundaries": {
+      "operator_only": [
+        "deployment", "onboarding_nonlegal", "project_setup",
+        "monitoring_sweeps", "verification_moderation", "maintenance_checks"
+      ],
+      "founder_only": [
+        "legal_approval", "contract", "payment", "proposal", "go_no_go", "pricing"
+      ]
+    },
+    "authority_map": {
+      "legal": {
+        "owns": "contract approval, payment authorization, proposal sign-off, pricing, go/no-go on legal-scope actions",
+        "cannot": ["be delegated to the operator", "be run silently without founder auth and audit"]
+      },
+      "non_legal": {
+        "owns": "deterministic execution of operational commands: deployment, onboarding, project setup, monitoring, verification, moderation, maintenance",
+        "cannot": ["approve legal commands", "commit payments or pricing", "exceed surfaces", "act outside its scope"]
+      }
+    }
+  },
+  "command_categories": {
+    "deployment": ["embed", "persona_load", "config_prep"],
+    "onboarding": ["client", "tenant", "creator"],
+    "project": ["setup", "structure", "config_stubs"],
+    "operator": ["monitor", "sweep", "verify", "moderate"],
+    "platform": ["marketplace", "cloud_runtime", "api"],
+    "ecosystem": ["creator", "tenant", "kiosk"],
+    "maintenance": ["audit", "regression", "isolation_checks"]
+  },
+  "command_syntax": {
+    "grammar": ["verb", "category", "target", "parameters", "auth"],
+    "parsing": {
+      "deterministic": true,
+      "strict": true
+    },
+    "envelope": {
+      "scoped": true,
+      "exact_origin": true,
+      "no_llm_interpretation": true
+    },
+    "gating": {
+      "founder_only": true,
+      "operator_auto": true,
+      "legal_required": true
+    }
+  },
+  "command_engine": {
+    "router": {
+      "table_based": true,
+      "rejects_unknown": true
+    },
+    "validator": {
+      "schema_checked": true,
+      "deterministic": true
+    },
+    "executor": {
+      "operator_bound": true,
+      "isolation_guarded": true
+    },
+    "audit_hooks": {
+      "record_all": true,
+      "founder_visible": true,
+      "no_cored_log": true
+    },
+    "fallback": ["deny_unknown", "handoff_founder", "fail_closed", "rethrow_parse_error"],
+    "isolation_integration": "deny_by_default"
+  },
+  "integration_points": [
+    "studio", "marketplace", "cloud_runtime", "api",
+    "embed_runtime", "operator_engine", "persona_loader", "identity_loader"
+  ],
+  "safety_boundaries": {
+    "legal_boundaries": ["contracts", "payments", "liabilities", "terms"],
+    "business_boundaries": ["pricing", "negotiation"],
+    "operator_boundaries": {
+      "nonlegal_only": true
+    },
+    "isolation_boundaries": "deny_by_default"
+  },
+  "command_roadmap": {
+    "stages": [
+      {
+        "id": "11.1",
+        "name": "command_grammar",
+        "gates": ["grammar_verified", "parser_deterministic", "envelope_safe"],
+        "kpis": ["command_parse_accuracy", "unknown_command_deny_rate"]
+      },
+      {
+        "id": "11.2",
+        "name": "command_engine",
+        "gates": ["router_ready", "validator_schema_checked", "executor_isolation_guarded"],
+        "kpis": ["command_execution_latency", "validator_reject_rate"]
+      },
+      {
+        "id": "11.3",
+        "name": "operator_integration",
+        "gates": ["operator_engine_bound", "operator_command_automation_live", "audit_hooks_continuous"],
+        "kpis": ["deployment_command_time", "monitoring_sweep_command_rate"]
+      },
+      {
+        "id": "11.4",
+        "name": "platform_integration",
+        "gates": ["all_categories_routable", "marketplace_cloud_api_commands_live", "isolation_checks_invokable"],
+        "kpis": ["platform_command_coverage", "cross_surface_command_success"]
+      },
+      {
+        "id": "11.5",
+        "name": "founder_console",
+        "gates": ["founder_legal_gate_verified", "console_audit_dashboard_live", "exception_handoff_verified"],
+        "kpis": ["founder_command_signoff_rate", "command_to_execution_latency", "audit_coverage"]
+      }
+    ]
+  }
+}

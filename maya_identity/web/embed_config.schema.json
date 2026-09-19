@@ -1,0 +1,136 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Maya Universal Embed Runtime — site configuration",
+  "description": "Configuration governing a website's Maya embed. Static, deny-by-default, no backend required from the site. Admin-owned, not site-owned.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_kind", "config_version", "runtime_mode",
+    "allowed_origins", "persona_allowlist", "mode_defaults",
+    "tenant", "memory", "sandbox_deny_all", "comm"
+  ],
+  "properties": {
+    "schema_kind": { "const": "embed_config" },
+    "config_version": { "const": "1.0" },
+    "runtime_mode": { "enum": ["A", "B", "C"] },
+    "allowed_origins": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^(https?|file)://[^/]+$"
+      }
+    },
+    "persona_allowlist": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "items": {
+        "enum": ["receptionist", "tutor", "concierge", "sales_agent", "companion", "market_analyst"]
+      }
+    },
+    "mode_defaults": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["A", "B", "C"],
+      "properties": {
+        "A": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["endpoint", "surface", "comm", "features"],
+          "properties": {
+            "endpoint": { "const": "/embed" },
+            "surface": { "const": "iframe_embed" },
+            "comm": { "const": "postMessage" },
+            "features": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": { "enum": ["chat", "identity_badge"] }
+            }
+          }
+        },
+        "B": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["endpoint", "widget", "comm", "features"],
+          "properties": {
+            "endpoint": { "const": "/embed" },
+            "widget": { "const": "maya.js" },
+            "comm": { "const": "postMessage" },
+            "features": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": { "enum": ["chat", "floating", "toggle"] }
+            }
+          }
+        },
+        "C": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["endpoint", "comm", "features"],
+          "properties": {
+            "endpoint": { "const": "/assistant" },
+            "comm": { "const": "same-origin_page" },
+            "features": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": { "enum": ["full_page", "chat"] }
+            }
+          }
+        }
+      }
+    },
+    "tenant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_active_slots", "invocation_quota_per_slot", "kill_switch", "token_ttl_seconds"],
+      "properties": {
+        "max_active_slots": { "type": "integer", "minimum": 1, "maximum": 16 },
+        "invocation_quota_per_slot": { "type": "integer", "minimum": 1 },
+        "kill_switch": { "const": true },
+        "token_ttl_seconds": { "type": "integer", "minimum": 60, "maximum": 3600 }
+      }
+    },
+    "memory": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["policy", "persistence", "cross_session"],
+      "properties": {
+        "policy": { "const": "memory_only" },
+        "persistence": { "const": false },
+        "cross_session": { "const": false }
+      }
+    },
+    "sandbox_deny_all": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 8,
+      "items": {
+        "enum": [
+          "outbound_http", "local_storage", "indexed_db", "cookie_write",
+          "clipboard_write", "window_top_navigation", "external_apis", "account_access"
+        ]
+      }
+    },
+    "comm": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["envelope_version", "channel", "origin_check", "allowed_event_types", "max_payload_kb"],
+      "properties": {
+        "envelope_version": { "const": "MSG.v1" },
+        "channel": { "const": "postMessage" },
+        "origin_check": { "const": "exact" },
+        "allowed_event_types": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 6,
+          "items": {
+            "enum": ["maya:mount", "maya:ready", "maya:message", "maya:reply", "maya:error", "maya:status"]
+          }
+        },
+        "max_payload_kb": { "type": "integer", "minimum": 1, "maximum": 64 }
+      }
+    }
+  }
+}

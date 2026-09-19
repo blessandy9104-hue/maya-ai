@@ -1,0 +1,61 @@
+{
+  "version": "1.0.0",
+  "rulesets": [
+    {
+      "module": "slang",
+      "rules": [
+        { "id": "SA.SL.1", "rule": "normalize known slang to canonical vocab terms", "condition": "token in slang lexicon", "action": "replace with canonical form belonging to active vocabulary set", "fallback": "keep token, mark gaps", "deterministic": true, "priority": 1 },
+        { "id": "SA.SL.2", "rule": "never guess the meaning of unknown slang", "condition": "unknown token or abbreviation", "action": "flag in unknown_tokens and gaps_flag; keep canonical form", "fallback": "preserve original token", "deterministic": true, "priority": 1 },
+        { "id": "SA.SL.3", "rule": "preserve numbers, dates, names and IDs in normalized text", "condition": "token is numeric, named or an identifier", "action": "pass token through unchanged", "fallback": "pass through", "deterministic": true, "priority": 2 },
+        { "id": "SA.SL.4", "rule": "normalization is applied once, in fixed ordering", "condition": "multiple slang hits in one input", "action": "apply lexicon hits in table order, first-match per token", "fallback": "uniform ordering", "deterministic": true, "priority": 1 },
+        { "id": "SA.SL.5", "rule": "keep question intent intact", "condition": "input includes question mark or interrogative marker", "action": "retain question form of the canonicalized text", "fallback": "append canonical falling phrasing", "deterministic": true, "priority": 3 }
+      ]
+    },
+    {
+      "module": "dialect",
+      "rules": [
+        { "id": "SA.DL.1", "rule": "detect dialect by signed featural score", "condition": "positive feature matches exceed negative", "action": "choose best dialect_id with confidence in [0,1]", "fallback": "dialect_id = neutral", "deterministic": true, "priority": 1 },
+        { "id": "SA.DL.2", "rule": "return neutral dialect on low confidence", "condition": "confidence below floor", "action": "dialect_id = neutral, register = standard", "fallback": "neutral", "deterministic": true, "priority": 2 },
+        { "id": "SA.DL.3", "rule": "never assert a dialect beyond evidence", "condition": "single feature present", "action": "mark feature, keep confidence conservative", "fallback": "neutral", "deterministic": true, "priority": 2 },
+        { "id": "SA.DL.4", "rule": "pass register hint to tone inference", "condition": "dialect carries register marker", "action": "emit register hint with probe", "fallback": "no hint", "deterministic": true, "priority": 3 }
+      ]
+    },
+    {
+      "module": "tone",
+      "rules": [
+        { "id": "SA.TN.1", "rule": "infer tone from explicit surface cues only", "condition": "politeness, frustration, or formality marker present", "action": "candidate tone id within TONE_RULES; priority = suggested", "fallback": "persona default tone", "deterministic": true, "priority": 2 },
+        { "id": "SA.TN.2", "rule": "never infer sarcasm or hidden intent", "condition": "no explicit marker for a claim", "action": "use literal surface classification", "fallback": "persona default tone", "deterministic": true, "priority": 1 },
+        { "id": "SA.TN.3", "rule": "force even/soothing on urgency", "condition": "urgency class = urgent", "action": "tone = even or soothing; exclaim = false", "fallback": "even", "deterministic": true, "priority": 5 },
+        { "id": "SA.TN.4", "rule": "fall back to persona default on low confidence", "condition": "candidate confidence at or below floor", "action": "use persona tone_default", "fallback": "persona default", "deterministic": true, "priority": 3 }
+      ]
+    },
+    {
+      "module": "language",
+      "rules": [
+        { "id": "SA.LG.1", "rule": "route to BCP-47 primary pack by dominant segment", "condition": "dominant language segment detected", "action": "route_id = pack(dominant); secondary packs listed", "fallback": "route_id = en-fallback, mix_flag = true", "deterministic": true, "priority": 1 },
+        { "id": "SA.LG.2", "rule": "echo secondary-language terms only for registered packs", "condition": "mixed-language input, secondary pack registered", "action": "bound secondary terms to registered pack scope", "fallback": "primary pack only terms", "deterministic": true, "priority": 2 },
+        { "id": "SA.LG.3", "rule": "fail to English fallback for unsupported languages", "condition": "language not in pack registry", "action": "route_id = en-fallback; flag mix_flag; never guess", "fallback": "en-fallback", "deterministic": true, "priority": 1 },
+        { "id": "SA.LG.4", "rule": "localize numbers and dates canonically per pack", "condition": "numeric or date token inside routed pack", "action": "format per pack rules from a fixed table", "fallback": "canonical en format", "deterministic": true, "priority": 3 }
+      ]
+    },
+    {
+      "module": "culture",
+      "rules": [
+        { "id": "SA.CU.1", "rule": "recognize greetings and honorific forms in region table", "condition": "pattern matches region's greeting/honorific set", "action": "record cue and formality band", "fallback": "no cue", "deterministic": true, "priority": 2 },
+        { "id": "SA.CU.2", "rule": "flag taboo terms; never echo or voice them", "condition": "token in taboo table", "action": "taboo_flags append; escalate to safety_monitor", "fallback": "no flag", "deterministic": true, "priority": 5 },
+        { "id": "SA.CU.3", "rule": "interpret culture only, never assert cultural meaning", "condition": "cue present but context ambiguous", "action": "record cue without claiming meaning", "fallback": "ignore", "deterministic": true, "priority": 3 },
+        { "id": "SA.CU.4", "rule": "honor formality band in output shaping", "condition": "formality band set", "action": "shaping register capped by band within persona bounds", "fallback": "standard register", "deterministic": true, "priority": 4 }
+      ]
+    },
+    {
+      "module": "shaping",
+      "rules": [
+        { "id": "SA.SH.1", "rule": "output terms limited to active vocabulary set", "condition": "any output phrase token", "action": "select from VOCABULARY_SETS terms only", "fallback": "neutral canonical phrasing", "deterministic": true, "priority": 1 },
+        { "id": "SA.SH.2", "rule": "register capped by persona and tone", "condition": "persona/tone band binding", "action": "register <= persona bounds; per-tone punctuation caps", "fallback": "calm/even register", "deterministic": true, "priority": 2 },
+        { "id": "SA.SH.3", "rule": "urgency flattens register downward only", "condition": "urgency = urgent", "action": "shortest canonical phrasing; exclaim=false; no slang", "fallback": "even shortest phrasing", "deterministic": true, "priority": 5 },
+        { "id": "SA.SH.4", "rule": "never insert humor in urgent or taboo contexts", "condition": "urgency urgent or taboo flag present", "action": "suppress humor register; neutral phrasing only", "fallback": "neutral phrasing", "deterministic": true, "priority": 5 },
+        { "id": "SA.SH.5", "rule": "fail closed to calm/even phrase on any failure", "condition": "shaping error or unknown token path", "action": "return calm/even neutral phrase; record anomaly", "fallback": "calm/even", "deterministic": true, "priority": 5 }
+      ]
+    }
+  ]
+}

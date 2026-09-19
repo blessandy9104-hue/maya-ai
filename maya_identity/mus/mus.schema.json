@@ -1,0 +1,216 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Maya Phase 13 unified specification (MUS) registry",
+  "description": "The single authoritative reference consolidating all prior phases (1-12): twelve systems, six boundary groups, consolidated ceilings (CHANNEL_MAX, per-persona, operator/AOL/platform, tenant quotas), seven schemas, unified tier-index pricing, and Founder Console integration. Numerically cross-consistent with the commerce catalog, scaling registry, and all phase registries.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "blueprint_version", "milestone", "mus_definition",
+    "system_consolidation", "boundary_consolidation",
+    "ceiling_consolidation", "schema_consolidation",
+    "pricing_consolidation", "console_integration", "mus_roadmap"
+  ],
+  "properties": {
+    "blueprint_version": { "const": "1.0" },
+    "milestone": { "const": "phase13" },
+    "mus_definition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["purpose", "consolidation_scope", "authority_map"],
+      "properties": {
+        "purpose": { "type": "string", "minLength": 1 },
+        "consolidation_scope": { "const": "phases_1_to_12" },
+        "authority_map": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["founder_only", "operator_only", "platform_only"],
+          "properties": {
+            "founder_only": { "$ref": "#/definitions/authority" },
+            "operator_only": { "$ref": "#/definitions/authority" },
+            "platform_only": { "$ref": "#/definitions/authority" }
+          }
+        }
+      }
+    },
+    "system_consolidation": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "runtime", "isolation_runtime", "persona_system", "embed_runtime",
+          "cloud_runtime", "marketplace", "studio", "api", "kiosk",
+          "operator_engine", "command_system", "aol_loops"
+        ]
+      }
+    },
+    "boundary_consolidation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["legal", "business", "safety", "isolation", "operator_only", "founder_only"],
+      "properties": {
+        "legal": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "enum": ["contracts", "payments", "liabilities", "terms"] }
+        },
+        "business": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "enum": ["pricing", "negotiation"] }
+        },
+        "safety": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "enum": ["financial", "medical", "legal"] }
+        },
+        "isolation": { "const": "deny_by_default" },
+        "operator_only": { "const": "nonlegal_nonfinancial" },
+        "founder_only": { "const": "legal_business_go_no_go" }
+      }
+    },
+    "ceiling_consolidation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["channel_max", "persona_ceilings", "operator_ceilings", "aol_ceilings", "platform_ceilings", "tenant_quotas"],
+      "properties": {
+        "channel_max": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["expression", "viseme", "micro", "anatomical"],
+          "properties": {
+            "expression": { "const": 0.5 },
+            "viseme": { "const": 0.35 },
+            "micro": { "const": 0.012 },
+            "anatomical": { "const": 0.8 }
+          }
+        },
+        "persona_ceilings": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["receptionist", "tutor", "concierge", "sales_agent", "market_analyst"],
+          "properties": {
+            "receptionist": { "$ref": "#/definitions/persona_ceiling" },
+            "tutor": { "$ref": "#/definitions/persona_ceiling" },
+            "concierge": { "$ref": "#/definitions/persona_ceiling" },
+            "sales_agent": { "$ref": "#/definitions/persona_ceiling" },
+            "market_analyst": { "$ref": "#/definitions/persona_ceiling" }
+          }
+        },
+        "operator_ceilings": { "$ref": "#/definitions/ceiling_ref" },
+        "aol_ceilings": { "$ref": "#/definitions/ceiling_ref" },
+        "platform_ceilings": { "$ref": "#/definitions/ceiling_ref" },
+        "tenant_quotas": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["cpu_budget_pct", "max_active_embeds_per_tenant", "quota_calls_per_day", "token_ttl_seconds"],
+          "properties": {
+            "cpu_budget_pct": { "const": 12 },
+            "max_active_embeds_per_tenant": { "const": 4 },
+            "quota_calls_per_day": { "const": 5000 },
+            "token_ttl_seconds": { "const": 900 }
+          }
+        }
+      }
+    },
+    "schema_consolidation": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "uniqueItems": true,
+      "items": { "enum": ["identity", "persona", "command", "operator_task", "aol_loop", "marketplace_listing", "tenant"] }
+    },
+    "pricing_consolidation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model", "persona_indices", "bundle_indices", "platform_indices", "marketplace_indices", "cloud_runtime_indices"],
+      "properties": {
+        "model": { "const": "unified_tier_index" },
+        "persona_indices": { "const": true },
+        "bundle_indices": { "const": true },
+        "platform_indices": { "const": true },
+        "marketplace_indices": { "const": true },
+        "cloud_runtime_indices": { "const": true }
+      }
+    },
+    "console_integration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command_system", "operator_mode", "aol", "authoritative"],
+      "properties": {
+        "command_system": { "const": "invocation_interface" },
+        "operator_mode": { "const": "executor" },
+        "aol": { "const": "autonomous_driver" },
+        "authoritative": { "const": true }
+      }
+    },
+    "mus_roadmap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stages"],
+      "properties": {
+        "stages": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "items": { "$ref": "#/definitions/mus_stage" }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["owns", "cannot"],
+      "properties": {
+        "owns": { "type": "string", "minLength": 1 },
+        "cannot": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "persona_ceiling": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["expression", "viseme", "micro"],
+      "properties": {
+        "expression": { "type": "number", "exclusiveMinimum": 0, "maximum": 0.5 },
+        "viseme": { "type": "number", "exclusiveMinimum": 0, "maximum": 0.35 },
+        "micro": { "type": "number", "exclusiveMinimum": 0, "maximum": 0.012 }
+      }
+    },
+    "ceiling_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref"],
+      "properties": {
+        "ref": { "const": "CHANNEL_MAX" }
+      }
+    },
+    "mus_stage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "gates", "kpis"],
+      "properties": {
+        "id": { "enum": ["13.1", "13.2", "13.3", "13.4", "13.5", "13.6"] },
+        "name": { "type": "string", "minLength": 1 },
+        "gates": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "kpis": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "patterns": {
+    "convergence": { "symbols": ["convergence"], "intensity": 0.8, "focal": "center", "activation": "build" },
+    "exploration": { "symbols": ["exploration"], "intensity": 0.7, "focal": "field", "activation": "spread" },
+    "expansion": { "symbols": ["expansion"], "intensity": 0.8, "focal": "crown", "activation": "grow" },
+    "illumination": { "symbols": ["illumination"], "intensity": 0.75, "focal": "network", "activation": "lift" },
+    "redirection": { "symbols": ["redirection"], "intensity": 0.9, "focal": "gaze", "activation": "sharp" },
+    "structure": { "symbols": ["structure"], "intensity": 0.7, "focal": "gaze", "activation": "build" },
+    "attentive": { "symbols": ["attentive"], "intensity": 0.6, "focal": "eyes", "activation": "hold" },
+    "flow": { "symbols": ["flow"], "intensity": 0.8, "focal": "field", "activation": "stream" },
+    "calm": { "symbols": ["calm"], "intensity": 0.4, "focal": "none", "activation": "still" }
+  }
+}

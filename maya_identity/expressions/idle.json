@@ -1,0 +1,13 @@
+{
+  "expression": "idle",
+  "kind": "presence · calm",
+  "geometry": { "scale": 1.0, "wander": 0.0015, "drift": 0.0 },
+  "eyes": { "lid": 0.0, "iris_glow": 0.5, "focus": 0.0, "iris_shift_x": 0.0, "pupil": 0.012 },
+  "brows": { "height": 0.0, "slant": 0.0 },
+  "mouth": { "open": 0.0, "lift": 0.0 },
+  "neural": { "activity": 0.3, "pulse": 0.35, "brightness": 0.55 },
+  "particles": { "density": 0.45, "speed": 0.5, "brightness": 0.55 },
+  "glow": { "intensity": 0.5, "core": "#6d7cff", "ring": "#38bdf8" },
+  "halo": { "visible": true, "pulse": 0.3, "intensity": 0.4 },
+  "symbols": []
+}

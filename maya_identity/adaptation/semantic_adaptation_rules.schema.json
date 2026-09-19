@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://maya.identity.profiles/schemas/semantic_adaptation_rules.schema.json",
+  "title": "Maya Semantic Adaptation Rules",
+  "description": "Machine-readable modular ruleset: slang normalization, dialect detection, tone inference, mixed-language routing, cultural cue interpretation, persona-consistent output shaping. Every rule is deterministic and fail-closed.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "rulesets"],
+  "properties": {
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "rulesets": {
+      "type": "array",
+      "minItems": 6,
+      "items": { "$ref": "#/$defs/ruleset" }
+    }
+  },
+  "$defs": {
+    "moduleId": {
+      "type": "string",
+      "enum": ["culture", "dialect", "language", "shaping", "slang", "tone"]
+    },
+    "rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "rule", "condition", "action", "fallback", "deterministic", "priority"],
+      "properties": {
+        "id": { "type": "string", "minLength": 6, "maxLength": 16, "pattern": "^SA\\.[A-Z]{2}\\.[0-9]+$" },
+        "rule": { "type": "string", "minLength": 8, "maxLength": 200 },
+        "condition": { "type": "string", "minLength": 4, "maxLength": 200 },
+        "action": { "type": "string", "minLength": 4, "maxLength": 200 },
+        "fallback": { "type": "string", "minLength": 4, "maxLength": 200 },
+        "deterministic": { "const": true },
+        "priority": { "type": "integer", "minimum": 1, "maximum": 5 }
+      }
+    },
+    "ruleset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["module", "rules"],
+      "properties": {
+        "module": { "$ref": "#/$defs/moduleId" },
+        "rules": {
+          "type": "array",
+          "minItems": 3,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/rule" }
+        }
+      }
+    }
+  }
+}

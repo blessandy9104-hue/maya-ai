@@ -1,0 +1,185 @@
+{
+  "catalog_version": "1.0",
+  "currency": "abstract_index",
+  "persona_packages": [
+    {
+      "persona_id": "receptionist",
+      "product_name": "AI Receptionist",
+      "target_customers": [
+        "small businesses", "service professionals", "clinics and studios",
+        "event or venue operators"
+      ],
+      "value_proposition": "A first-contact assistant on your website that answers routine questions, points visitors to the right page, and never leaves a lead unanswered.",
+      "use_cases": [
+        "hours and directions", "appointment / booking routing",
+        "FAQ answering", "after-hours first contact"
+      ],
+      "tiers": [
+        { "id": "essentials", "one_time_index": 1.0, "recurring_monthly_multiplier": 0.0 },
+        { "id": "growth", "one_time_index": 1.6, "recurring_monthly_multiplier": 0.15 },
+        { "id": "premium", "one_time_index": 2.5, "recurring_monthly_multiplier": 0.4 }
+      ],
+      "ceiling": { "expression": 0.38, "viseme": 0.24, "micro": 0.008 },
+      "embedded_mode": "A"
+    },
+    {
+      "persona_id": "tutor",
+      "product_name": "AI Tutor",
+      "target_customers": [
+        "schools and academies", "course creators", "coaching practices",
+        "edtech startups"
+      ],
+      "value_proposition": "A patient explainer that walks learners through steps at their own pace, using adaptive teaching and a calm technical register.",
+      "use_cases": [
+        "step-by-step explanations", "practice guidance",
+        "course landing support", "revision Q&A on provided material"
+      ],
+      "tiers": [
+        { "id": "essentials", "one_time_index": 1.0, "recurring_monthly_multiplier": 0.0 },
+        { "id": "growth", "one_time_index": 1.7, "recurring_monthly_multiplier": 0.15 },
+        { "id": "premium", "one_time_index": 2.6, "recurring_monthly_multiplier": 0.4 }
+      ],
+      "ceiling": { "expression": 0.4, "viseme": 0.26, "micro": 0.009 },
+      "embedded_mode": "B"
+    },
+    {
+      "persona_id": "concierge",
+      "product_name": "AI Concierge",
+      "target_customers": [
+        "hotels and hospitality", "event planners", "membership clubs",
+        "affiliate / creator communities"
+      ],
+      "value_proposition": "A welcoming guide that recommends within provided offerings, confirms options, and keeps the tone warm without overpromising.",
+      "use_cases": [
+        "menu and offering guidance", "event agendas",
+        "local recommendations (from provided context)", "member helpdesk"
+      ],
+      "tiers": [
+        { "id": "essentials", "one_time_index": 1.0, "recurring_monthly_multiplier": 0.0 },
+        { "id": "growth", "one_time_index": 1.6, "recurring_monthly_multiplier": 0.18 },
+        { "id": "premium", "one_time_index": 2.5, "recurring_monthly_multiplier": 0.45 }
+      ],
+      "ceiling": { "expression": 0.35, "viseme": 0.2, "micro": 0.006 },
+      "embedded_mode": "B"
+    },
+    {
+      "persona_id": "sales_agent",
+      "product_name": "AI Sales Agent (Explainer)",
+      "target_customers": [
+        "product sellers", "service firms", "freelancers selling services",
+        "SaaS landing pages"
+      ],
+      "value_proposition": "A grounded explainer that clarifies your offers, answers prospect questions from provided material, and hands off interested visitors cleanly — it presents, it does not pressure.",
+      "use_cases": [
+        "pricing and feature questions", "qualification-style intake (provided lists)",
+        "demo scheduling routing", "objection FAQ from provided material"
+      ],
+      "tiers": [
+        { "id": "essentials", "one_time_index": 1.1, "recurring_monthly_multiplier": 0.0 },
+        { "id": "growth", "one_time_index": 1.8, "recurring_monthly_multiplier": 0.2 },
+        { "id": "premium", "one_time_index": 2.8, "recurring_monthly_multiplier": 0.5 }
+      ],
+      "ceiling": { "expression": 0.42, "viseme": 0.28, "micro": 0.01 },
+      "embedded_mode": "C"
+    },
+    {
+      "persona_id": "market_analyst",
+      "product_name": "Market Analyst Assistant (Interpretation Only)",
+      "target_customers": [
+        "trading-focused content sites", "finance bloggers", "chart-reading education sites",
+        "community research portals"
+      ],
+      "value_proposition": "An interpretive assistant that reads user-provided market data for pattern structure, trends, volatility, and risk zones — clearly labeled as interpretation, never as a trading signal or advice.",
+      "use_cases": [
+        "pattern interpretation of user-provided charts",
+        "indicator readings explained in plain language",
+        "volatility and risk-zone highlighting",
+        "structured interpretation objects for content embeds"
+      ],
+      "tiers": [
+        { "id": "essentials", "one_time_index": 1.2, "recurring_monthly_multiplier": 0.0 },
+        { "id": "growth", "one_time_index": 2.0, "recurring_monthly_multiplier": 0.2 },
+        { "id": "premium", "one_time_index": 3.0, "recurring_monthly_multiplier": 0.5 }
+      ],
+      "ceiling": { "expression": 0.25, "viseme": 0.12, "micro": 0.002 },
+      "embedded_mode": "B"
+    }
+  ],
+  "bundles": [
+    {
+      "id": "bundle_receptionist",
+      "persona_id": "receptionist",
+      "name": "Website + AI Receptionist",
+      "includes": ["accessibility-friendly marketing site", "AI Receptionist embed (Mode A)", "identity profile and persona config", "origin allowlist setup", "readiness verification and handover"],
+      "one_time": [
+        { "item": "site build", "kind": "one_time" },
+        { "item": "persona configuration", "kind": "one_time" }
+      ],
+      "recurring": [
+        { "item": "site hosting", "kind": "recurring" },
+        { "item": "support and content updates", "kind": "recurring" }
+      ],
+      "update_policy": "Routine content updates are part of the recurring plan; persona tweaks beyond an agreed allowance are quoted per request."
+    },
+    {
+      "id": "bundle_tutor",
+      "persona_id": "tutor",
+      "name": "Website + AI Tutor",
+      "includes": ["landing or course site", "AI Tutor embed (Mode B floating)", "teaching corpus wiring from provided material", "adaptive-profile configuration", "verification and lesson launch checklist"],
+      "one_time": [
+        { "item": "site build", "kind": "one_time" },
+        { "item": "corpus integration", "kind": "one_time" }
+      ],
+      "recurring": [
+        { "item": "site hosting", "kind": "recurring" },
+        { "item": "support and content updates", "kind": "recurring" }
+      ],
+      "update_policy": "Curriculum content updates are handled on the recurring plan; new lesson modules are quoted for the extra corpus work."
+    },
+    {
+      "id": "bundle_concierge",
+      "persona_id": "concierge",
+      "name": "Website + AI Concierge",
+      "includes": ["brand-focused website", "AI Concierge embed (Mode B)", "offerings database from provided context", "warm-language config with boundary rules", "verification and guest-facing launch"],
+      "one_time": [
+        { "item": "site build", "kind": "one_time" },
+        { "item": "offerings configuration", "kind": "one_time" }
+      ],
+      "recurring": [
+        { "item": "site hosting", "kind": "recurring" },
+        { "item": "offerings and support updates", "kind": "recurring" }
+      ],
+      "update_policy": "Menu and agenda updates ride the recurring plan; seasonal rebranding of the persona is quoted per request."
+    },
+    {
+      "id": "bundle_sales_agent",
+      "persona_id": "sales_agent",
+      "name": "Website + AI Sales Agent",
+      "includes": ["conversion-oriented landing site", "AI Sales Agent embed (Mode C full page)", "offer and pricing corpus wiring", "intake and handoff flow config", "compliance framing (presents, not advises)"],
+      "one_time": [
+        { "item": "site build", "kind": "one_time" },
+        { "item": "offer corpus integration", "kind": "one_time" }
+      ],
+      "recurring": [
+        { "item": "site hosting", "kind": "recurring" },
+        { "item": "support, offers and pricing updates", "kind": "recurring" }
+      ],
+      "update_policy": "Pricing and offer updates are recurring-plan items; new offer structures that change the corpus require a quoted integration pass."
+    },
+    {
+      "id": "bundle_market_analyst",
+      "persona_id": "market_analyst",
+      "name": "Website + Market Analyst Assistant",
+      "includes": ["content-style website for interpretation", "Market Analyst Assistant embed (Mode B)", "MPM configuration and instrument/timeframe presets", "disclaimer and compliance copy on site", "verification including financial-safety ruleset"],
+      "one_time": [
+        { "item": "site build", "kind": "one_time" },
+        { "item": "MPM + persona configuration", "kind": "one_time" }
+      ],
+      "recurring": [
+        { "item": "site hosting", "kind": "recurring" },
+        { "item": "interpretation-feed and support updates", "kind": "recurring" }
+      ],
+      "update_policy": "Interpretation presets and instrument lists update on the recurring plan; any change touching the financial-safety ruleset triggers re-verification and is quoted."
+    }
+  ]
+}

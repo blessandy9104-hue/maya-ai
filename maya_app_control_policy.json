@@ -1,0 +1,6 @@
+{
+  "owner_control_enabled": false,
+  "actions": {},
+  "max_launches_per_request": 1,
+  "launch_timeout_seconds": 5
+}

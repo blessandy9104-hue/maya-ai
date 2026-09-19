@@ -1,0 +1,191 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Maya Phase 7 isolation runtime implementation registry",
+  "description": "Implementation-ready configuration for the isolation runtime (the single remaining critical-path dependency). Enforces tenant, persona, identity, and sandbox boundaries; must pass the full-system audit before cloud/marketplace/API hosting opens. Consistent with the Isolation Manager spec (maya_runtime/isolation/*), the Tenant Isolation Contract (NS(t,k), F1-F10, J1-J9), and sandbox.py.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "blueprint_version", "milestone", "isolation_model",
+    "enforcement_engine", "runtime_architecture",
+    "integration_points", "verification_suite"
+  ],
+  "properties": {
+    "blueprint_version": { "const": "1.0" },
+    "milestone": { "const": "phase7" },
+    "isolation_model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tenant_unit", "namespace_def", "boundaries"],
+      "properties": {
+        "tenant_unit": { "const": "domain_level_namespace" },
+        "namespace_def": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["formula", "resource_kinds"],
+          "properties": {
+            "formula": { "pattern": "^NS\\(t,k\\)\\s*::\\s*/\\s*t\\s*/\\s*k\\s*/\\s*\\*$" },
+            "resource_kinds": {
+              "type": "array",
+              "minItems": 6,
+              "uniqueItems": true,
+              "items": { "enum": ["data", "logs", "policies", "brand", "outputs", "metadata"] }
+            }
+          }
+        },
+        "boundaries": {
+          "type": "array",
+          "minItems": 4,
+          "uniqueItems": true,
+          "items": { "enum": ["tenant_identity", "persona", "embed_config", "namespace"] }
+        }
+      }
+    },
+    "enforcement_engine": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["policy", "persona_isolation", "identity_isolation", "sandbox_enforcement", "message_validation"],
+      "properties": {
+        "policy": { "const": "deny_by_default" },
+        "persona_isolation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["tenant_scoped", "cross_tenant_denied", "core_shared_readonly"],
+          "properties": {
+            "tenant_scoped": { "const": true },
+            "cross_tenant_denied": { "const": true },
+            "core_shared_readonly": { "const": true }
+          }
+        },
+        "identity_isolation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["cored_never_serialized", "readonly_to_tenants", "fingerprint_only"],
+          "properties": {
+            "cored_never_serialized": { "const": true },
+            "readonly_to_tenants": { "const": true },
+            "fingerprint_only": { "const": true }
+          }
+        },
+        "sandbox_enforcement": {
+          "type": "array",
+          "minItems": 4,
+          "uniqueItems": true,
+          "items": { "enum": ["no_external_api", "no_account_access", "no_network_egress", "no_process_ipc", "surface_whitelist", "fail_closed"] }
+        },
+        "message_validation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["envelope", "direction_pairing", "exact_origin"],
+          "properties": {
+            "envelope": { "const": "postmessage_v1" },
+            "direction_pairing": { "const": true },
+            "exact_origin": { "const": true },
+            "allowed_types": {
+              "type": "array",
+              "minItems": 6,
+              "uniqueItems": true,
+              "items": { "enum": ["mount", "ready", "chat_in", "chat_out", "error", "status"] }
+            }
+          }
+        }
+      }
+    },
+    "runtime_architecture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["package", "modules", "coordinator", "registry", "validator", "audit_hooks", "deterministic_fallback"],
+      "properties": {
+        "package": { "const": "maya_runtime/isolation/" },
+        "modules": {
+          "type": "array",
+          "minItems": 8,
+          "uniqueItems": true,
+          "items": { "enum": ["__init__", "persona", "role", "tenant", "user", "tone", "identity", "multi"] }
+        },
+        "coordinator": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["role", "orders_guard_calls"],
+          "properties": {
+            "role": { "pattern": "^guard\\.(can|acquire|switch|record)$" },
+            "orders_guard_calls": { "const": true }
+          }
+        },
+        "registry": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["purpose", "namespaced"],
+          "properties": {
+            "purpose": { "pattern": "tenant|namespace|persona|role" },
+            "namespaced": { "const": true }
+          }
+        },
+        "validator": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["purpose", "deterministic"],
+          "properties": {
+            "purpose": { "pattern": "bound|quota|kill|drift|consent" },
+            "deterministic": { "const": true }
+          }
+        },
+        "audit_hooks": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["record_all", "redact_deny", "cored_never_logged", "anomaly_feed"],
+          "properties": {
+            "record_all": { "const": true },
+            "redact_deny": { "const": true },
+            "cored_never_logged": { "const": true },
+            "anomaly_feed": { "const": true }
+          }
+        },
+        "deterministic_fallback": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["fail_closed_deny", "neutral_output", "no_partial_state"],
+          "properties": {
+            "fail_closed_deny": { "const": true },
+            "neutral_output": { "const": true },
+            "no_partial_state": { "const": true }
+          }
+        }
+      }
+    },
+    "integration_points": {
+      "type": "array",
+      "minItems": 6,
+      "uniqueItems": true,
+      "items": { "enum": ["embed_runtime", "persona_loader", "identity_profile_loader", "cloud_runtime", "marketplace", "read_only_api"] }
+    },
+    "verification_suite": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["steps", "count", "audit_hook_checks", "regression", "boundary_groups"],
+      "properties": {
+        "steps": {
+          "type": "array",
+          "minItems": 12,
+          "maxItems": 12,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 3 }
+        },
+        "count": { "const": 12 },
+        "audit_hook_checks": { "const": true },
+        "regression": {
+          "type": "array",
+          "minItems": 3,
+          "uniqueItems": true,
+          "items": { "enum": ["parity_native_headless", "existing_sweep", "prior_impl_readiness"] }
+        },
+        "boundary_groups": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": { "enum": ["persona_boundary", "tenant_boundary", "sandbox_boundary"] }
+        }
+      }
+    }
+  }
+}

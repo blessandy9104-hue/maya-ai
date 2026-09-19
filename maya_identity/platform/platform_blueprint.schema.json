@@ -1,0 +1,249 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Maya Phase 6 platform blueprint registry",
+  "description": "Structured Phase-6 ecosystem configuration: platform core and boundaries, authority map, four ecosystems, platform services, multi-layer governance, abstract economics, and the six-part roadmap. Everything stays consistent with the Phase-5 scaling registry and the isolation-runtime critical-path gate.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "blueprint_version", "milestone", "platform_core",
+    "ecosystems", "services", "governance", "economics", "roadmap"
+  ],
+  "properties": {
+    "blueprint_version": { "const": "1.0" },
+    "milestone": { "const": "phase6" },
+    "platform_core": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["definition", "boundaries", "authority_map"],
+      "properties": {
+        "definition": { "type": "string", "minLength": 1 },
+        "boundaries": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["maya_is", "maya_is_not"],
+          "properties": {
+            "maya_is": {
+              "type": "array",
+              "minItems": 4,
+              "items": { "type": "string", "minLength": 1 }
+            },
+            "maya_is_not": {
+              "type": "array",
+              "minItems": 4,
+              "items": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "authority_map": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["runtime", "tenant", "creator", "founder"],
+          "properties": {
+            "runtime": { "$ref": "#/definitions/authority" },
+            "tenant": { "$ref": "#/definitions/authority" },
+            "creator": { "$ref": "#/definitions/authority" },
+            "founder": { "$ref": "#/definitions/authority" }
+          }
+        }
+      }
+    },
+    "ecosystems": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["creator", "business", "developer", "marketplace"],
+      "properties": {
+        "creator": { "$ref": "#/definitions/ecosystem" },
+        "business": { "$ref": "#/definitions/ecosystem" },
+        "developer": { "$ref": "#/definitions/ecosystem" },
+        "marketplace": { "$ref": "#/definitions/ecosystem" }
+      }
+    },
+    "services": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "studio", "marketplace", "cloud_runtime", "api", "kiosk", "embed_runtime"
+        ]
+      }
+    },
+    "governance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["layers", "verification_pipeline", "moderation_rules", "isolation_enforcement", "platform_ceilings"],
+      "properties": {
+        "layers": {
+          "type": "array",
+          "minItems": 3,
+          "uniqueItems": true,
+          "items": { "enum": ["runtime", "marketplace", "studio"] }
+        },
+        "verification_pipeline": {
+          "type": "array",
+          "minItems": 5,
+          "uniqueItems": true,
+          "items": { "enum": ["submit", "auto_verify", "founder_review", "approve", "list"] }
+        },
+        "moderation_rules": {
+          "type": "array",
+          "minItems": 5,
+          "items": { "$ref": "#/definitions/rule" }
+        },
+        "isolation_enforcement": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["post_implementation", "required_gates"],
+          "properties": {
+            "post_implementation": { "const": true },
+            "required_gates": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": { "enum": ["isolation_runtime_implemented", "audit_cleared"] }
+            }
+          }
+        },
+        "platform_ceilings": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["expression", "viseme", "micro", "anatomical"],
+          "properties": {
+            "expression": { "const": 0.5 },
+            "viseme": { "const": 0.35 },
+            "micro": { "const": 0.012 },
+            "anatomical": { "const": 0.8 }
+          }
+        }
+      }
+    },
+    "economics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["marketplace_split", "platform_fees", "creator_incentives", "founder_incentives", "scaling_economics"],
+      "properties": {
+        "marketplace_split": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["creator_share_index", "platform_share_index"],
+          "properties": {
+            "creator_share_index": { "type": "number", "exclusiveMinimum": 0, "maximum": 1 },
+            "platform_share_index": { "type": "number", "exclusiveMinimum": 0, "maximum": 1 }
+          }
+        },
+        "platform_fees": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["embed_rent_index", "cloud_tenant_index"],
+          "properties": {
+            "embed_rent_index": { "type": "number", "exclusiveMinimum": 0, "maximum": 0.5 },
+            "cloud_tenant_index": { "type": "number", "exclusiveMinimum": 0, "maximum": 0.5 }
+          }
+        },
+        "creator_incentives": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "founder_incentives": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "scaling_economics": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": { "$ref": "#/definitions/econ_tier" }
+        }
+      }
+    },
+    "roadmap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["phases"],
+      "properties": {
+        "phases": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "items": { "$ref": "#/definitions/platform_phase" }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["owns", "cannot"],
+      "properties": {
+        "owns": { "type": "string", "minLength": 1 },
+        "cannot": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "ecosystem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["actors", "surface", "guardrails"],
+      "properties": {
+        "actors": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "surface": { "type": "string", "minLength": 1 },
+        "guardrails": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "rule"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^MR\\d{2}$" },
+        "rule": { "type": "string", "minLength": 1 }
+      }
+    },
+    "econ_tier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tier", "tenants", "cost_scale", "revenue_index"],
+      "properties": {
+        "tier": { "type": "string", "minLength": 1 },
+        "tenants": { "type": "integer", "minimum": 1 },
+        "cost_scale": { "type": "number", "exclusiveMinimum": 0 },
+        "revenue_index": { "type": "number", "exclusiveMinimum": 0 }
+      }
+    },
+    "platform_phase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "gates", "kpis"],
+      "properties": {
+        "id": { "enum": ["6.1", "6.2", "6.3", "6.4", "6.5", "6.6"] },
+        "name": { "type": "string", "minLength": 1 },
+        "gates": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "kpis": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

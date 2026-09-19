@@ -1,0 +1,42 @@
+{
+  "schema_version": 2,
+  "source": "read-only cognitive state signals — the visual system never writes any cognitive state",
+  "inputs": {
+    "attention": { "min": 0, "max": 1, "kind": "weight", "target": "eye_focus", "weight": 0.6, "bias": 0.0 },
+    "focus": { "min": 0, "max": 1, "kind": "weight", "target": "eye_focus", "weight": 0.4, "bias": 0.0 },
+    "curiosity": { "min": 0, "max": 1, "kind": "weight", "target": "eye_focus", "weight": 0.15, "bias": 0.1 },
+    "cognitive_load": { "min": 0, "max": 1, "kind": "weight", "target": "neural_activity", "weight": 0.55, "bias": 0.0 },
+    "activity_pressure": { "min": 0, "max": 1, "kind": "weight", "target": "neural_activity", "weight": 0.35, "bias": 0.0 },
+    "search_depth": { "min": 0, "max": 1, "kind": "weight", "target": "particle_density", "weight": 0.5, "bias": 0.0 },
+    "novelty": { "min": 0, "max": 1, "kind": "weight", "target": "particle_density", "weight": 0.35, "bias": 0.0 },
+    "engagement": { "min": 0, "max": 1, "kind": "weight", "target": "glow_intensity", "weight": 0.5, "bias": 0.1 },
+    "confidence": { "min": 0, "max": 1, "kind": "weight", "target": "glow_intensity", "weight": 0.25, "bias": 0.0 },
+    "memory_retrieval": { "min": 0, "max": 1, "kind": "weight", "target": "micro", "weight": 0.5, "bias": 0.0 },
+    "strain": { "min": 0, "max": 1, "kind": "weight", "target": "distortion", "weight": 0.5, "bias": 0.0 },
+    "stimulation": { "min": 0, "max": 1, "kind": "weight", "target": "breath", "weight": 0.4, "bias": 0.1 }
+  },
+  "modulators": {
+    "eye_focus": { "max": 1.0 },
+    "neural_activity": { "max": 1.0 },
+    "particle_density": { "max": 1.0 },
+    "glow_intensity": { "max": 1.0 },
+    "micro": { "max": 1.0 },
+    "breath": { "max": 1.0 },
+    "distortion": { "max": 0.6 }
+  },
+  "behavior_fields": ["gaze_x", "gaze_y", "symbol_mode"],
+  "activity_key": "activity",
+  "fallback": {
+    "eye_focus": 0.4,
+    "neural_activity": 0.35,
+    "particle_density": 0.45,
+    "glow_intensity": 0.5,
+    "micro": 0.0,
+    "breath": 0.5,
+    "distortion": 0.0,
+    "gaze_x": 0.0,
+    "gaze_y": 0.0,
+    "symbol_mode": "none"
+  },
+  "note": "Pure read-only mapping. The interpreter never writes state and never touches non-visual systems."
+}

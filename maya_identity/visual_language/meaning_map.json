@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "map": {
+    "idle": "calm",
+    "listening": "attentive",
+    "searching": "exploration",
+    "solving": "convergence",
+    "learning": "expansion",
+    "recalling": "illumination",
+    "analyzing": "structure",
+    "creating": "flow",
+    "warning": "redirection",
+    "processing": "flow",
+    "research": "exploration",
+    "communication": "flow",
+    "knowledge": "illumination",
+    "memory_access": "illumination"
+  },
+  "meaning": {
+    "convergence": "Maya is organizing scattered information into a coherent solution.",
+    "exploration": "Maya is spreading attention outward to discover new connections.",
+    "expansion": "New neural structures are growing and integrating.",
+    "illumination": "Old memory pathways are being relit and reconnected.",
+    "redirection": "Attention is being redirected; the pattern signals a warning.",
+    "structure": "An idea is being organized into form.",
+    "attentive": "Maya is focused and listening closely.",
+    "flow": "A creative current is moving through the field.",
+    "calm": "Steady, balanced presence."
+  }
+}

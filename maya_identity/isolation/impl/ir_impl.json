@@ -1,0 +1,125 @@
+{
+  "blueprint_version": "1.0",
+  "milestone": "phase7_impl",
+  "ir_definition": {
+    "purpose": "The implementation-ready isolation runtime that enforces every MUS boundary, making isolation the concrete fail-closed guard around every tenant, persona, identity, message, and surface. It is the final missing component required for platform launch: with it, multi-tenant cloud, marketplace, and API surfaces can open; without it, the platform stays gated.",
+    "enforcement": "deny_by_default",
+    "mus_boundary_order": ["safety", "isolation", "legal", "business", "operator", "founder"]
+  },
+  "isolation_surfaces": [
+    "persona", "tenant", "creator", "marketplace", "cloud_runtime", "api", "embed_runtime"
+  ],
+  "isolation_rules": {
+    "message_validation": ["postmessage_v1_envelope", "allowed_types", "exact_origin", "direction_pairing", "size_limit_16k"],
+    "identity_sealing": {
+      "cored_never_serialized": true,
+      "readonly_to_tenants": true,
+      "fingerprint_only": true
+    },
+    "persona_sealing": {
+      "tenant_scoped": true,
+      "cross_tenant_denied": true,
+      "core_shared_readonly": true
+    },
+    "tenant_sealing": {
+      "namespaces_disjoint": true,
+      "no_cross_tenant_read": true,
+      "no_cross_tenant_write": true
+    },
+    "namespace_sealing": {
+      "formula": "NS(t,k) :: /t/k/*",
+      "resource_kinds": ["data", "logs", "policies", "brand", "outputs", "metadata"]
+    },
+    "cross_tenant_denial": true,
+    "cross_persona_denial": true,
+    "cross_identity_denial": {
+      "identity_thread_bound": true,
+      "no_identity_splice": true
+    },
+    "fail_closed": true
+  },
+  "ir_architecture": {
+    "validator": {
+      "checks": ["bound", "quota", "kill_switch", "drift", "consent"],
+      "deterministic": true
+    },
+    "router": {
+      "declarative": true,
+      "boundary_ordered": true,
+      "no_escape": true
+    },
+    "executor": {
+      "isolation_guarded": true,
+      "operator_bound": true,
+      "namespaced": true
+    },
+    "audit_hooks": {
+      "record_all": true,
+      "redact_deny": true,
+      "cored_never_logged": true,
+      "anomaly_feed": true
+    },
+    "fallback": {
+      "deny": { "fail_closed": true, "neutral_output": true, "no_partial_state": true },
+      "retry_bounded": { "bounded": true, "cooldown_on_escalate": true, "deterministic": true },
+      "escalate_founder": { "legal_to_founder": true, "business_to_founder": true, "ambiguous_to_founder": true }
+    }
+  },
+  "integration_points": {
+    "runtime": "guard_orders_calls",
+    "persona_engine": "tenant_scoped_seal",
+    "operator_engine": "executor_bound",
+    "command_system": "isolation_integration_deny_by_default",
+    "aol_loops": "isolation_guarded_executor",
+    "platform_surfaces": ["studio", "marketplace", "cloud_runtime", "api"],
+    "mus_reference": "authoritative"
+  },
+  "safety_boundaries": {
+    "legal": ["contracts", "payments", "liabilities"],
+    "business": ["pricing", "negotiation"],
+    "safety": ["financial", "medical", "legal"],
+    "operator_only": "nonlegal_nonfinancial",
+    "founder_only": "legal_business_go_no_go",
+    "isolation_ceilings": "CHANNEL_MAX"
+  },
+  "ir_roadmap": {
+    "stages": [
+      {
+        "id": "7.1",
+        "name": "isolation_rules",
+        "gates": ["all_nine_rules_implemented", "rules_verification_suite"],
+        "kpis": ["rules_coverage", "rules_verification_pass"]
+      },
+      {
+        "id": "7.2",
+        "name": "isolation_validator",
+        "gates": ["validator_deterministic", "bound_quota_kill_drift_consent_checks_live"],
+        "kpis": ["validator_determinism", "bound_check_pass_rate"]
+      },
+      {
+        "id": "7.3",
+        "name": "isolation_router",
+        "gates": ["router_declarative", "boundary_ordered_routing", "no_escape_verified"],
+        "kpis": ["route_correctness", "escape_attempts_blocked"]
+      },
+      {
+        "id": "7.4",
+        "name": "isolation_executor",
+        "gates": ["executor_isolation_guarded", "executor_operator_bound", "namespaced_execution"],
+        "kpis": ["executor_guard_rate", "cross_tenant_leaks"]
+      },
+      {
+        "id": "7.5",
+        "name": "platform_integration",
+        "gates": ["all_seven_surfaces_wired", "mus_boundary_order_enforced", "parity_native_headless"],
+        "kpis": ["surface_integration_coverage", "boundary_order_violations"]
+      },
+      {
+        "id": "7.6",
+        "name": "launch_gate",
+        "gates": ["re_audit_clean", "isolation_ceilings_match_channel_max", "platform_launch_authorized"],
+        "kpis": ["reaudit_pass", "multi_tenant_readiness", "isolation_ceiling_consistency"]
+      }
+    ]
+  }
+}

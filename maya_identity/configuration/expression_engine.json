@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "engine": "real-time expression engine",
+  "identity_policy": "Expressions are transformations of the same canonical geometry. Identity files are never written by this engine.",
+  "gaze": { "enabled": true },
+  "micro_expression": { "enabled": true },
+  "breathing": { "enabled": true },
+  "neural_motion": { "enabled": true },
+  "eye_movement": { "enabled": true },
+  "subtle_facial_changes": { "enabled": true },
+  "holographic_distortion": { "enabled": true },
+  "frame_ms": 60,
+  "blend": {
+    "eye_focus": "max",
+    "neural_activity": "max",
+    "particle_density": "max",
+    "glow_intensity": "max"
+  },
+  "note": "Toggles drive the procedural engine's per-frame transforms. maya_app.py never contains animation logic."
+}

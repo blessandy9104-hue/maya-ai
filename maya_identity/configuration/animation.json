@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "capabilities": {
+    "blink": false,
+    "breath": false,
+    "gaze": false,
+    "micro_expression": false,
+    "voice_sync": false,
+    "microphone": false,
+    "webcam": false
+  },
+  "states": {
+    "awake": {"glow": "active", "movement": "subtle"},
+    "processing": {"glow": "focused", "movement": "neural"},
+    "listening": {"glow": "attentive", "movement": "attentive"},
+    "research": {"glow": "focused", "movement": "analytical"},
+    "sleeping": {"glow": "dim", "movement": "reduced"},
+    "offline": {"glow": "none", "movement": "none"}
+  },
+  "future_behavior": {
+    "blink_rate": "natural",
+    "breathing": true,
+    "eye_tracking": false,
+    "voice_sync": false
+  },
+  "hooks": {
+    "comment": "Phase-1 architecture only. Complex animation is controlled here, never hardcoded in the GUI. Populate these as capabilities become available."
+  },
+  "blink": { "enabled": false, "future_support": true },
+  "breathing": { "enabled": false, "future_support": true },
+  "eye_tracking": { "enabled": false },
+  "voice_sync": { "enabled": false },
+  "gaze": { "enabled": false, "future_support": true },
+  "micro_expressions": { "enabled": false, "future_support": true },
+  "neural_motion": { "enabled": true },
+  "procedural_rendering": {
+    "engine": "maya_identity.renderer.hologram_renderer",
+    "frame_ms": 80,
+    "note": "The procedural visual engine animates Maya's face. Every behaviour is enabled here, never hardcoded in the GUI. The engine draws from geometry/ and expressions/ and never modifies identity."
+  }
+}

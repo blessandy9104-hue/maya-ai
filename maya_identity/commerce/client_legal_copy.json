@@ -1,0 +1,67 @@
+{
+  "copy_version": "1.0",
+  "standard_disclaimer": "Maya is an AI assistant that runs on this website. It is not a human employee, and it is not a licensed professional. Responses do not constitute legal, medical, or financial advice, and no outcome is guaranteed. You are responsible for any decision you make based on this assistant.",
+  "market_analyst_disclaimer": "The Market Analyst Assistant provides market-pattern interpretation only. It is not financial advice, not a trading bot, and does not execute trades or take action with any account. It does not predict future prices and makes no promise of profit. Markets are uncertain, and all decisions remain your responsibility.",
+  "contract_clauses": [
+    {
+      "id": "scope_of_service",
+      "title": "Scope of service",
+      "text": "The provider builds a website and deploys the agreed Maya persona via the universal embed runtime. The assistant answers from the site's provided context only; the provider does not sell algorithmic trading, managed portfolios, or decision-making systems."
+    },
+    {
+      "id": "no_professional_advice",
+      "title": "No professional advice",
+      "text": "The deployed assistant is not a human professional. It does not provide legal, medical, tax, or financial advice, and must not be relied upon as such."
+    },
+    {
+      "id": "no_guaranteed_outcomes",
+      "title": "No guaranteed outcomes",
+      "text": "No sales, placement, enrollment, or return is guaranteed. The assistant improves answering consistency, not business results."
+    },
+    {
+      "id": "data_handling",
+      "title": "Data handling",
+      "text": "The embed operates memory-only: no persistent storage, no cross-session memory, no account access, and no outbound data egress. No personal data leaves the configured surface."
+    },
+    {
+      "id": "no_automated_decisions",
+      "title": "No automated decisions",
+      "text": "The assistant makes no automated decisions affecting the client's business or users and gives no advice with legal effect. It interprets and responds within its configured persona only."
+    },
+    {
+      "id": "liability",
+      "title": "Liability",
+      "text": "The provider's liability is limited to the fees paid for the previous twelve months. The provider is not liable for decisions made by the client or users based on assistant responses."
+    },
+    {
+      "id": "updates_and_maintenance",
+      "title": "Updates and maintenance",
+      "text": "Content updates, persona tweaks within the agreed allowance, and hosting are provided on the recurring plan. Changes to the financial-safety ruleset (where applicable) require re-verification and may be quoted."
+    },
+    {
+      "id": "termination",
+      "title": "Termination",
+      "text": "Either party may terminate with thirty days' notice. On termination, the embed is withdrawn from the site and the client retains the website assets; persona profiles remain provider property."
+    },
+    {
+      "id": "intellectual_property",
+      "title": "Intellectual property",
+      "text": "The client owns the content of their website. The provider owns the Maya runtime, persona profiles, and embed tooling. No license beyond deploying the embed on the client's domains is granted."
+    }
+  ],
+  "landing_page": {
+    "headline": "Websites with AI staff — built, deployed, and ready to greet your visitors.",
+    "value_bullets": [
+      "Choose the assistant for your business: receptionist, tutor, concierge, sales explainer, or market-pattern analyst.",
+      "Static-host friendly universal embed — works on any website, no backend for you.",
+      "Private by design: memory-only sessions, no account access, no external data egress."
+    ],
+    "trust_props": [
+      "Deterministic, bounded responses within verified personas",
+      "Interpretation-only market analyst (never a trading bot)",
+      "Readiness-verified before any public launch"
+    ],
+    "cta": "Start with one assistant on your site, then grow your AI team.",
+    "footer_disclaimer": "Maya assistants are AI, not human staff and not licensed professionals. Responses are not legal, medical, or financial advice, and no outcomes are guaranteed."
+  }
+}

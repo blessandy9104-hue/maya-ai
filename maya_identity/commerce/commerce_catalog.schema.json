@@ -1,0 +1,118 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Maya commercialization catalog — persona packages and website bundles",
+  "description": "Service catalog for the solo-founder commercialization of Maya. Pricing is currency-agnostic: tiers are expressed as one-time and recurring indices (multipliers of an internal base). Ceilings reference the persona training/MPM registries (single source of truth), so the catalog can be cross-checked against CHANNEL_MAX.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["catalog_version", "currency", "persona_packages", "bundles"],
+  "properties": {
+    "catalog_version": { "const": "1.0" },
+    "currency": { "const": "abstract_index" },
+    "persona_packages": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "items": { "$ref": "#/definitions/persona_package" }
+    },
+    "bundles": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "items": { "$ref": "#/definitions/bundle" }
+    }
+  },
+  "definitions": {
+    "tier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "one_time_index", "recurring_monthly_multiplier"],
+      "properties": {
+        "id": {
+          "enum": ["essentials", "growth", "premium"]
+        },
+        "one_time_index": { "type": "number", "exclusiveMinimum": 0 },
+        "recurring_monthly_multiplier": { "type": "number", "minimum": 0 }
+      }
+    },
+    "persona_package": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["persona_id", "product_name", "target_customers", "value_proposition", "use_cases", "tiers", "ceiling", "embedded_mode"],
+      "properties": {
+        "persona_id": {
+          "enum": ["receptionist", "tutor", "concierge", "sales_agent", "market_analyst"]
+        },
+        "product_name": { "type": "string", "minLength": 1 },
+        "target_customers": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "value_proposition": { "type": "string", "minLength": 1 },
+        "use_cases": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "tiers": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": { "$ref": "#/definitions/tier" }
+        },
+        "ceiling": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["expression", "viseme", "micro"],
+          "properties": {
+            "expression": { "type": "number", "minimum": 0, "maximum": 0.5 },
+            "viseme": { "type": "number", "minimum": 0, "maximum": 0.35 },
+            "micro": { "type": "number", "minimum": 0, "maximum": 0.012 }
+          }
+        },
+        "embedded_mode": { "enum": ["A", "B", "C"] }
+      }
+    },
+    "bundle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "persona_id", "name", "includes", "one_time", "recurring", "update_policy"],
+      "properties": {
+        "id": {
+          "enum": ["bundle_receptionist", "bundle_tutor", "bundle_concierge", "bundle_sales_agent", "bundle_market_analyst"]
+        },
+        "persona_id": {
+          "enum": ["receptionist", "tutor", "concierge", "sales_agent", "market_analyst"]
+        },
+        "name": { "type": "string", "minLength": 1 },
+        "includes": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "one_time": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/definitions/component_kind" }
+        },
+        "recurring": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/definitions/component_kind" }
+        },
+        "update_policy": { "type": "string", "minLength": 1 }
+      }
+    },
+    "component_kind": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["item", "kind"],
+      "properties": {
+        "item": { "type": "string", "minLength": 1 },
+        "kind": { "enum": ["one_time", "recurring"] }
+      }
+    }
+  }
+}

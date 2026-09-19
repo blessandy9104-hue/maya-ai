@@ -1,0 +1,11 @@
+{
+  "version": "MSG.v1",
+  "direction": "to_maya",
+  "type": "maya:mount",
+  "session_id": "webrt_site_0001",
+  "payload": {
+    "mode": "A",
+    "persona": "receptionist",
+    "surface": "iframe_embed"
+  }
+}

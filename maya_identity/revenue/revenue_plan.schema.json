@@ -1,0 +1,190 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Maya Phase 10 monetization and client acquisition revenue registry",
+  "description": "Implementation-ready revenue-engine configuration. Phase 8 platform launched, Phase 9 operator mode active. A solo founder (ThinkPad) runs a repeatable, scalable revenue engine. ALL pricing is abstract tier-index (indices and ratios, no currency literals); conversion to real prices is founder-defined and scoped out of the machine-readable registry. Consistent with the Phase-5 commercial catalog (5 personas, bundle structure, abstract_index currency).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "blueprint_version", "milestone", "monetization_architecture",
+    "offer_system", "acquisition_engine", "sales_workflow",
+    "revenue_loops", "scaling_economics", "phase10_roadmap"
+  ],
+  "properties": {
+    "blueprint_version": { "const": "1.0" },
+    "milestone": { "const": "phase10" },
+    "monetization_architecture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pricing_model", "conversion", "components"],
+      "properties": {
+        "pricing_model": { "const": "unified_tier_index" },
+        "conversion": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["founder_defined", "in_repo", "method"],
+          "properties": {
+            "founder_defined": { "const": true },
+            "in_repo": { "const": false },
+            "method": { "type": "string", "minLength": 1 }
+          }
+        },
+        "components": {
+          "type": "array",
+          "minItems": 4,
+          "uniqueItems": true,
+          "items": { "enum": ["persona_pricing", "bundle_pricing", "platform_pricing", "one_time", "recurring"] }
+        }
+      }
+    },
+    "offer_system": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["core_offers", "persona_offers", "bundle_offers", "kiosk_offer", "cloud_tenant_offer", "marketplace_creator_offer", "total"],
+      "properties": {
+        "core_offers": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": { "enum": ["starter", "standard", "premium"] }
+        },
+        "persona_offers": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "uniqueItems": true,
+          "items": { "enum": ["receptionist", "tutor", "concierge", "sales_agent", "market_analyst"] }
+        },
+        "bundle_offers": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "kiosk_offer": { "const": true },
+        "cloud_tenant_offer": { "const": true },
+        "marketplace_creator_offer": { "const": true },
+        "total": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["count"],
+          "properties": {
+            "count": { "const": 14 }
+          }
+        }
+      }
+    },
+    "acquisition_engine": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["outreach", "messaging", "workflow", "referral", "positioning"],
+      "properties": {
+        "outreach": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "messaging": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["non_salesy", "tone"],
+          "properties": {
+            "non_salesy": { "const": true },
+            "tone": { "type": "string", "minLength": 1 }
+          }
+        },
+        "workflow": {
+          "type": "array",
+          "minItems": 3,
+          "uniqueItems": true,
+          "items": { "enum": ["pilot", "diversification", "scaling"] }
+        },
+        "referral": { "const": true },
+        "positioning": { "const": "websites_with_ai_staff" }
+      }
+    },
+    "sales_workflow": {
+      "type": "array",
+      "minItems": 6,
+      "items": { "enum": ["intake", "requirements", "persona_selection", "proposal", "deployment", "payment"] }
+    },
+    "revenue_loops": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "items": { "enum": ["one_time", "recurring", "marketplace", "cloud_runtime", "kiosk"] }
+    },
+    "scaling_economics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tiers", "capacity_rules", "automation_leverage", "leverage_curve"],
+      "properties": {
+        "tiers": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": { "$ref": "#/definitions/revenue_tier" }
+        },
+        "capacity_rules": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "automation_leverage": { "type": "string", "minLength": 1 },
+        "leverage_curve": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "type": "number", "exclusiveMinimum": 0 }
+        }
+      }
+    },
+    "phase10_roadmap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stages"],
+      "properties": {
+        "stages": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "items": { "$ref": "#/definitions/revenue_stage" }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "revenue_tier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tier", "clients", "cost_index", "revenue_index"],
+      "properties": {
+        "tier": { "type": "string", "minLength": 1 },
+        "clients": { "type": "integer", "minimum": 1 },
+        "cost_index": { "type": "number", "exclusiveMinimum": 0 },
+        "revenue_index": { "type": "number", "exclusiveMinimum": 0 }
+      }
+    },
+    "revenue_stage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "gates", "kpis"],
+      "properties": {
+        "id": { "enum": ["10.1", "10.2", "10.3", "10.4", "10.5"] },
+        "name": { "type": "string", "minLength": 1 },
+        "gates": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "kpis": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

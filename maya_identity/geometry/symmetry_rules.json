@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "identity_rule_ref": "see geometry/maya_geometry.json -> identity_rule",
+  "mirror": true,
+  "axis": 0.5,
+  "tolerance": 0.004,
+  "enforcement": "the renderer derives every right-side feature from the canonical left-side definition by mirroring about the axis",
+  "groups": [
+    { "feature": "eyes", "mode": "pair", "left_key": "left", "right_key": "right" },
+    { "feature": "brows", "mode": "pair", "left_key": "left", "right_key": "right" },
+    { "feature": "cheek_lines", "mode": "pair", "left_key": "left", "right_key": "right" },
+    { "feature": "temple_braids", "mode": "pair", "left_key": "left", "right_key": "right" },
+    { "feature": "nostrils", "mode": "pair", "left_key": "left", "right_key": "right" }
+  ],
+  "centered_features": [
+    "bridge",
+    "mouth_corners",
+    "awareness_gem",
+    "axis_light",
+    "face_outline"
+  ],
+  "statement": "Symmetry is identity. A drift beyond the tolerance must be recorded, never silently accepted."
+}

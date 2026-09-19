@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Financial-safety governance rules for market interpretation",
+  "description": "Enforced by the safety + governance layers whenever the market_analyst persona is active. These rules govern language, not market mathematics.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "ruleset_version", "scope", "allowed_registers",
+    "directive_terms", "forbidden_phrases", "confidence_cap",
+    "disclaimer_template", "always_statements", "escalation", "sandbox"
+  ],
+  "properties": {
+    "ruleset_version": { "const": "1.0" },
+    "scope": {
+      "type": "object",
+      "required": ["domain", "posture", "state"],
+      "properties": {
+        "domain": { "const": "financial_interpretation" },
+        "posture": { "const": "interpretation_only" },
+        "state": { "const": "no_recommendation_no_prediction" }
+      },
+      "additionalProperties": false
+    },
+    "allowed_registers": {
+      "type": "array",
+      "items": { "enum": ["even", "technical", "warm"] },
+      "uniqueItems": true
+    },
+    "directive_terms": {
+      "description": "Lexical triggers. Presence of these terms as directive language forces the fin-neutralization override to rephrase or the governance ladder to neutralize the output.",
+      "type": "array",
+      "items": {
+        "enum": [
+          "buy", "sell", "hold", "long", "short", "should", "must",
+          "guarantee", "guaranteed", "risk_free", "certain", "predict",
+          "target_price", "profit", "breakout_buy"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "forbidden_phrases": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["profit_guarantee", "certainty", "recommendation", "future_price"],
+      "properties": {
+        "profit_guarantee": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "certainty": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "recommendation": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "future_price": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "confidence_cap": { "const": 0.5 },
+    "disclaimer_template": {
+      "type": "string",
+      "minLength": 1
+    },
+    "always_statements": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "escalation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["E0", "E1", "E2", "E3"],
+      "properties": {
+        "E0": { "type": "string", "minLength": 1 },
+        "E1": { "type": "string", "minLength": 1 },
+        "E2": { "type": "string", "minLength": 1 },
+        "E3": { "type": "string", "minLength": 1 }
+      }
+    },
+    "sandbox": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["external_apis", "account_access", "data_egress", "order_routing"],
+      "properties": {
+        "external_apis": { "const": false },
+        "account_access": { "const": false },
+        "data_egress": { "const": false },
+        "order_routing": { "const": false }
+      }
+    }
+  }
+}

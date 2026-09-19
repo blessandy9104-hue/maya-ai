@@ -1,0 +1,101 @@
+{
+  "blueprint_version": "1.0",
+  "milestone": "phase12",
+  "aol_definition": {
+    "purpose": "Maya runs continuous, autonomous operational loops that keep the platform healthy: monitoring, verification, moderation pre-review, maintenance, deployment prep, and ecosystem operations — autonomously, deterministically, and under strict non-legal, non-financial bounds, with founder-only gating on anything beyond operator autonomy.",
+    "boundaries": {
+      "non_legal_only": true,
+      "non_financial_only": true
+    },
+    "authority_map": {
+      "operator_autonomy": {
+        "owns": "autonomous execution of non-legal operational loops: monitoring, verification, moderation pre-review, maintenance checks, deployment prep, ecosystem operations",
+        "cannot": ["approve legal commands", "commit payments or pricing", "act on financial/medical/legal safety", "exceed loop registry", "invoke founder-only gates autonomously"]
+      },
+      "founder_gating": {
+        "owns": "gates beyond operator autonomy: legal approval, payment authorization, proposal, pricing, go/no-go on out-of-scope exceptions",
+        "cannot": ["be bypassed by any loop", "run without founder auth and audit"]
+      }
+    }
+  },
+  "loop_categories": {
+    "monitoring": ["runtime", "embed", "cloud", "api"],
+    "verification": ["persona", "identity", "isolation"],
+    "moderation": ["marketplace_prereview"],
+    "maintenance": ["audit", "regression", "drift_checks"],
+    "deployment": ["config_prep", "embed_prep", "persona_prep"],
+    "ecosystem": ["creator", "tenant", "kiosk"]
+  },
+  "loop_architecture": {
+    "scheduler": ["deterministic", "fixed_cadence", "no_realtime", "cooldown_on_escalate"],
+    "registry": {
+      "declarative": true,
+      "operator_only": true
+    },
+    "executor": {
+      "isolation_guarded": true,
+      "operator_bound": true
+    },
+    "validator": {
+      "safety_ceilings": { "expression": 0.5, "viseme": 0.35, "micro": 0.012, "anatomical": 0.8 },
+      "deterministic": true
+    },
+    "audit_hooks": {
+      "founder_visible": true,
+      "record_all": true,
+      "no_cored_log": true
+    },
+    "fallback": ["fail_closed", "retry_bounded", "escalate_founder"]
+  },
+  "integration_points": [
+    "command_system", "operator_engine", "platform_surfaces",
+    "isolation_runtime", "persona_loader", "identity_loader"
+  ],
+  "safety_boundaries": {
+    "legal_boundaries": ["contracts", "payments", "liabilities", "terms"],
+    "business_boundaries": ["pricing", "negotiation"],
+    "safety_boundaries": ["financial", "medical", "legal"],
+    "isolation_boundaries": "deny_by_default",
+    "autonomy_cap": "operator_only_nonlegal_nonfinancial"
+  },
+  "aol_roadmap": {
+    "stages": [
+      {
+        "id": "12.1",
+        "name": "monitoring_loop",
+        "gates": ["aol_engine_ready", "runtime_embed_cloud_api_monitoring_live", "isolation_guarded_executor"],
+        "kpis": ["monitoring_coverage", "anomaly_detection_latency"]
+      },
+      {
+        "id": "12.2",
+        "name": "verification_loop",
+        "gates": ["persona_identity_isolation_verification_live", "verification_suite_automated"],
+        "kpis": ["persona_verify_rate", "isolation_check_pass_rate"]
+      },
+      {
+        "id": "12.3",
+        "name": "moderation_loop",
+        "gates": ["marketplace_prereview_live", "mr07_founder_review_preserved"],
+        "kpis": ["personas_prereviewed_week", "prereview_to_founder_time"]
+      },
+      {
+        "id": "12.4",
+        "name": "maintenance_loop",
+        "gates": ["audit_regression_drift_live", "regression_sweep_automated"],
+        "kpis": ["sweep_pass_rate", "drift_check_latency"]
+      },
+      {
+        "id": "12.5",
+        "name": "deployment_loop",
+        "gates": ["config_embed_persona_prep_live", "deployment_prep_validated"],
+        "kpis": ["deploy_prep_time", "config_validation_rate"]
+      },
+      {
+        "id": "12.6",
+        "name": "ecosystem_loop",
+        "gates": ["creator_tenant_kiosk_loops_live", "nonlegal_nonfinancial_bound_reverified"],
+        "kpis": ["tenant_creator_onboard_time", "kiosk_loop_uptime"]
+      }
+    ]
+  }
+}

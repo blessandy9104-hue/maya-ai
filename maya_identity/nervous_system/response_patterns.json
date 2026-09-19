@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "default": "idle",
+  "patterns": {
+    "idle": { "symbol_mode": "none", "eye_focus": 0.3, "neural_activity": 0.3, "particle_density": 0.4, "glow_intensity": 0.45 },
+    "listening": { "symbol_mode": "attentive", "eye_focus": 0.85, "neural_activity": 0.5, "particle_density": 0.6, "glow_intensity": 0.7 },
+    "solving": { "symbol_mode": "convergence", "eye_focus": 0.8, "neural_activity": 0.9, "particle_density": 0.7, "glow_intensity": 0.75 },
+    "searching": { "symbol_mode": "exploration", "eye_focus": 0.75, "neural_activity": 0.8, "particle_density": 0.9, "glow_intensity": 0.7 },
+    "learning": { "symbol_mode": "expansion", "eye_focus": 0.8, "neural_activity": 0.9, "particle_density": 0.75, "glow_intensity": 0.9 },
+    "analyzing": { "symbol_mode": "structure", "eye_focus": 0.9, "neural_activity": 0.8, "particle_density": 0.65, "glow_intensity": 0.7 },
+    "recalling": { "symbol_mode": "illumination", "eye_focus": 0.7, "neural_activity": 0.6, "particle_density": 0.5, "glow_intensity": 0.8 },
+    "creating": { "symbol_mode": "flow", "eye_focus": 0.7, "neural_activity": 0.85, "particle_density": 0.8, "glow_intensity": 0.85 },
+    "warning": { "symbol_mode": "redirection", "eye_focus": 0.95, "neural_activity": 0.95, "particle_density": 0.5, "glow_intensity": 0.6 },
+    "processing": { "symbol_mode": "flow", "eye_focus": 0.6, "neural_activity": 0.85, "particle_density": 0.8, "glow_intensity": 0.8 },
+    "research": { "symbol_mode": "exploration", "eye_focus": 0.8, "neural_activity": 0.8, "particle_density": 0.85, "glow_intensity": 0.75 }
+  },
+  "note": "Response patterns translate an activity into a visual command baseline. Patterns never touch identity files."
+}

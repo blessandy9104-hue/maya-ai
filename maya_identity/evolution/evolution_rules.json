@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "allowed": [
+    "smoother_animation",
+    "better_expressions",
+    "improved_rendering",
+    "additional_symbols",
+    "richer_effects"
+  ],
+  "forbidden": [
+    "changing_canonical_geometry",
+    "changing_identity_structure",
+    "random_redesign",
+    "replacing_appearance"
+  ],
+  "requirements": ["version", "reason", "timestamp", "validation"],
+  "protected_paths": ["geometry/", "identity.json"],
+  "record_target": "metadata/identity_versions.jsonl",
+  "policy": "Every recorded identity change must carry a version, reason, timestamp and validation state. Geometry/ and identity.json are protected and are never auto-changed by the evolution system."
+}

@@ -1,0 +1,111 @@
+{
+  "blueprint_version": "1.0",
+  "milestone": "phase13",
+  "mus_definition": {
+    "purpose": "A single, authoritative Maya Unified Specification consolidating all prior phases (1-12) into one reference: twelve systems, six boundary groups, consolidated ceilings, seven schemas, unified tier-index pricing, and Founder Console integration — so every surface, boundary, and ceiling is defined once and consistently.",
+    "consolidation_scope": "phases_1_to_12",
+    "authority_map": {
+      "founder_only": {
+        "owns": "legal authority, contract approval, payment authorization, pricing, negotiation, go/no-go, final marketplace approval",
+        "cannot": ["delegate legal authority", "be bypassed by any loop or command", "skip audit"]
+      },
+      "operator_only": {
+        "owns": "non-legal, non-financial operational execution: onboarding, setup, deployment prep, monitoring, verification, moderation pre-review, maintenance",
+        "cannot": ["approve legal", "commit payments or pricing", "act on financial/medical/legal safety", "exceed ceilings or scope"]
+      },
+      "platform_only": {
+        "owns": "the deterministic shared runtime, ceilings, marketplace governance, and tenant-boundary enforcement",
+        "cannot": ["grant legal authority", "alter per-tenant boundaries at will", "exceed platform ceilings"]
+      }
+    }
+  },
+  "system_consolidation": [
+    "runtime", "isolation_runtime", "persona_system", "embed_runtime",
+    "cloud_runtime", "marketplace", "studio", "api", "kiosk",
+    "operator_engine", "command_system", "aol_loops"
+  ],
+  "boundary_consolidation": {
+    "legal": ["contracts", "payments", "liabilities", "terms"],
+    "business": ["pricing", "negotiation"],
+    "safety": ["financial", "medical", "legal"],
+    "isolation": "deny_by_default",
+    "operator_only": "nonlegal_nonfinancial",
+    "founder_only": "legal_business_go_no_go"
+  },
+  "ceiling_consolidation": {
+    "channel_max": { "expression": 0.5, "viseme": 0.35, "micro": 0.012, "anatomical": 0.8 },
+    "persona_ceilings": {
+      "receptionist": { "expression": 0.38, "viseme": 0.24, "micro": 0.008 },
+      "tutor": { "expression": 0.4, "viseme": 0.26, "micro": 0.009 },
+      "concierge": { "expression": 0.35, "viseme": 0.2, "micro": 0.006 },
+      "sales_agent": { "expression": 0.42, "viseme": 0.28, "micro": 0.01 },
+      "market_analyst": { "expression": 0.25, "viseme": 0.12, "micro": 0.002 }
+    },
+    "operator_ceilings": { "ref": "CHANNEL_MAX" },
+    "aol_ceilings": { "ref": "CHANNEL_MAX" },
+    "platform_ceilings": { "ref": "CHANNEL_MAX" },
+    "tenant_quotas": {
+      "cpu_budget_pct": 12,
+      "max_active_embeds_per_tenant": 4,
+      "quota_calls_per_day": 5000,
+      "token_ttl_seconds": 900
+    }
+  },
+  "schema_consolidation": [
+    "identity", "persona", "command", "operator_task", "aol_loop", "marketplace_listing", "tenant"
+  ],
+  "pricing_consolidation": {
+    "model": "unified_tier_index",
+    "persona_indices": true,
+    "bundle_indices": true,
+    "platform_indices": true,
+    "marketplace_indices": true,
+    "cloud_runtime_indices": true
+  },
+  "console_integration": {
+    "command_system": "invocation_interface",
+    "operator_mode": "executor",
+    "aol": "autonomous_driver",
+    "authoritative": true
+  },
+  "mus_roadmap": {
+    "stages": [
+      {
+        "id": "13.1",
+        "name": "system_consolidation",
+        "gates": ["all_twelve_systems_enumerated", "phase_chain_integrity"],
+        "kpis": ["system_reference_completeness", "consistency_violations"]
+      },
+      {
+        "id": "13.2",
+        "name": "boundary_consolidation",
+        "gates": ["boundary_groups_complete", "boundaries_disjoint"],
+        "kpis": ["boundary_reference_completeness", "overlap_detected"]
+      },
+      {
+        "id": "13.3",
+        "name": "ceiling_consolidation",
+        "gates": ["channel_max_verified", "persona_ceilings_match_catalog", "tenant_quotas_match_scaling"],
+        "kpis": ["ceiling_consistency_rate", "ceiling_violations"]
+      },
+      {
+        "id": "13.4",
+        "name": "schema_consolidation",
+        "gates": ["seven_schemas_referenced", "schema_paths_resolve"],
+        "kpis": ["schema_reference_coverage", "schema_validation_pass_rate"]
+      },
+      {
+        "id": "13.5",
+        "name": "pricing_consolidation",
+        "gates": ["tier_index_model_verified", "pricing_groups_consistent"],
+        "kpis": ["pricing_consistency_rate", "index_scope_coverage"]
+      },
+      {
+        "id": "13.6",
+        "name": "founder_console_integration",
+        "gates": ["console_authoritative", "command_operator_aol_wired"],
+        "kpis": ["authoritative_reference_coverage", "console_consistency_latency"]
+      }
+    ]
+  }
+}

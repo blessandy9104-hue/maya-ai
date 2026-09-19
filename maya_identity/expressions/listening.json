@@ -1,0 +1,14 @@
+{
+  "expression": "listening",
+  "kind": "presence · listening · attentive",
+  "geometry": { "scale": 1.012, "wander": 0.001, "drift": 0.002 },
+  "eyes": { "lid": -0.02, "iris_glow": 0.7, "focus": 0.55, "iris_shift_x": 0.0, "pupil": 0.013 },
+  "brows": { "height": -0.004, "slant": 0.0 },
+  "mouth": { "open": 0.0, "lift": 0.01 },
+  "neural": { "activity": 0.45, "pulse": 0.45, "brightness": 0.65 },
+  "particles": { "density": 0.6, "speed": 0.7, "brightness": 0.7 },
+  "glow": { "intensity": 0.65, "core": "#6d7cff", "ring": "#38bdf8" },
+  "halo": { "visible": true, "pulse": 0.45, "intensity": 0.55 },
+  "attention_arc": true,
+  "symbols": []
+}

@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "palette": {
+    "glow": "#6d7cff",
+    "glow_soft": "#4d5bb5",
+    "neural": "#38bdf8",
+    "neural_soft": "#2543a8",
+    "ink": "#e7ebfa",
+    "dim": "#5b6488",
+    "field": "#0b1020",
+    "bg": "#0a0e1a"
+  },
+  "lighting": {
+    "cam": "cinematic",
+    "key": "indigo",
+    "rim": "cool blue",
+    "sense": "dark futuristic"
+  },
+  "visual_style": {
+    "style": "gender-neutral digital consciousness, human-inspired and lifelike but never defined as male or female",
+    "avoid": ["cartoon", "anime", "robotic", "male", "female", "generic AI woman", "generic AI man", "constantly changing identity"]
+  },
+  "holographic_effects": {
+    "enabled": false,
+    "layers": 0,
+    "note": "phase-1 architecture only; decorative and always layer-preserving"
+  },
+  "avatar": {
+    "portrait_size": 512,
+    "icon_size": 48,
+    "ico_sizes": [16, 24, 32, 48, 64, 256],
+    "canonical_master": "maya_face_canonical.png",
+    "canonical_icon": "maya_face_canonical.ico",
+    "canonical_variants": {
+      "maya_face_canonical_256.png": 256,
+      "maya_face_canonical_128.png": 128,
+      "maya_face_canonical_48.png": 48
+    },
+    "canonical_names": {
+      "portrait": "maya_face_canonical.png",
+      "portrait_medium": "maya_face_canonical_256.png",
+      "portrait_small": "maya_face_canonical_128.png",
+      "icon_png": "maya_face_canonical_48.png",
+      "awake": "maya_face_canonical_awake.png",
+      "dim": "maya_face_canonical_dim.png",
+      "icon": "maya_face_canonical.ico"
+    },
+    "legacy_canonical_names": {
+      "portrait": "maya_face.png",
+      "portrait_medium": "maya_face_256.png",
+      "portrait_small": "maya_face_128.png",
+      "icon_png": "maya_face_48.png",
+      "awake": "maya_face_awake.png",
+      "dim": "maya_face_dim.png",
+      "icon": "maya_face.ico"
+    },
+    "placeholder_names": {
+      "portrait": "maya_face_placeholder.png",
+      "portrait_medium": "maya_face_placeholder_256.png",
+      "portrait_small": "maya_face_placeholder_128.png",
+      "icon_png": "maya_face_placeholder_48.png",
+      "icon": "maya_identity_placeholder.ico"
+    }
+  },
+  "placeholder": {
+    "note": "Layout-only. The placeholder is a neutral monogram ring, not Maya's face. It must never become the canonical identity.",
+    "ring_alpha": 0.85,
+    "glyph_alpha": 0.95
+  }
+}

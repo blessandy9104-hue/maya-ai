@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "identity_rule_ref": "see geometry/maya_geometry.json -> identity_rule",
+  "face_outline": {
+    "primitive": "ellipse",
+    "cx": 0.5,
+    "cy": 0.46,
+    "rx": 0.29,
+    "ry": 0.38,
+    "segments": 16
+  },
+  "jaw": {
+    "primitive": "ellipse_arc",
+    "cx": 0.5,
+    "cy": 0.585,
+    "rx": 0.2,
+    "ry": 0.19,
+    "theta_start": 15,
+    "theta_end": 165
+  },
+  "cheek_lines": {
+    "left": [ [0.262, 0.432], [0.246, 0.472], [0.25, 0.52] ],
+    "right": [ [0.738, 0.432], [0.754, 0.472], [0.75, 0.52] ]
+  },
+  "brows": {
+    "left": [ [0.335, 0.376], [0.362, 0.367], [0.392, 0.363], [0.425, 0.366], [0.445, 0.373] ],
+    "right": [ [0.555, 0.373], [0.575, 0.366], [0.608, 0.363], [0.638, 0.367], [0.665, 0.376] ]
+  },
+  "eyes": {
+    "half_width": 0.05,
+    "spacing": 0.115,
+    "level": 0.4,
+    "upper_lift": 0.014,
+    "lower_sag": 0.009,
+    "inner_x": 0.06,
+    "outer_x": 0.165,
+    "iris": { "radius": 0.026, "y_offset": 0.0005 },
+    "pupil": { "radius": 0.012 }
+  },
+  "nose": {
+    "bridge": [ [0.5, 0.336], [0.5, 0.392] ],
+    "tip": [0.5, 0.468],
+    "alar_curves": {
+      "left": [ [0.478, 0.462], [0.5, 0.47] ],
+      "right": [ [0.522, 0.462], [0.5, 0.47] ]
+    },
+    "nostrils": { "left": [0.481, 0.479], "right": [0.519, 0.479], "radius": 0.005 }
+  },
+  "mouth": {
+    "corners": { "left": [0.438, 0.549], "right": [0.562, 0.549] },
+    "upper_control": [0.5, 0.539],
+    "lower_control": [0.5, 0.563],
+    "closed_curve": 0.008
+  },
+  "temple_braids": {
+    "left": [ [0.258, 0.36], [0.236, 0.44], [0.262, 0.52] ],
+    "right": [ [0.742, 0.36], [0.764, 0.44], [0.738, 0.52] ]
+  },
+  "signature_features": {
+    "awareness_gem": { "point": [0.5, 0.335], "radius": 0.006, "glow": 0.9 },
+    "axis_light": { "points": [ [0.5, 0.335], [0.5, 0.6] ], "subtle": true },
+    "cheek_points": { "left": [0.342, 0.472], "right": [0.658, 0.472], "radius": 0.004, "glow": 0.6 },
+    "neural_crown": [ [0.44, 0.322], [0.47, 0.315], [0.5, 0.312], [0.53, 0.315], [0.56, 0.322] ]
+  },
+  "feature_anchors": {
+    "crown": [0.5, 0.335],
+    "chin": [0.5, 0.84],
+    "left_eye": [0.385, 0.4],
+    "right_eye": [0.615, 0.4],
+    "mouth": [0.5, 0.55]
+  }
+}

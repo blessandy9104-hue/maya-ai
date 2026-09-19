@@ -1,0 +1,160 @@
+{
+  "blueprint_version": "1.0",
+  "milestone": "phase6",
+  "platform_core": {
+    "definition": "Maya is an ecosystem platform: validated personas running on a deterministic runtime, built with the Studio, distributed through a governed marketplace, deployed through the embed and cloud runtimes, and extended through a read-only API and physical kiosk deployments.",
+    "boundaries": {
+      "maya_is": [
+        "a persona platform with a verified runtime",
+        "an interpretation engine (including market-pattern interpretation)",
+        "an embed + cloud runtime with per-tenant isolation",
+        "a verify-first marketplace for personas"
+      ],
+      "maya_is_not": [
+        "a financial advisor or trading system",
+        "human labor or a professional-equivalency service",
+        "an autonomous decision-making agent",
+        "general-purpose compute or an account-access service"
+      ]
+    },
+    "authority_map": {
+      "runtime": {
+        "owns": "execution, verification, ceilings, readiness gate",
+        "cannot": ["change tenant boundaries", "self-declare readiness", "exceed platform ceilings"]
+      },
+      "tenant": {
+        "owns": "their domain deployment and mounted persona choice",
+        "cannot": ["edit profiles or ceilings", "access other tenants", "bypass origin checks"]
+      },
+      "creator": {
+        "owns": "persona designs within guided studio constraints",
+        "cannot": ["exceed CHANNEL_MAX ceilings", "ship unverified personas", "add banned directive language"]
+      },
+      "founder": {
+        "owns": "runtime core, marketplace approval, studio advanced mode, platform fees",
+        "cannot": ["grant runtime authority over other tenants", "skip verification and readiness gates"]
+      }
+    }
+  },
+  "ecosystems": {
+    "creator": {
+      "actors": ["persona creators", "studio guided-mode users"],
+      "surface": "Maya Studio",
+      "guardrails": [
+        "ceiling-locked editing",
+        "schema + governance checks before any listing",
+        "listing quota per creator"
+      ]
+    },
+    "business": {
+      "actors": ["companies deploying personas", "site owners"],
+      "surface": "embed runtime + cloud runtime",
+      "guardrails": [
+        "per-tenant namespaces and quotas",
+        "exact-origin domain isolation",
+        "memory-only sessions"
+      ]
+    },
+    "developer": {
+      "actors": ["read-only API consumers", "partner sites"],
+      "surface": "Maya API",
+      "guardrails": [
+        "GET-only endpoints",
+        "opaque read tokens",
+        "no pii, no account, rate-limited"
+      ]
+    },
+    "marketplace": {
+      "actors": ["creators submitting personas", "tenants installing personas"],
+      "surface": "Maya Marketplace",
+      "guardrails": [
+        "submit-verify-approve-list pipeline",
+        "eight governance checks incl. no_financial_guarantee",
+        "moderation rules with founder review"
+      ]
+    }
+  },
+  "services": [
+    "studio", "marketplace", "cloud_runtime", "api", "kiosk", "embed_runtime"
+  ],
+  "governance": {
+    "layers": ["runtime", "marketplace", "studio"],
+    "verification_pipeline": ["submit", "auto_verify", "founder_review", "approve", "list"],
+    "moderation_rules": [
+      { "id": "MR01", "rule": "Ceilings must stay within platform ceilings (CHANNEL_MAX)." },
+      { "id": "MR02", "rule": "Vocabulary must be closed and tone within the allowlist." },
+      { "id": "MR03", "rule": "Banned directive and financial-guarantee language is grounds for rejection." },
+      { "id": "MR04", "rule": "No PII or CORED content may appear in any listing or profile." },
+      { "id": "MR05", "rule": "Personas must be deterministic and produce bounded output in verification." },
+      { "id": "MR06", "rule": "Market-analyst-category personas must carry the financial-safety ruleset and disclaimer." },
+      { "id": "MR07", "rule": "Founder review is required before any listing; auto-verify alone is insufficient." }
+    ],
+    "isolation_enforcement": {
+      "post_implementation": true,
+      "required_gates": ["isolation_runtime_implemented", "audit_cleared"]
+    },
+    "platform_ceilings": { "expression": 0.5, "viseme": 0.35, "micro": 0.012, "anatomical": 0.8 }
+  },
+  "economics": {
+    "marketplace_split": { "creator_share_index": 0.7, "platform_share_index": 0.3 },
+    "platform_fees": {
+      "embed_rent_index": 0.05,
+      "cloud_tenant_index": 0.1
+    },
+    "creator_incentives": [
+      "70% of the persona recurring component",
+      "top-listed personas earn a higher listing position",
+      "creators with verified, deterministic personas gain vetted status"
+    ],
+    "founder_incentives": [
+      "30% platform share plus embed rent and cloud tenant fees",
+      "bundled revenue from deployments using marketplace personas",
+      "platform reserve grows with tenant count, funding verification capacity"
+    ],
+    "scaling_economics": [
+      { "tier": "solo", "tenants": 10, "cost_scale": 1.0, "revenue_index": 1.0 },
+      { "tier": "operator", "tenants": 100, "cost_scale": 3.0, "revenue_index": 6.5 },
+      { "tier": "platform", "tenants": 1000, "cost_scale": 10.0, "revenue_index": 28.0 }
+    ]
+  },
+  "roadmap": {
+    "phases": [
+      {
+        "id": "6.1",
+        "name": "platform_core",
+        "gates": ["studio_guided_live", "domain_isolation_preserved"],
+        "kpis": ["studio_guided_edits_week", "time_to_deploy_guided"]
+      },
+      {
+        "id": "6.2",
+        "name": "creator_ecosystem",
+        "gates": ["creator_onboarding_open", "verification_pipeline_automated"],
+        "kpis": ["creators_onboarded", "pipeline_auto_verify_rate"]
+      },
+      {
+        "id": "6.3",
+        "name": "marketplace_launch",
+        "gates": ["marketplace_governance_verified", "founder_review_capacity"],
+        "kpis": ["personas_listed", "marketplace_install_rate"]
+      },
+      {
+        "id": "6.4",
+        "name": "cloud_runtime_expansion",
+        "gates": ["isolation_runtime_implemented", "audit_cleared", "multi_tenant_hosting_live"],
+        "kpis": ["tenants_on_cloud", "namespace_enforcement_rate"]
+      },
+      {
+        "id": "6.5",
+        "name": "developer_api_growth",
+        "gates": ["read_only_api_live", "sandbox_compliance_verified"],
+        "kpis": ["api_consumers", "api_slo_rate"]
+      },
+      {
+        "id": "6.6",
+        "name": "kiosk_physical_deployments",
+        "gates": ["cloud_runtime_stable", "kiosk_verification_available"],
+        "kpis": ["kiosk_deployments", "offline_safe_uptime"]
+      }
+    ]
+  }
+}

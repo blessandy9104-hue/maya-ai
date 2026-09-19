@@ -1,0 +1,10 @@
+{
+  "version": "MSG.v1",
+  "direction": "to_site",
+  "type": "maya:error",
+  "session_id": "webrt_site_0001",
+  "payload": {
+    "code": "tenant_quota_exceeded",
+    "detail": "Slot invocation quota reached; session paused for this period."
+  }
+}

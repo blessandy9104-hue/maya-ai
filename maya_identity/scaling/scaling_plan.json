@@ -1,0 +1,139 @@
+{
+  "plan_version": "1.0",
+  "milestone": "phase5",
+  "dependency_boundary": "isolation_runtime_required",
+  "studio": {
+    "editing_modes": ["guided", "founder_advanced"],
+    "ceiling_policy": {
+      "locked": true,
+      "max_allowed": { "expression": 0.5, "viseme": 0.35, "micro": 0.012, "anatomical": 0.8 }
+    },
+    "presets": [
+      {
+        "persona_id": "receptionist",
+        "ceiling": { "expression": 0.38, "viseme": 0.24, "micro": 0.008 },
+        "locked_fields": ["channel_ceiling", "tone_profile.banned_registers", "hard_rules"]
+      },
+      {
+        "persona_id": "tutor",
+        "ceiling": { "expression": 0.4, "viseme": 0.26, "micro": 0.009 },
+        "locked_fields": ["channel_ceiling", "tone_profile.banned_registers", "hard_rules"]
+      },
+      {
+        "persona_id": "concierge",
+        "ceiling": { "expression": 0.35, "viseme": 0.2, "micro": 0.006 },
+        "locked_fields": ["channel_ceiling", "tone_profile.banned_registers", "hard_rules"]
+      },
+      {
+        "persona_id": "sales_agent",
+        "ceiling": { "expression": 0.42, "viseme": 0.28, "micro": 0.01 },
+        "locked_fields": ["channel_ceiling", "tone_profile.banned_registers", "hard_rules"]
+      },
+      {
+        "persona_id": "market_analyst",
+        "ceiling": { "expression": 0.25, "viseme": 0.12, "micro": 0.002 },
+        "locked_fields": ["channel_ceiling", "confidence_cap", "financial_safety_ruleset", "hard_rules"]
+      }
+    ],
+    "validation_gates": ["schema", "ceiling", "vocab", "tone"],
+    "advanced_mode": {
+      "founder_only": true,
+      "requires_readiness": true
+    }
+  },
+  "marketplace": {
+    "enabled_at_phase": "5.2",
+    "flow": ["submit", "verify", "approve", "list"],
+    "governance_checks": [
+      "schema", "ceiling_bounded", "vocab_closed", "tone_allowlist",
+      "no_banned_directive", "deterministic", "no_pii", "no_financial_guarantee"
+    ],
+    "revenue_split": {
+      "creator_share_index": 0.7,
+      "platform_share_index": 0.3
+    },
+    "listing_quota_per_creator": 10
+  },
+  "cloud_runtime": {
+    "enabled_at_phase": "5.3",
+    "requires": ["isolation_runtime_implemented", "audit_cleared"],
+    "per_tenant": {
+      "namespace": "NS(t,k)",
+      "endpoint": "/embed/acme-corp",
+      "memory": "memory_only",
+      "max_active_embeds_per_tenant": 4,
+      "cpu_budget_pct": 12,
+      "quota_calls_per_day": 5000,
+      "token_ttl_seconds": 900
+    },
+    "deterministic_scaling": {
+      "rule": "add_capacity_when_all_slots_over_80_for_window"
+    }
+  },
+  "api": {
+    "enabled_at_phase": "5.3",
+    "read_only": true,
+    "endpoints": [
+      { "path": "/v1/interpretation", "method": "GET", "scope": "mpm_interpret", "write": false },
+      { "path": "/v1/persona-info", "method": "GET", "scope": "public_persona_meta", "write": false },
+      { "path": "/v1/embed-status", "method": "GET", "scope": "embed_health_status", "write": false }
+    ],
+    "sandbox": {
+      "auth": "opaque_read_token",
+      "no_write": true,
+      "no_pii": true,
+      "no_account": true,
+      "rate_limit_per_min": 60
+    }
+  },
+  "kiosk": {
+    "presets": ["kiosk_assistant", "receptionist"],
+    "offline_safe": true,
+    "deterministic_loop": { "cadence_seconds": 2, "no_rng": true },
+    "boundaries": [
+      "single_site",
+      "verified_runtime_required",
+      "no_remote_secrets",
+      "physical_power_cycle_expected",
+      "offline_fallback"
+    ]
+  },
+  "roadmap": {
+    "phases": [
+      {
+        "id": "P1",
+        "range": "10-50",
+        "gates": [
+          "studio_guided",
+          "domain_isolation",
+          "folder_per_client",
+          "retainer_automation"
+        ]
+      },
+      {
+        "id": "P2",
+        "range": "50-100",
+        "gates": [
+          "isolation_runtime_implemented",
+          "audit_cleared",
+          "cloud_runtime_live",
+          "read_only_api"
+        ]
+      },
+      {
+        "id": "P3",
+        "range": "100-1000",
+        "gates": [
+          "marketplace_open",
+          "multi_tenant_audited",
+          "founder_to_operator"
+        ]
+      }
+    ],
+    "capacity_rules": [
+      "P1 onboarding max_concurrent 3",
+      "P2 support_ratio 40 clients per founder",
+      "retainer_automation_required_before_P3"
+    ]
+  }
+}

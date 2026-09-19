@@ -1,0 +1,7 @@
+{
+  "max_cpu_percent": 60.0,
+  "max_memory_percent": 70.0,
+  "max_process_count": 2,
+  "max_launches_per_minute": 1,
+  "sample_interval_seconds": 2.0
+}

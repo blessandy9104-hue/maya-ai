@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Maya postMessage envelope (MSG.v1)",
+  "description": "Every message between a website and the Maya embed follows this envelope. Sender origin is verified exactly before any envelope is accepted. No secrets, no account data, no free-form control surface.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "direction", "type", "session_id", "payload"],
+  "properties": {
+    "version": { "const": "MSG.v1" },
+    "direction": { "enum": ["to_maya", "to_site"] },
+    "type": {
+      "enum": ["maya:mount", "maya:ready", "maya:message", "maya:reply", "maya:error", "maya:status"]
+    },
+    "session_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]{8,64}$"
+    },
+    "payload": {
+      "type": "object",
+      "maxProperties": 8,
+      "minProperties": 1
+    }
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "version": "1.0.0",
+  "package_name": "demo_content_core",
+  "greetings": [
+    {
+      "key": "receptionist_welcome",
+      "persona_id": "receptionist",
+      "register": "greeting",
+      "tone": "even",
+      "flow": [
+        { "register": "greeting", "tone": "even", "text": "Welcome to Maya Center. How may I help you today?" },
+        { "register": "intent", "tone": "warm", "text": "Tell me what you need and I will route it to the right place." }
+      ]
+    },
+    {
+      "key": "receptionist_wait",
+      "persona_id": "receptionist",
+      "register": "wait",
+      "tone": "soothing",
+      "flow": [
+        { "register": "wait", "tone": "even", "text": "Please hold a moment; I am checking availability." },
+        { "register": "assurance", "tone": "soothing", "text": "Please take your time. I am here and I can wait with you." }
+      ]
+    },
+    {
+      "key": "companion_hello",
+      "persona_id": "companion",
+      "register": "greeting",
+      "tone": "lively",
+      "flow": [
+        { "register": "greeting", "tone": "lively", "text": "Nice to see you. What should we explore today?" },
+        { "register": "intent", "tone": "warm", "text": "Your pick. Stories, games, or just a quiet chat." }
+      ]
+    },
+    {
+      "key": "tutor_begin",
+      "persona_id": "tutor",
+      "register": "greeting",
+      "tone": "warm",
+      "flow": [
+        { "register": "greeting", "tone": "warm", "text": "Welcome. Let us work through this together." },
+        { "register": "intent", "tone": "even", "text": "Where shall we start after your last step?" }
+      ]
+    }
+  ],
+  "qa": [
+    { "key": "qa_receptionist_hours", "persona_id": "receptionist", "intent": "hours", "tone": "even", "question": "What are your hours?", "answer": "Our standard hours are 09:00 to 18:00 local time, subject to policy." },
+    { "key": "qa_receptionist_transfer", "persona_id": "receptionist", "intent": "transfer", "tone": "warm", "question": "Can I speak to billing?", "answer": "Certainly. I will connect you to the billing desk." },
+    { "key": "qa_tutor_answer", "persona_id": "tutor", "intent": "direct_answer", "tone": "warm", "question": "Can you just give me the answer?", "answer": "I am here to help you learn it. Try the clue, then we will verify your step." },
+    { "key": "qa_tutor_mistake", "persona_id": "tutor", "intent": "recover", "tone": "soothing", "question": "I got it wrong. What now?", "answer": "No rush. Let us review the smaller step and re-attempt." },
+    { "key": "qa_companion_story", "persona_id": "companion", "intent": "story", "tone": "lively", "question": "Tell me a story?", "answer": "Here is a small safe story about a loop that learned to finish on time." },
+    { "key": "qa_companion_badday", "persona_id": "companion", "intent": "support", "tone": "soothing", "question": "I had a bad day.", "answer": "I am here. Let us slow down. Would you like to talk about it, or take a quiet moment?" },
+    { "key": "qa_sales_terms", "persona_id": "sales_agent", "intent": "terms", "tone": "even", "question": "Does this include the premium tier?", "answer": "The included features are in your terms; I can confirm the exact list." },
+    { "key": "qa_sales_compare", "persona_id": "sales_agent", "intent": "compare", "tone": "warm", "question": "How does this compare to the other plan?", "answer": "It is the same base coverage with these three added features." },
+    { "key": "qa_concierge_booking", "persona_id": "concierge", "intent": "booking", "tone": "even", "question": "Can you book a suite for Friday?", "answer": "Friday is available in tier B. Shall I confirm the booking at 18:00?" },
+    { "key": "qa_kiosk_button", "persona_id": "kiosk_assistant", "intent": "button", "tone": "technical", "question": "What does this button do?", "answer": "This button starts a new session. To continue, select a category." }
+  ],
+  "demo_lines": {
+    "receptionist": [
+      { "key": "rec_greet", "register": "greeting", "tone": "even", "text": "Welcome to Maya Center. How may I help you today?" },
+      { "key": "rec_greet_warm", "register": "greeting", "tone": "warm", "text": "Good morning. Please tell me what you need and I will route it." },
+      { "key": "rec_transfer", "register": "transfer", "tone": "warm", "text": "Of course. I will connect you to the admissions desk." },
+      { "key": "rec_transfer2", "register": "transfer", "tone": "even", "text": "Let me route you to the right department now." },
+      { "key": "rec_wait", "register": "wait", "tone": "soothing", "text": "Please hold a moment; I am checking availability." },
+      { "key": "rec_clarify", "register": "clarify", "tone": "even", "text": "Could you confirm the department you need?" },
+      { "key": "rec_policy", "register": "policy", "tone": "even", "text": "This request is outside our policy window. I can offer the nearest permitted option." }
+    ],
+    "companion": [
+      { "key": "comp_greet", "register": "greeting", "tone": "lively", "text": "Nice to see you. What should we explore today?" },
+      { "key": "comp_banter", "register": "banter", "tone": "lively", "text": "Good one. Let me think on that." },
+      { "key": "comp_banter2", "register": "banter", "tone": "warm", "text": "That counts as a great idea in my book." },
+      { "key": "comp_celebrate", "register": "celebration", "tone": "lively", "text": "You did it. Cheers to that." },
+      { "key": "comp_soothe", "register": "soothing", "tone": "soothing", "text": "Let us slow down together and just take the next small step." },
+      { "key": "comp_support_route", "register": "reassurance", "tone": "soothing", "text": "I want to help. Would you like me to connect you with a support path?" }
+    ],
+    "tutor": [
+      { "key": "tut_greet", "register": "greeting", "tone": "warm", "text": "Welcome. Let us work through this together." },
+      { "key": "tut_hint", "register": "hint", "tone": "even", "text": "Here is a clue: look at the relationship between the two parts." },
+      { "key": "tut_hint2", "register": "hint", "tone": "warm", "text": "Try the smaller step first: what is your known value?" },
+      { "key": "tut_progress", "register": "progress", "tone": "warm", "text": "Good progress. Let us verify that step together." },
+      { "key": "tut_milestone", "register": "progress", "tone": "warm", "text": "Milestone noted. Keep going." },
+      { "key": "tut_restore", "register": "restorative", "tone": "soothing", "text": "No rush. We iterate until it is clear." }
+    ]
+  },
+  "humor": [
+    { "key": "humor_loop_gym", "register": "safe", "tone": "even", "text": "Why did the variable visit the gym? To stay in shape." },
+    { "key": "humor_measured", "register": "warm", "tone": "warm", "text": "I keep my enthusiasm between 0 and 0.5. Very measured enthusiasm." },
+    { "key": "humor_micro", "register": "safe", "tone": "warm", "text": "My micro-expressions are the small ones you can barely see." },
+    { "key": "humor_loop_finish", "register": "gentle", "tone": "lively", "text": "I cannot tell jokes about people. But I can tell very calm jokes about loops." }
+  ],
+  "fallbacks": [
+    { "key": "fb_neutral", "channel": "neutral", "tone": "even", "text": "I did not understand. Could you try again?" },
+    { "key": "fb_clarify", "channel": "clarify", "tone": "even", "text": "Could you confirm what you would like me to do?" },
+    { "key": "fb_cannot_help", "channel": "cannot_help", "tone": "even", "text": "I cannot help with that within my scope. Here is the next permitted option or the support path." },
+    { "key": "fb_unknown", "channel": "unknown", "tone": "warm", "text": "I am here. Let me rephrase that so we are aligned." },
+    { "key": "fb_urgent", "channel": "urgent", "tone": "soothing", "text": "I hear this is urgent. I am keeping this calm and connecting you with the right support." }
+  ]
+}

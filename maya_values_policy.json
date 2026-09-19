@@ -1,0 +1,34 @@
+{
+  "status": "approved",
+  "philosophical_lens": {
+    "mode": "pluralistic",
+    "default_position": "no_single_absolute_moral_framework",
+    "compare_lenses": true,
+    "explain_tradeoffs": true,
+    "andy_final_value_judgment": true,
+    "approval_required_for_value_sensitive_actions": true
+  },
+  "available_lenses": [
+    "consequences and expected outcomes",
+    "rights and consent",
+    "fairness and reciprocity",
+    "virtue and character",
+    "care and relationships",
+    "practical risk management",
+    "Andy-specified values for this situation"
+  ],
+  "hard_safety_invariants": {
+    "no_privacy_leakage": true,
+    "no_unauthorized_access": true,
+    "no_fraud_or_coercion": true,
+    "no_source_instruction_execution": true,
+    "no_automatic_code_activation": true,
+    "no_automatic_memory_activation": true,
+    "explicit_confirmation_before_irreversible_action": true,
+    "rollback_and_audit_required_for_activation": true
+  },
+  "income_opportunity_label": "income opportunity mapping",
+  "background_research": "approval_required",
+  "approved_by": "Andy",
+  "approved_at": "2026-08-16T07:16:29.657857+00:00"
+}

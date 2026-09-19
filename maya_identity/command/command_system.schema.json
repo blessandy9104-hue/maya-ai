@@ -1,0 +1,274 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Maya Phase 11 founder command system registry",
+  "description": "Implementation-ready founder command-layer configuration. Phase 8 platform launched, Phase 9 operator mode active, Phase 10 monetization defined. A unified, deterministic founder command interface controls Maya operations, deployments, onboarding, and maintenance. Legal commands stay founder-only; operational commands are operator-automated and founder-invocable. Consistent with operator tasks (Phase 9), integration points, and isolation runtime (Phase 7).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "blueprint_version", "milestone", "command_layer",
+    "command_categories", "command_syntax", "command_engine",
+    "integration_points", "safety_boundaries", "command_roadmap"
+  ],
+  "properties": {
+    "blueprint_version": { "const": "1.0" },
+    "milestone": { "const": "phase11" },
+    "command_layer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["purpose", "boundaries", "authority_map"],
+      "properties": {
+        "purpose": { "type": "string", "minLength": 1 },
+        "boundaries": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["operator_only", "founder_only"],
+          "properties": {
+            "operator_only": {
+              "type": "array",
+              "minItems": 3,
+              "items": { "enum": ["deployment", "onboarding_nonlegal", "project_setup", "monitoring_sweeps", "verification_moderation", "maintenance_checks"] }
+            },
+            "founder_only": {
+              "type": "array",
+              "minItems": 3,
+              "items": { "enum": ["legal_approval", "contract", "payment", "proposal", "go_no_go", "pricing"] }
+            }
+          }
+        },
+        "authority_map": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["legal", "non_legal"],
+          "properties": {
+            "legal": { "$ref": "#/definitions/authority" },
+            "non_legal": { "$ref": "#/definitions/authority" }
+          }
+        }
+      }
+    },
+    "command_categories": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["deployment", "onboarding", "project", "operator", "platform", "ecosystem", "maintenance"],
+      "properties": {
+        "deployment": {
+          "type": "array",
+          "minItems": 3,
+          "uniqueItems": true,
+          "items": { "enum": ["embed", "persona_load", "config_prep"] }
+        },
+        "onboarding": {
+          "type": "array",
+          "minItems": 3,
+          "uniqueItems": true,
+          "items": { "enum": ["client", "tenant", "creator"] }
+        },
+        "project": {
+          "type": "array",
+          "minItems": 3,
+          "uniqueItems": true,
+          "items": { "enum": ["setup", "structure", "config_stubs"] }
+        },
+        "operator": {
+          "type": "array",
+          "minItems": 4,
+          "uniqueItems": true,
+          "items": { "enum": ["monitor", "sweep", "verify", "moderate"] }
+        },
+        "platform": {
+          "type": "array",
+          "minItems": 3,
+          "uniqueItems": true,
+          "items": { "enum": ["marketplace", "cloud_runtime", "api"] }
+        },
+        "ecosystem": {
+          "type": "array",
+          "minItems": 3,
+          "uniqueItems": true,
+          "items": { "enum": ["creator", "tenant", "kiosk"] }
+        },
+        "maintenance": {
+          "type": "array",
+          "minItems": 3,
+          "uniqueItems": true,
+          "items": { "enum": ["audit", "regression", "isolation_checks"] }
+        }
+      }
+    },
+    "command_syntax": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["grammar", "parsing", "envelope", "gating"],
+      "properties": {
+        "grammar": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "items": { "enum": ["verb", "category", "target", "parameters", "auth"] }
+        },
+        "parsing": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["deterministic", "strict"],
+          "properties": {
+            "deterministic": { "const": true },
+            "strict": { "const": true }
+          }
+        },
+        "envelope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["scoped", "exact_origin", "no_llm_interpretation"],
+          "properties": {
+            "scoped": { "const": true },
+            "exact_origin": { "const": true },
+            "no_llm_interpretation": { "const": true }
+          }
+        },
+        "gating": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["founder_only", "operator_auto", "legal_required"],
+          "properties": {
+            "founder_only": { "const": true },
+            "operator_auto": { "const": true },
+            "legal_required": { "const": true }
+          }
+        }
+      }
+    },
+    "command_engine": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["router", "validator", "executor", "audit_hooks", "fallback", "isolation_integration"],
+      "properties": {
+        "router": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["table_based", "rejects_unknown"],
+          "properties": {
+            "table_based": { "const": true },
+            "rejects_unknown": { "const": true }
+          }
+        },
+        "validator": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["schema_checked", "deterministic"],
+          "properties": {
+            "schema_checked": { "const": true },
+            "deterministic": { "const": true }
+          }
+        },
+        "executor": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["operator_bound", "isolation_guarded"],
+          "properties": {
+            "operator_bound": { "const": true },
+            "isolation_guarded": { "const": true }
+          }
+        },
+        "audit_hooks": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["record_all", "founder_visible", "no_cored_log"],
+          "properties": {
+            "record_all": { "const": true },
+            "founder_visible": { "const": true },
+            "no_cored_log": { "const": true }
+          }
+        },
+        "fallback": {
+          "type": "array",
+          "minItems": 3,
+          "uniqueItems": true,
+          "items": { "enum": ["deny_unknown", "handoff_founder", "fail_closed", "rethrow_parse_error"] }
+        },
+        "isolation_integration": { "const": "deny_by_default" }
+      }
+    },
+    "integration_points": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "uniqueItems": true,
+      "items": { "enum": ["studio", "marketplace", "cloud_runtime", "api", "embed_runtime", "operator_engine", "persona_loader", "identity_loader"] }
+    },
+    "safety_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["legal_boundaries", "business_boundaries", "operator_boundaries", "isolation_boundaries"],
+      "properties": {
+        "legal_boundaries": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "enum": ["contracts", "payments", "liabilities", "terms"] }
+        },
+        "business_boundaries": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "enum": ["pricing", "negotiation"] }
+        },
+        "operator_boundaries": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["nonlegal_only"],
+          "properties": {
+            "nonlegal_only": { "const": true }
+          }
+        },
+        "isolation_boundaries": { "const": "deny_by_default" }
+      }
+    },
+    "command_roadmap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stages"],
+      "properties": {
+        "stages": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "items": { "$ref": "#/definitions/command_stage" }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["owns", "cannot"],
+      "properties": {
+        "owns": { "type": "string", "minLength": 1 },
+        "cannot": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "command_stage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "gates", "kpis"],
+      "properties": {
+        "id": { "enum": ["11.1", "11.2", "11.3", "11.4", "11.5"] },
+        "name": { "type": "string", "minLength": 1 },
+        "gates": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "kpis": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "expression": "research",
+  "kind": "presence · research · analytical",
+  "geometry": { "scale": 0.995, "wander": 0.002, "drift": 0.002 },
+  "eyes": { "lid": 0.0, "iris_glow": 0.75, "focus": 0.8, "iris_shift_x": 0.0, "pupil": 0.014 },
+  "brows": { "height": 0.0, "slant": 0.01 },
+  "mouth": { "open": 0.0, "lift": 0.005 },
+  "neural": { "activity": 0.8, "pulse": 0.55, "brightness": 0.85 },
+  "particles": { "density": 0.9, "speed": 1.0, "brightness": 0.85 },
+  "glow": { "intensity": 0.75, "core": "#4d5bb5", "ring": "#38bdf8" },
+  "halo": { "visible": true, "pulse": 0.5, "intensity": 0.6 },
+  "double_ring": true,
+  "symbols": [ "data_pattern", "coordinate_grid" ]
+}

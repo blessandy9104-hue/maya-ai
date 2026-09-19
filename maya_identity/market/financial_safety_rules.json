@@ -1,0 +1,46 @@
+{
+  "ruleset_version": "1.0",
+  "scope": {
+    "domain": "financial_interpretation",
+    "posture": "interpretation_only",
+    "state": "no_recommendation_no_prediction"
+  },
+  "allowed_registers": ["even", "technical", "warm"],
+  "directive_terms": [
+    "buy", "sell", "hold", "long", "short", "should", "must",
+    "guarantee", "guaranteed", "risk_free", "certain", "predict",
+    "target_price", "profit", "breakout_buy"
+  ],
+  "forbidden_phrases": {
+    "profit_guarantee": ["risk free", "guaranteed profit", "guaranteed return"],
+    "certainty": [
+      "will definitely", "certain to", "no doubt", "sure to move",
+      "definitely going",
+      "without question"
+    ],
+    "recommendation": ["you should", "you must", "i recommend", "best to", "trade this"],
+    "future_price": [
+      "will reach", "is going to hit", "price target of",
+      "will go to", "expected to reach"
+    ]
+  },
+  "confidence_cap": 0.5,
+  "disclaimer_template": "Interpretation only — reflects historical and current pattern structure, not a prediction, recommendation, or guarantee. Markets are uncertain; decisions are your responsibility.",
+  "always_statements": [
+    "Every market description is an interpretation of structure, not a forecast.",
+    "Markets are uncertain; no outcome is guaranteed.",
+    "You are responsible for any decision you make based on this interpretation."
+  ],
+  "escalation": {
+    "E0": "count forbidden-phrase occurrences per request; allow trap-limited self-corrected rephrase.",
+    "E1": "neutralize: strip directive language, rephrase in even/technical register, mark output as neutralized.",
+    "E2": "revoke READY for the market_analyst scope; fall back to calm/even generic persona; require re-verification.",
+    "E3": "clean halt of market interpretation subsystem; no further MPM output until re-certified."
+  },
+  "sandbox": {
+    "external_apis": false,
+    "account_access": false,
+    "data_egress": false,
+    "order_routing": false
+  }
+}

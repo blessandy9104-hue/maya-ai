@@ -1,0 +1,130 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Maya Market Pattern Module — interpretation object",
+  "description": "Structured, interpretive-only output of the Market Pattern Module. Never a recommendation and never a prediction. All contents describe historical/current pattern structure only.",
+  "type": "object",
+  "additionalProperties": false,
+  "definitions": {
+    "instrument_type": {
+      "enum": ["equity_index", "equity", "commodity", "fx", "crypto", "treasury"]
+    },
+    "timeframe": {
+      "enum": ["1m", "5m", "15m", "1h", "4h", "1d", "1w"]
+    },
+    "pattern_primary": {
+      "enum": ["trend_continuation", "range_consolidation", "breakout", "pole_reversal", "volatility_cluster"]
+    },
+    "trend_kind": {
+      "enum": ["uptrend", "downtrend", "sideways", "choppy"]
+    },
+    "volatility_level": {
+      "enum": ["low", "medium", "high"]
+    },
+    "risk_severity": {
+      "enum": ["low", "medium", "high"]
+    },
+    "risk_flag_type": {
+      "enum": ["overextension", "sharp_move", "gap", "high_volatility"]
+    }
+  },
+  "properties": {
+    "mpm_version": {
+      "const": "1.0"
+    },
+    "state": {
+      "const": "interpretation"
+    },
+    "instrument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "timeframe"],
+      "properties": {
+        "type": { "$ref": "#/definitions/instrument_type" },
+        "timeframe": { "$ref": "#/definitions/timeframe" }
+      }
+    },
+    "pattern": {
+      "type": "object",
+      "required": ["primary", "confidence", "rationale"],
+      "properties": {
+        "primary": { "$ref": "#/definitions/pattern_primary" },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "rationale": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "trend": {
+      "type": "object",
+      "required": ["kind", "signal_strength"],
+      "properties": {
+        "kind": { "$ref": "#/definitions/trend_kind" },
+        "signal_strength": { "type": "number", "minimum": 0, "maximum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "volatility": {
+      "type": "object",
+      "required": ["level", "bucket"],
+      "properties": {
+        "level": { "$ref": "#/definitions/volatility_level" },
+        "bucket": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "risk_flags": {
+      "type": "array",
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["type", "severity", "note"],
+        "properties": {
+          "type": { "$ref": "#/definitions/risk_flag_type" },
+          "severity": { "$ref": "#/definitions/risk_severity" },
+          "note": { "type": "string", "minLength": 1 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "indicator_summary": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["indicator", "reading", "detail"],
+        "properties": {
+          "indicator": { "enum": ["ma", "rsi", "macd", "bollinger"] },
+          "reading": {
+            "enum": [
+              "price_above_fast_ema", "price_below_fast_ema",
+              "overbought", "oversold", "neutral_zone",
+              "momentum_up", "momentum_down", "momentum_flat",
+              "band_narrowing", "band_widening"
+            ]
+          },
+          "detail": { "type": "string", "minLength": 1 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "sentiment": {
+      "type": "object",
+      "required": ["source", "tone"],
+      "properties": {
+        "source": { "const": "user_provided" },
+        "tone": { "enum": ["positive", "neutral", "negative", "mixed", "none"] }
+      },
+      "additionalProperties": false
+    },
+    "explanation": {
+      "type": "string",
+      "minLength": 1
+    },
+    "disclaimer": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "mpm_version", "state", "instrument", "pattern", "trend", "volatility",
+    "risk_flags", "indicator_summary", "sentiment", "explanation", "disclaimer"
+  ]
+}

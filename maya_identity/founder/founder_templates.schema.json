@@ -1,0 +1,140 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Maya founder deployment playbook — operational templates",
+  "description": "Reusable operational artifacts for the solo founder selling 'Websites with AI Staff'. Every persona referenced must belong to the web allowlist; every script stays inside the safe-copy boundaries validated for the commerce catalog.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "template_version", "positioning", "onboarding",
+    "persona_selection", "outreach", "deployment_checklist"
+  ],
+  "properties": {
+    "template_version": { "const": "1.0" },
+    "positioning": { "const": "Websites with AI Staff" },
+    "onboarding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fields", "checklist", "pii_rule"],
+      "properties": {
+        "fields": {
+          "type": "array",
+          "minItems": 8,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "label", "kind"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^OB\\d{2}$" },
+              "label": { "type": "string", "minLength": 1 },
+              "kind": { "enum": ["text", "single_choice", "multiline", "boolean"] },
+              "options": {
+                "type": "array",
+                "items": { "type": "string", "minLength": 1 }
+              },
+              "required": { "type": "boolean" }
+            }
+          }
+        },
+        "checklist": {
+          "type": "array",
+          "minItems": 6,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "pii_rule": { "type": "string", "minLength": 1 }
+      }
+    },
+    "persona_selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision_rows", "mode_map"],
+      "properties": {
+        "decision_rows": {
+          "type": "array",
+          "minItems": 5,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["condition", "persona_id", "reason"],
+            "properties": {
+              "condition": { "type": "string", "minLength": 1 },
+              "persona_id": {
+                "enum": ["receptionist", "tutor", "concierge", "sales_agent", "market_analyst"]
+              },
+              "reason": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "mode_map": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["receptionist", "tutor", "concierge", "sales_agent", "market_analyst"],
+          "properties": {
+            "receptionist": { "const": "A" },
+            "tutor": { "const": "B" },
+            "concierge": { "const": "B" },
+            "sales_agent": { "const": "C" },
+            "market_analyst": { "const": "B" }
+          }
+        }
+      }
+    },
+    "outreach": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pilot", "diversification", "scaling", "referral"],
+      "properties": {
+        "pilot": { "type": "array", "minItems": 2, "items": { "$ref": "#/definitions/script" } },
+        "diversification": { "type": "array", "minItems": 2, "items": { "$ref": "#/definitions/script" } },
+        "scaling": { "type": "array", "minItems": 1, "items": { "$ref": "#/definitions/script" } },
+        "referral": { "$ref": "#/definitions/script" }
+      }
+    },
+    "deployment_checklist": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stages"],
+      "properties": {
+        "stages": {
+          "type": "array",
+          "minItems": 7,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["stage", "steps", "verify_gate"],
+            "properties": {
+              "stage": { "type": "string", "minLength": 1 },
+              "steps": {
+                "type": "array",
+                "minItems": 1,
+                "items": { "type": "string", "minLength": 1 }
+              },
+              "verify_gate": { "$ref": "#/definitions/gate" }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "script": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "subject", "script"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "subject": { "type": "string", "minLength": 1 },
+        "script": { "type": "string", "minLength": 1 }
+      }
+    },
+    "gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "properties": {
+        "kind": {
+          "enum": ["handshake", "sweep_clean", "readiness", "handover", "none"]
+        }
+      }
+    }
+  }
+}

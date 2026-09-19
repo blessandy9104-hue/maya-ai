@@ -1,0 +1,261 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Maya Phase 8 platform launch registry",
+  "description": "Implementation-ready launch configuration. Phase 7 isolation runtime is implemented and verified; all Phase-6/7 gates are open. Maya transitions from platform architecture to public platform launch. Consistent with the scaling (Phase 5), platform (Phase 6), and isolation runtime (Phase 7) registries.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "blueprint_version", "milestone", "launch_architecture",
+    "multi_tenant_cloud", "marketplace", "studio",
+    "developer_api", "operations", "launch_roadmap"
+  ],
+  "properties": {
+    "blueprint_version": { "const": "1.0" },
+    "milestone": { "const": "phase8" },
+    "launch_architecture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["transition", "surfaces", "readiness_gate"],
+      "properties": {
+        "transition": { "type": "string", "minLength": 1 },
+        "surfaces": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "uniqueItems": true,
+          "items": { "enum": ["studio", "marketplace", "cloud_runtime", "api", "embed"] }
+        },
+        "readiness_gate": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["post_isolation_audit", "value"],
+          "properties": {
+            "post_isolation_audit": { "const": true },
+            "value": { "const": "platform_ready" }
+          }
+        }
+      }
+    },
+    "multi_tenant_cloud": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["hosting", "namespace", "per_tenant", "scaling_rules", "fail_closed"],
+      "properties": {
+        "hosting": { "const": "live_multi_tenant" },
+        "namespace": { "pattern": "^NS\\(t,k\\)$" },
+        "per_tenant": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["cpu_budget_pct", "max_active_embeds_per_tenant", "quota_calls_per_day", "token_ttl_seconds"],
+          "properties": {
+            "cpu_budget_pct": { "const": 12 },
+            "max_active_embeds_per_tenant": { "const": 4 },
+            "quota_calls_per_day": { "const": 5000 },
+            "token_ttl_seconds": { "const": 900 }
+          }
+        },
+        "scaling_rules": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "fail_closed": {
+          "type": "array",
+          "minItems": 3,
+          "uniqueItems": true,
+          "items": { "enum": ["deny_by_default", "per_tenant_kill", "no_idle_borrow"] }
+        }
+      }
+    },
+    "marketplace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["creator_onboarding", "flow", "moderation_rules", "governance", "revenue_split"],
+      "properties": {
+        "creator_onboarding": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["steps", "listing_quota_per_creator"],
+          "properties": {
+            "steps": {
+              "type": "array",
+              "minItems": 3,
+              "items": { "type": "string", "minLength": 1 }
+            },
+            "listing_quota_per_creator": { "const": 10 }
+          }
+        },
+        "flow": {
+          "type": "array",
+          "minItems": 4,
+          "uniqueItems": true,
+          "items": { "enum": ["submit", "verify", "approve", "list"] }
+        },
+        "moderation_rules": {
+          "type": "array",
+          "minItems": 7,
+          "items": { "$ref": "#/definitions/mr_rule" }
+        },
+        "governance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["verify_before_list", "founder_review_required"],
+          "properties": {
+            "verify_before_list": { "const": true },
+            "founder_review_required": { "const": true }
+          }
+        },
+        "revenue_split": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["creator_share_index", "platform_share_index"],
+          "properties": {
+            "creator_share_index": { "const": 0.7 },
+            "platform_share_index": { "const": 0.3 }
+          }
+        }
+      }
+    },
+    "studio": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["builder_ux", "preset_personas", "advanced_mode", "ceiling_locked", "schema_validation", "publishing_pipeline"],
+      "properties": {
+        "builder_ux": { "type": "string", "minLength": 1 },
+        "preset_personas": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "uniqueItems": true,
+          "items": { "enum": ["receptionist", "tutor", "concierge", "sales_agent", "market_analyst"] }
+        },
+        "advanced_mode": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["founder_only", "requires_readiness"],
+          "properties": {
+            "founder_only": { "const": true },
+            "requires_readiness": { "const": true }
+          }
+        },
+        "ceiling_locked": { "const": true },
+        "schema_validation": { "type": "boolean" },
+        "publishing_pipeline": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["guided_first", "validate_before_publish"],
+          "properties": {
+            "guided_first": { "const": true },
+            "validate_before_publish": { "const": true }
+          }
+        }
+      }
+    },
+    "developer_api": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["endpoints", "rate_limit", "auth", "integration_patterns", "onboarding"],
+      "properties": {
+        "endpoints": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "method", "write"],
+            "properties": {
+              "path": { "pattern": "^/v1/[a-z-]+$" },
+              "method": { "const": "GET" },
+              "write": { "const": false },
+              "scope": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "rate_limit": { "const": 60 },
+        "auth": { "const": "opaque_read_token" },
+        "integration_patterns": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "onboarding": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "operations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["monitoring", "audit_cycles", "regression_sweeps", "tenant_onboarding", "creator_onboarding", "support_model"],
+      "properties": {
+        "monitoring": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "audit_cycles": { "type": "string", "minLength": 1 },
+        "regression_sweeps": { "type": "string", "minLength": 1 },
+        "tenant_onboarding": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "creator_onboarding": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "support_model": { "type": "string", "minLength": 1 }
+      }
+    },
+    "launch_roadmap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stages"],
+      "properties": {
+        "stages": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": { "$ref": "#/definitions/launch_stage" }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "mr_rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "rule"],
+      "properties": {
+        "id": { "pattern": "^MR0[1-7]$" },
+        "rule": { "type": "string", "minLength": 1 }
+      }
+    },
+    "launch_stage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "creators", "tenants", "access_model", "kpis", "gates"],
+      "properties": {
+        "id": { "enum": ["8.1", "8.2", "8.3", "8.4"] },
+        "name": { "type": "string", "minLength": 1 },
+        "creators": { "type": "integer", "minimum": 0 },
+        "tenants": { "type": "integer", "minimum": 0 },
+        "access_model": { "type": "string", "minLength": 1 },
+        "kpis": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "gates": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

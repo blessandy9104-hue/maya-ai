@@ -1,0 +1,13 @@
+{
+  "expression": "learning",
+  "kind": "presence · learning · integrating",
+  "geometry": { "scale": 1.01, "wander": 0.006, "drift": 0.003 },
+  "eyes": { "lid": -0.03, "iris_glow": 0.9, "focus": 0.5, "iris_shift_x": 0.0, "pupil": 0.013 },
+  "brows": { "height": 0.006, "slant": 0.0 },
+  "mouth": { "open": 0.0, "lift": 0.015 },
+  "neural": { "activity": 0.9, "pulse": 0.75, "brightness": 1.0 },
+  "particles": { "density": 0.75, "speed": 0.9, "brightness": 0.9 },
+  "glow": { "intensity": 0.9, "core": "#9a8cff", "ring": "#6d7cff" },
+  "halo": { "visible": true, "pulse": 0.6, "intensity": 0.8 },
+  "symbols": [ "node_integrate", "ring_formation" ]
+}

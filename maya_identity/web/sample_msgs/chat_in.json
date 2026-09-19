@@ -1,0 +1,9 @@
+{
+  "version": "MSG.v1",
+  "direction": "to_maya",
+  "type": "maya:message",
+  "session_id": "webrt_site_0001",
+  "payload": {
+    "text": "What services are offered this evening?"
+  }
+}

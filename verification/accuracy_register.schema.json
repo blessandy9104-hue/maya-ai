@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "maya:verification:accuracy-register:1",
+  "title": "External Accuracy Validation Register — record schema",
+  "description": "Structural basis for recording every external accuracy validation performed on Maya's numerical language (MAYA Project Batch #1). This schema defines the shape of one validation record. It is a template only: no runtime consumes or enforces these records yet (validation-register runtime is explicitly deferred). Each record documents one claim validated against an authoritative external source.",
+  "type": "object",
+  "required": [
+    "record_version",
+    "claim",
+    "domain",
+    "target_identifier",
+    "source",
+    "source_authority",
+    "source_version_date",
+    "what_was_validated",
+    "method",
+    "expected",
+    "observed",
+    "result",
+    "discrepancies",
+    "limitations",
+    "validated_at",
+    "tool",
+    "tool_version",
+    "evidence_ref"
+  ],
+  "properties": {
+    "record_version": {
+      "const": 1,
+      "description": "Shape version of the register record itself."
+    },
+    "claim": {
+      "type": "string",
+      "description": "The specific claim being validated (a numerical guarantee Maya makes)."
+    },
+    "domain": {
+      "type": "string",
+      "enum": [
+        "json-canonicalization",
+        "number-serialization",
+        "geometry-identifier",
+        "geometry-scalar-measurement",
+        "geometry-coordinate",
+        "geometry-vector",
+        "geometry-transform",
+        "geometry-topology",
+        "geometry-symmetry-constraint",
+        "geometry-deformation-parameter",
+        "geometry-expression-parameter",
+        "geometry-animation-state",
+        "geometry-semantic-attribute",
+        "hash-digest",
+        "determinism"
+      ],
+      "description": "Numerical-language category the claim belongs to."
+    },
+    "target_identifier": {
+      "type": "string",
+      "description": "Stable identifier of the code/data object the claim is about (module path, data record id, or JSON pointer)."
+    },
+    "source": {
+      "type": "string",
+      "description": "Name of the authoritative external source (e.g. 'RFC 8785', 'IEEE 754-2019', 'Unicode 17.0.0')."
+    },
+    "source_authority": {
+      "type": "string",
+      "enum": [
+        "standards-track",
+        "informational",
+        "independent-submission",
+        "iso",
+        "de-facto",
+        "vendor",
+        "non-standard"
+      ],
+      "description": "Authority level of the source; NEVER elevates an informational or non-standard source to standards-track."
+    },
+    "source_version_date": {
+      "type": "string",
+      "description": "Version/edition and date of the source consulted."
+    },
+    "what_was_validated": {
+      "type": "string",
+      "description": "Precise statement of what was checked against the source."
+    },
+    "method": {
+      "type": "string",
+      "enum": [
+        "byte-comparison-with-authoritative-vector",
+        "digest-comparison-with-authoritative-vector",
+        "cross-interpreter-comparison",
+        "independent-reimplementation-comparison",
+        "cross-toolchain-comparison",
+        "bit-pattern-reconstruction",
+        "round-trip-reparse",
+        "static-inspection",
+        "negative-test",
+        "unavailable-not-validated"
+      ],
+      "description": "How the validation was performed."
+    },
+    "expected": {
+      "type": ["string", "number", "boolean", "null", "array", "object"],
+      "description": "Expected value taken from the authoritative source."
+    },
+    "observed": {
+      "type": ["string", "number", "boolean", "null", "array", "object"],
+      "description": "Observed value produced by Maya's implementation."
+    },
+    "result": {
+      "type": "string",
+      "enum": ["pass", "fail", "unavailable"],
+      "description": "pass = observed matches expected; fail = mismatch; unavailable = the source/tool could not be consulted (never counts as success)."
+    },
+    "discrepancies": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Documented deviations/limitations of the comparison (e.g. .NET number serialization is not JCS)."
+    },
+    "limitations": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "What this validation does NOT prove."
+    },
+    "validated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC timestamp (ISO 8601) when validation was performed."
+    },
+    "tool": {
+      "type": "string",
+      "description": "Observing tool (e.g. CPython 3.13.15, Windows PowerShell 5.1, .NET 8)."
+    },
+    "tool_version": {
+      "type": "string"
+    },
+    "evidence_ref": {
+      "type": "string",
+      "description": "Path/pointer to raw evidence (captured output file, vector table row, log)."
+    }
+  },
+  "additionalProperties": false
+}

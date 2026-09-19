@@ -1,0 +1,5 @@
+# Required by encrypted audit logging and its regression tests.
+cryptography>=42,<46
+
+# Used by the optional local resource monitor. Maya fails closed when absent.
+psutil>=5.9,<8

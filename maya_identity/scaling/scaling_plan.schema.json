@@ -1,0 +1,275 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Maya Phase 5 scaling plan registry",
+  "description": "Structured scaling configuration: studio, persona marketplace, cloud runtime, read-only API, kiosk mode, and the 3-phase roadmap. Every gate encodes the boundary that multi-tenant hosting requires the isolation/sandbox runtime to be implemented and audited first.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "plan_version", "milestone", "dependency_boundary",
+    "studio", "marketplace", "cloud_runtime", "api", "kiosk", "roadmap"
+  ],
+  "properties": {
+    "plan_version": { "const": "1.0" },
+    "milestone": { "const": "phase5" },
+    "dependency_boundary": { "const": "isolation_runtime_required" },
+    "studio": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["editing_modes", "ceiling_policy", "presets", "validation_gates", "advanced_mode"],
+      "properties": {
+        "editing_modes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "enum": ["guided", "founder_advanced"] }
+        },
+        "ceiling_policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["locked", "max_allowed"],
+          "properties": {
+            "locked": { "const": true },
+            "max_allowed": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["expression", "viseme", "micro", "anatomical"],
+              "properties": {
+                "expression": { "const": 0.5 },
+                "viseme": { "const": 0.35 },
+                "micro": { "const": 0.012 },
+                "anatomical": { "const": 0.8 }
+              }
+            }
+          }
+        },
+        "presets": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "uniqueItems": true,
+          "items": { "$ref": "#/definitions/preset" }
+        },
+        "validation_gates": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 4,
+          "items": { "enum": ["schema", "ceiling", "vocab", "tone"] }
+        },
+        "advanced_mode": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["founder_only", "requires_readiness"],
+          "properties": {
+            "founder_only": { "const": true },
+            "requires_readiness": { "const": true }
+          }
+        }
+      }
+    },
+    "marketplace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["enabled_at_phase", "flow", "governance_checks", "revenue_split", "listing_quota_per_creator"],
+      "properties": {
+        "enabled_at_phase": { "const": "5.2" },
+        "flow": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 4,
+          "items": { "enum": ["submit", "verify", "approve", "list"] }
+        },
+        "governance_checks": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 6,
+          "items": {
+            "enum": [
+              "schema", "ceiling_bounded", "vocab_closed", "tone_allowlist",
+              "no_banned_directive", "deterministic", "no_pii", "no_financial_guarantee"
+            ]
+          }
+        },
+        "revenue_split": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["creator_share_index", "platform_share_index"],
+          "properties": {
+            "creator_share_index": { "type": "number", "exclusiveMinimum": 0, "maximum": 1 },
+            "platform_share_index": { "type": "number", "exclusiveMinimum": 0, "maximum": 1 }
+          }
+        },
+        "listing_quota_per_creator": { "type": "integer", "minimum": 1, "maximum": 50 }
+      }
+    },
+    "cloud_runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["enabled_at_phase", "requires", "per_tenant", "deterministic_scaling"],
+      "properties": {
+        "enabled_at_phase": { "const": "5.3" },
+        "requires": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "enum": ["isolation_runtime_implemented", "audit_cleared"] }
+        },
+        "per_tenant": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "namespace", "endpoint", "memory", "max_active_embeds_per_tenant",
+            "cpu_budget_pct", "quota_calls_per_day", "token_ttl_seconds"
+          ],
+          "properties": {
+            "namespace": { "const": "NS(t,k)" },
+            "endpoint": { "pattern": "^\\/embed\\/[a-z0-9\\-]{1,32}$" },
+            "memory": { "const": "memory_only" },
+            "max_active_embeds_per_tenant": { "type": "integer", "minimum": 1, "maximum": 8 },
+            "cpu_budget_pct": { "type": "integer", "minimum": 1, "maximum": 25 },
+            "quota_calls_per_day": { "type": "integer", "minimum": 100 },
+            "token_ttl_seconds": { "type": "integer", "minimum": 60, "maximum": 3600 }
+          }
+        },
+        "deterministic_scaling": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["rule"],
+          "properties": {
+            "rule": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    },
+    "api": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["enabled_at_phase", "read_only", "endpoints", "sandbox"],
+      "properties": {
+        "enabled_at_phase": { "const": "5.3" },
+        "read_only": { "const": true },
+        "endpoints": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": { "$ref": "#/definitions/api_endpoint" }
+        },
+        "sandbox": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["auth", "no_write", "no_pii", "no_account", "rate_limit_per_min"],
+          "properties": {
+            "auth": { "const": "opaque_read_token" },
+            "no_write": { "const": true },
+            "no_pii": { "const": true },
+            "no_account": { "const": true },
+            "rate_limit_per_min": { "type": "integer", "minimum": 5, "maximum": 120 }
+          }
+        }
+      }
+    },
+    "kiosk": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["presets", "offline_safe", "deterministic_loop", "boundaries"],
+      "properties": {
+        "presets": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "enum": ["kiosk_assistant", "receptionist"] }
+        },
+        "offline_safe": { "const": true },
+        "deterministic_loop": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["cadence_seconds", "no_rng"],
+          "properties": {
+            "cadence_seconds": { "type": "integer", "minimum": 1, "maximum": 30 },
+            "no_rng": { "const": true }
+          }
+        },
+        "boundaries": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 4,
+          "items": {
+            "enum": [
+              "single_site", "verified_runtime_required", "no_remote_secrets",
+              "physical_power_cycle_expected", "offline_fallback"
+            ]
+          }
+        }
+      }
+    },
+    "roadmap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["phases", "capacity_rules"],
+      "properties": {
+        "phases": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "range", "gates"],
+            "properties": {
+              "id": { "enum": ["P1", "P2", "P3"] },
+              "range": { "pattern": "^\\d+\\s*[-].*$" },
+              "gates": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": { "type": "string", "minLength": 1 }
+              }
+            }
+          }
+        },
+        "capacity_rules": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "preset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["persona_id", "ceiling", "locked_fields"],
+      "properties": {
+        "persona_id": {
+          "enum": ["receptionist", "tutor", "concierge", "sales_agent", "market_analyst"]
+        },
+        "ceiling": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["expression", "viseme", "micro"],
+          "properties": {
+            "expression": { "type": "number", "minimum": 0, "maximum": 0.5 },
+            "viseme": { "type": "number", "minimum": 0, "maximum": 0.35 },
+            "micro": { "type": "number", "minimum": 0, "maximum": 0.012 }
+          }
+        },
+        "locked_fields": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "api_endpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "method", "scope", "write"],
+      "properties": {
+        "path": { "pattern": "^\\/v1\\/[a-z\\-]+$" },
+        "method": { "const": "GET" },
+        "scope": {
+          "enum": ["mpm_interpret", "public_persona_meta", "embed_health_status"]
+        },
+        "write": { "const": false }
+      }
+    }
+  }
+}

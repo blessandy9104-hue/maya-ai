@@ -1,0 +1,32 @@
+{
+  "version": 2,
+  "local_only": true,
+  "human_approval_required_for_memory": true,
+  "enabled_sources": {
+    "maya_conversations": true,
+    "tasks_and_planning": true,
+    "explicit_decisions": true,
+    "approved_preferences": true,
+    "learning_activity": true,
+    "maya_feedback": true,
+    "files": false,
+    "applications": false,
+    "screen_capture": false,
+    "keystrokes": false,
+    "browser_history": false,
+    "browser_tabs": false,
+    "microphone": false,
+    "camera": false
+  },
+  "storage": {
+    "raw_content": false,
+    "structured_evidence_only": true,
+    "pending_ledger": "andy_evidence_pending.jsonl",
+    "approved_ledger": "andy_evidence.jsonl"
+  },
+  "inference": {
+    "minimum_supporting_examples": 2,
+    "create_pending_candidates_only": true,
+    "never_auto_activate": true
+  }
+}

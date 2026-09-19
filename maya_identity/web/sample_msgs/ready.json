@@ -1,0 +1,11 @@
+{
+  "version": "MSG.v1",
+  "direction": "to_site",
+  "type": "maya:ready",
+  "session_id": "webrt_site_0001",
+  "payload": {
+    "persona": "receptionist",
+    "protocol_version": "2.0",
+    "readiness": "confirmed"
+  }
+}

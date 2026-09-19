@@ -1,0 +1,10 @@
+{
+  "version": "MSG.v1",
+  "direction": "to_site",
+  "type": "maya:status",
+  "session_id": "webrt_site_0001",
+  "payload": {
+    "state": "active",
+    "anomalies": 0
+  }
+}

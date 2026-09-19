@@ -1,0 +1,13 @@
+{
+  "expression": "sleeping",
+  "kind": "presence · sleeping · dormant",
+  "geometry": { "scale": 1.0, "wander": 0.0005, "drift": 0.0 },
+  "eyes": { "lid": 0.75, "iris_glow": 0.12, "focus": 0.0, "iris_shift_x": 0.0, "pupil": 0.006 },
+  "brows": { "height": 0.004, "slant": 0.0 },
+  "mouth": { "open": 0.0, "lift": 0.0 },
+  "neural": { "activity": 0.06, "pulse": 0.12, "brightness": 0.15 },
+  "particles": { "density": 0.15, "speed": 0.2, "brightness": 0.18 },
+  "glow": { "intensity": 0.22, "core": "#2a3353", "ring": "#2a3353" },
+  "halo": { "visible": false, "pulse": 0.1, "intensity": 0.1 },
+  "symbols": []
+}

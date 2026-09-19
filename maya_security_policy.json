@@ -1,0 +1,9 @@
+{
+  "owner_control_enabled": false,
+  "require_owner_token": true,
+  "require_explicit_confirmation": true,
+  "encryption_required_for_audit": true,
+  "observation_separate": true,
+  "emergency_stop_blocks_control": true,
+  "allowlist": {}
+}

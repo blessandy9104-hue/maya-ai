@@ -1,0 +1,13 @@
+{
+  "expression": "processing",
+  "kind": "presence · processing · focused",
+  "geometry": { "scale": 1.0, "wander": 0.004, "drift": 0.004 },
+  "eyes": { "lid": 0.0, "iris_glow": 0.8, "focus": 0.35, "iris_shift_x": 0.0, "pupil": 0.014 },
+  "brows": { "height": -0.006, "slant": 0.015 },
+  "mouth": { "open": 0.0, "lift": 0.0 },
+  "neural": { "activity": 0.95, "pulse": 0.9, "brightness": 0.95 },
+  "particles": { "density": 0.85, "speed": 1.3, "brightness": 0.9 },
+  "glow": { "intensity": 0.85, "core": "#9a8cff", "ring": "#6d7cff" },
+  "halo": { "visible": true, "pulse": 0.7, "intensity": 0.7 },
+  "symbols": [ "flow_sweep" ]
+}

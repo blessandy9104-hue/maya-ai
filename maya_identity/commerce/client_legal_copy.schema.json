@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Client-facing legal & marketing copy templates",
+  "description": "Disclaimer, contract, and landing-page copy templates for selling Maya sites and personas. Every template is written to stay inside the safe boundaries of the runtime: interpretation-only, not professional advice, no guaranteed outcomes, memory-only, no account access.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "copy_version", "standard_disclaimer", "market_analyst_disclaimer",
+    "contract_clauses", "landing_page"
+  ],
+  "properties": {
+    "copy_version": { "const": "1.0" },
+    "standard_disclaimer": {
+      "type": "string",
+      "minLength": 1
+    },
+    "market_analyst_disclaimer": {
+      "type": "string",
+      "minLength": 1
+    },
+    "contract_clauses": {
+      "type": "array",
+      "minItems": 8,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "title", "text"],
+        "properties": {
+          "id": {
+            "enum": [
+              "scope_of_service", "no_professional_advice", "no_guaranteed_outcomes",
+              "data_handling", "no_automated_decisions", "liability",
+              "updates_and_maintenance", "termination", "intellectual_property"
+            ]
+          },
+          "title": { "type": "string", "minLength": 1 },
+          "text": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "landing_page": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["headline", "value_bullets", "trust_props", "cta", "footer_disclaimer"],
+      "properties": {
+        "headline": { "type": "string", "minLength": 1 },
+        "value_bullets": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "trust_props": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "cta": { "type": "string", "minLength": 1 },
+        "footer_disclaimer": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

@@ -1,0 +1,208 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Maya Phase 9 founder automation (operator mode) registry",
+  "description": "Implementation-ready operator-mode configuration. Phase 8 platform is launched; Phase 7 isolation runtime is implemented and verified. The solo founder (ThinkPad) automates all non-legal operational founder tasks: onboarding, intake, setup, deployment prep, monitoring, verification, and moderation. Legal/business/safety authority stays human. Consistent with Phase 5-8 registries.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "blueprint_version", "milestone", "operator_mode",
+    "automated_tasks", "operator_engine", "integration_points",
+    "automation_boundaries", "operator_roadmap"
+  ],
+  "properties": {
+    "blueprint_version": { "const": "1.0" },
+    "milestone": { "const": "phase9" },
+    "operator_mode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["can_automate", "cannot_automate", "authority_map"],
+      "properties": {
+        "can_automate": {
+          "type": "array",
+          "minItems": 5,
+          "items": { "enum": ["operations", "onboarding_nonlegal", "setup_deployment_prep", "monitoring_sweeps", "verification_moderation", "api_usage_monitoring"] }
+        },
+        "cannot_automate": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "enum": ["legal_tasks", "business_decisions", "liability", "payments"] }
+        },
+        "authority_map": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["founder", "operator"],
+          "properties": {
+            "founder": { "$ref": "#/definitions/authority" },
+            "operator": { "$ref": "#/definitions/authority" }
+          }
+        }
+      }
+    },
+    "automated_tasks": {
+      "type": "array",
+      "minItems": 13,
+      "maxItems": 13,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "client_onboarding", "requirements_intake", "persona_selection",
+          "project_setup", "embed_runtime_prep", "persona_config_prep",
+          "deployment_prep", "monitoring_sweeps", "tenant_onboarding",
+          "creator_onboarding", "marketplace_moderation", "api_usage_monitoring",
+          "kiosk_deployment_prep"
+        ]
+      }
+    },
+    "operator_engine": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["orchestrator", "task_registry", "task_scheduler", "safety_ceilings", "audit_hooks", "fallback"],
+      "properties": {
+        "orchestrator": { "type": "string", "minLength": 1 },
+        "task_registry": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["scope", "declarative"],
+          "properties": {
+            "scope": { "const": "operations" },
+            "declarative": { "const": true }
+          }
+        },
+        "task_scheduler": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["deterministic", "no_parallel_legal", "ordering"],
+          "properties": {
+            "deterministic": { "const": true },
+            "no_parallel_legal": { "const": true },
+            "ordering": {
+              "type": "array",
+              "minItems": 6,
+              "items": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "safety_ceilings": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["expression", "viseme", "micro", "anatomical", "autonomy"],
+          "properties": {
+            "expression": { "const": 0.5 },
+            "viseme": { "const": 0.35 },
+            "micro": { "const": 0.012 },
+            "anatomical": { "const": 0.8 },
+            "autonomy": { "const": "nonlegal_operations_only" }
+          }
+        },
+        "audit_hooks": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["record_all", "founder_visible", "operator_scoped"],
+          "properties": {
+            "record_all": { "const": true },
+            "founder_visible": { "const": true },
+            "operator_scoped": { "const": true }
+          }
+        },
+        "fallback": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["handoff_to_founder", "no_legal_auto"],
+          "properties": {
+            "handoff_to_founder": { "const": true },
+            "no_legal_auto": { "const": true }
+          }
+        }
+      }
+    },
+    "integration_points": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "uniqueItems": true,
+      "items": {
+        "enum": ["studio", "marketplace", "cloud_runtime", "api", "embed_runtime", "isolation_runtime", "persona_loader", "identity_loader"]
+      }
+    },
+    "automation_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["legal_boundaries", "business_boundaries", "safety_boundaries", "operator_only"],
+      "properties": {
+        "legal_boundaries": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "enum": ["contracts", "payments", "liability", "terms"] }
+        },
+        "business_boundaries": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "enum": ["pricing", "negotiation"] }
+        },
+        "safety_boundaries": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "enum": ["financial", "medical", "legal"] }
+        },
+        "operator_only": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["nonlegal_only", "founder_escalation"],
+          "properties": {
+            "nonlegal_only": { "const": true },
+            "founder_escalation": { "const": true }
+          }
+        }
+      }
+    },
+    "operator_roadmap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stages"],
+      "properties": {
+        "stages": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "items": { "$ref": "#/definitions/operator_stage" }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["owns", "cannot"],
+      "properties": {
+        "owns": { "type": "string", "minLength": 1 },
+        "cannot": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "operator_stage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "gates", "kpis"],
+      "properties": {
+        "id": { "enum": ["9.1", "9.2", "9.3", "9.4", "9.5"] },
+        "name": { "type": "string", "minLength": 1 },
+        "gates": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "kpis": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

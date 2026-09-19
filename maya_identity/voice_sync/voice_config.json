@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "enabled": false,
+  "disabled_policy": "returns a neutral delta; no audio hardware is required and nothing is written",
+  "future_support": {
+    "volume": "glow_intensity",
+    "speech_rhythm": "neural_activity",
+    "pause": "eye_focus / attention expression",
+    "emphasis": "symbol_activity"
+  },
+  "normalization": {
+    "volume_range": [0, 1],
+    "rhythm_range": [0, 1],
+    "pause_range": [0, 1],
+    "emphasis_range": [0, 1]
+  }
+}

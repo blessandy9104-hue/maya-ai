@@ -1,0 +1,90 @@
+# Python / environments
+venv/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# IDE / tooling
+.idea/
+.vscode/
+*.iml
+.aider*
+
+# Temporary / generated files
+*.tmp
+*.bak
+*.orig
+*.log
+*.pid
+*.lock
+*.inspect.txt
+*.jsonl
+*.save
+*.preview.json
+*.before_*
+*.broken_context_edit
+
+# Runtime / generated trees
+browser_cache/
+knowledge/
+versions/
+lessons/
+Maya Reports/
+report_archive/
+.freebuff/
+DiamondAI_Submission/
+Nexan_Submission/
+
+# Runtime emergency / stray artifacts
+PRESENCE_STOP
+v0.16.0
+canonical_trace.txt
+pytest_collection_trace*.txt
+benchmark_failures.txt
+
+# Generated per-run reports
+MAYA_FULL_PROJECT_ANALYSIS.txt
+MAYA_BATCH_*.md
+MAYA_*_REPORT.md
+MAYA_ARCHITECTURE_INTEGRITY_REPORT.md
+
+# ---------------------------------------------------------------------------
+# Privacy-locked generated state
+# ---------------------------------------------------------------------------
+# Root-level runtime state written by the application or test harnesses on
+# every run (task queues, learning/presence status, onboarding, opportunity
+# bookmarks, activation/scope registries). These are generated state, not
+# source, and are never committed. Keeping them ignored prevents an accidental
+# `git add -A` from staging fresh copies or local personal data.
+tasks.json
+tasks.backup.json
+todolist.jsonl
+learning_status.json
+presence_status.json
+onboarding_pending.json
+maya_learning_proposals.json
+maya_opportunity_bookmarks.json
+maya_activation_state.json
+maya_approval_dashboard.json
+maya_approved_local_scope.json
+maya_control_center.json
+maya_conversation_continuity.json
+maya_conversation_sources.json
+maya_current_pc_safety_scope.json
+maya_evidence_cluster.json
+maya_final_service_status.json
+maya_improvement_queue.json
+maya_income_report_comparison.json
+maya_interest_profile.json
+maya_product_compass.json
+maya_research_freshness.json
+maya_research_freshness_proposal.json
+maya_seed.json
+maya_suggestion_reviews.json
+maya_supervised_research_learning.json
+maya_weekly_focus.json
+maya_service_state.json
+maya_humanity_benefit_seed_findings.md
+andy_profile.json
+andy_profile.py

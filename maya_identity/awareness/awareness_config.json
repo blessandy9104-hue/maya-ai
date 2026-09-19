@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "enabled": true,
+  "inputs": ["user_attention", "app_state", "active_tasks", "interaction_timing"],
+  "signal_allowlist": [
+    "user_attention",
+    "app_state",
+    "active_tasks",
+    "interaction_timing",
+    "proximity",
+    "focus_surface"
+  ],
+  "bounded": true,
+  "privacy_guard": "The awareness layer accepts only safe read-only signals. It never reads private files, passwords, permissions, security state, or memory, and it never writes anywhere."
+}

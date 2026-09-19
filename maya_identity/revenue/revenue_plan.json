@@ -1,0 +1,89 @@
+{
+  "blueprint_version": "1.0",
+  "milestone": "phase10",
+  "monetization_architecture": {
+    "pricing_model": "unified_tier_index",
+    "conversion": {
+      "founder_defined": true,
+      "in_repo": false,
+      "method": "founder maps each tier-index and recurring multiplier to a real price in a private ledger, kept outside the machine-readable registry; the engine only carries ratios"
+    },
+    "components": ["persona_pricing", "bundle_pricing", "platform_pricing", "one_time", "recurring"]
+  },
+  "offer_system": {
+    "core_offers": ["starter", "standard", "premium"],
+    "persona_offers": ["receptionist", "tutor", "concierge", "sales_agent", "market_analyst"],
+    "bundle_offers": ["bundle_receptionist", "bundle_tutor", "bundle_sales_agent"],
+    "kiosk_offer": true,
+    "cloud_tenant_offer": true,
+    "marketplace_creator_offer": true,
+    "total": { "count": 14 }
+  },
+  "acquisition_engine": {
+    "outreach": [
+      "per-persona founder-style outreach scripts",
+      "promotional channel one (email / local business lists)",
+      "referral channel with structured intro flow"
+    ],
+    "messaging": {
+      "non_salesy": true,
+      "tone": "founder-to-owner, plain, helpful, non-salesy; tells a problem-and-fix story rather than pitching"
+    },
+    "workflow": ["pilot", "diversification", "scaling"],
+    "referral": true,
+    "positioning": "websites_with_ai_staff"
+  },
+  "sales_workflow": [
+    "intake", "requirements", "persona_selection", "proposal", "deployment", "payment"
+  ],
+  "revenue_loops": ["one_time", "recurring", "marketplace", "cloud_runtime", "kiosk"],
+  "scaling_economics": {
+    "tiers": [
+      { "tier": "solo", "clients": 10, "cost_index": 1.0, "revenue_index": 1.0 },
+      { "tier": "operator", "clients": 50, "cost_index": 2.4, "revenue_index": 4.2 },
+      { "tier": "platform", "clients": 100, "cost_index": 4.5, "revenue_index": 11.0 }
+    ],
+    "capacity_rules": [
+      "max 2 client builds in parallel",
+      "support ratio 30 clients per founder before operator-assist",
+      "retainer automation must be live before 50 clients",
+      "acquisition limited by deployment capacity, not demand"
+    ],
+    "automation_leverage": "Phase 9 operator mode absorbs onboarding, setup, deployment prep, monitoring, and moderation; the founder's time concentrates on legal approval, closing, and exceptions",
+    "leverage_curve": [1.0, 1.75, 2.44]
+  },
+  "phase10_roadmap": {
+    "stages": [
+      {
+        "id": "10.1",
+        "name": "monetization_core",
+        "gates": ["tier_index_model_verified", "conversion_ledger_founded"],
+        "kpis": ["offer_set_complete", "price_consistency_rate"]
+      },
+      {
+        "id": "10.2",
+        "name": "offer_system",
+        "gates": ["core_persona_bundle_offers_live", "kiosk_cloud_creator_offers_defined"],
+        "kpis": ["offer_publish_rate", "quote_to_proposal_time"]
+      },
+      {
+        "id": "10.3",
+        "name": "acquisition_engine",
+        "gates": ["outreach_scripts_ready", "referral_flow_live", "pilot_workflow_verified"],
+        "kpis": ["qualified_leads_month", "pilot_to_diversification_rate"]
+      },
+      {
+        "id": "10.4",
+        "name": "revenue_loops",
+        "gates": ["recurring_loop_live", "marketplace_split_verified", "cloud_kiosk_loops_live"],
+        "kpis": ["recurring_ratio", "loop_churn_rate"]
+      },
+      {
+        "id": "10.5",
+        "name": "scaling_economics",
+        "gates": ["capacity_rules_respected", "automation_leverage_verified", "leverage_curve_monotone"],
+        "kpis": ["revenue_per_client_index", "revenue_per_effort_index", "capacity_utilization"]
+      }
+    ]
+  }
+}

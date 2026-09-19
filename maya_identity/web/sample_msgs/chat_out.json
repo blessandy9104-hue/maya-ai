@@ -1,0 +1,10 @@
+{
+  "version": "MSG.v1",
+  "direction": "to_site",
+  "type": "maya:reply",
+  "session_id": "webrt_site_0001",
+  "payload": {
+    "text": "This evening we offer a brief service overview, event check-in, and directions. May I ask which you'd like to know more about?",
+    "persona": "receptionist"
+  }
+}

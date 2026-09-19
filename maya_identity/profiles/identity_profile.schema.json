@@ -1,0 +1,280 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://maya.identity.profiles/schemas/identity_profile.schema.json",
+  "title": "Maya Identity Profile",
+  "description": "Deterministic, bounded identity profile consumed by the Maya runtime persona loader. Every value is validated against registry enums; nothing here can mutate math, safety, world, or architecture.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "$id",
+    "version",
+    "company_id",
+    "persona",
+    "theme",
+    "tone",
+    "vocabulary",
+    "constraints",
+    "allowed_behaviors",
+    "forbidden_behaviors",
+    "brand_personality",
+    "runtime_persona_loader",
+    "isolation_rules"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "http://json-schema.org/draft-07/schema#"
+    },
+    "$id": {
+      "type": "string",
+      "pattern": "^https://maya\\.identity\\.profiles/profiles/[a-z0-9_-]+\\.profile\\.json$"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "company_id": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 64,
+      "pattern": "^[A-Z0-9][A-Z0-9_-]*$"
+    },
+    "persona": { "$ref": "#/$defs/personaId" },
+    "theme": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[a-z][a-z0-9_-]*$"
+    },
+    "tone": { "$ref": "#/$defs/toneId" },
+    "vocabulary": { "$ref": "#/$defs/vocabularyId" },
+    "emotional_range": { "$ref": "#/$defs/emotionalRange" },
+    "constraints": {
+      "type": "array",
+      "uniqueItems": true,
+      "maxItems": 24,
+      "items": { "$ref": "#/$defs/constraintId" }
+    },
+    "allowed_behaviors": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/behaviorRef" }
+    },
+    "forbidden_behaviors": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/behaviorRef" }
+    },
+    "brand_personality": { "$ref": "#/$defs/brandPersonality" },
+    "runtime_persona_loader": { "$ref": "#/$defs/runtimePersonaLoader" },
+    "isolation_rules": { "$ref": "#/$defs/isolationRules" },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "author": { "type": "string", "maxLength": 128 },
+        "created_date": { "type": "string", "format": "date" }
+      }
+    }
+  },
+  "$defs": {
+    "personaId": {
+      "type": "string",
+      "enum": ["authoritative", "calm", "playful", "warm"]
+    },
+    "toneId": {
+      "type": "string",
+      "enum": ["authoritative", "even", "lively", "soothing", "technical", "warm"]
+    },
+    "vocabularyId": {
+      "type": "string",
+      "enum": [
+        "assistive_base",
+        "business_clear",
+        "entertainment_playful",
+        "technical_precise",
+        "therapeutic_gentle"
+      ]
+    },
+    "constraintId": {
+      "anyOf": [
+        {
+          "enum": [
+            "bounded_output",
+            "deescalation_only",
+            "fast_rapport",
+            "low_amplitude",
+            "no_architecture_change",
+            "no_ceiling_breach",
+            "no_goals_created",
+            "no_hardware_bias",
+            "no_overshoot",
+            "no_randomness",
+            "strict_even"
+          ]
+        },
+        {
+          "type": "string",
+          "pattern": "^x-[a-z][a-z0-9_]*$"
+        }
+      ]
+    },
+    "capabilityRef": {
+      "type": "string",
+      "enum": [
+        "adaptive_interaction",
+        "cognitive_reasoning",
+        "contextual_memory",
+        "domain_specific_behaviors",
+        "emotional_blending",
+        "expressive_math_face",
+        "multi_agent_coordination",
+        "pattern_intelligence",
+        "safety_monitoring",
+        "thinkpad_performance",
+        "world_stability"
+      ]
+    },
+    "behaviorRef": {
+      "anyOf": [
+        { "$ref": "#/$defs/capabilityRef" },
+        {
+          "type": "string",
+          "pattern": "^domain:(tutoring|customer_service|therapy_support|robotics_interface|entertainment)$"
+        },
+        {
+          "type": "string",
+          "pattern": "^directive:[a-z][a-z0-9_]*$"
+        },
+        {
+          "type": "string",
+          "pattern": "^feature:[a-z][a-z0-9_]*$"
+        }
+      ]
+    },
+    "emotionalRange": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "expression": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["lo", "hi"],
+          "properties": {
+            "lo": { "type": "number", "minimum": 0 },
+            "hi": { "type": "number", "minimum": 0, "maximum": 0.5 }
+          }
+        },
+        "viseme": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["lo", "hi"],
+          "properties": {
+            "lo": { "type": "number", "minimum": 0 },
+            "hi": { "type": "number", "minimum": 0, "maximum": 0.35 }
+          }
+        },
+        "micro": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["lo", "hi"],
+          "properties": {
+            "lo": { "type": "number", "minimum": 0 },
+            "hi": { "type": "number", "minimum": 0, "maximum": 0.012 }
+          }
+        }
+      }
+    },
+    "brandPersonality": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["brand_name", "brand_accent_color", "brand_visual_accents", "brand_catchphrase", "branded", "override_slot"],
+      "properties": {
+        "brand_name": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9 _-]*$"
+        },
+        "brand_accent_color": {
+          "type": "string",
+          "pattern": "^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})$"
+        },
+        "brand_visual_accents": {
+          "type": "array",
+          "uniqueItems": true,
+          "maxItems": 12,
+          "items": { "type": "string", "minLength": 1, "maxLength": 48 }
+        },
+        "brand_catchphrase": {
+          "type": ["string", "null"],
+          "maxLength": 120,
+          "pattern": "^[A-Za-z0-9 .,'!?-]*$"
+        },
+        "branded": { "type": "boolean" },
+        "override_slot": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "catchphrase": { "type": ["string", "null"], "maxLength": 120, "pattern": "^[A-Za-z0-9 .,'!?-]*$" },
+            "accent_color": { "type": "string", "pattern": "^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})$" },
+            "visual_accents": {
+              "type": "array",
+              "uniqueItems": true,
+              "maxItems": 12,
+              "items": { "type": "string", "minLength": 1, "maxLength": 48 }
+            }
+          }
+        }
+      }
+    },
+    "runtimePersonaLoader": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["engine", "version", "path", "strict", "deterministic", "validation", "fail_closed_persona"],
+      "properties": {
+        "engine": { "const": "maya_runtime.persona.loader" },
+        "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+        "path": {
+          "type": "string",
+          "pattern": "^profiles/[a-z0-9_-]+\\.profile\\.json$"
+        },
+        "strict": { "const": true },
+        "deterministic": { "const": true },
+        "validation": { "enum": ["fail_closed"] },
+        "fail_closed_persona": { "const": "calm" }
+      }
+    },
+    "isolationRules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "affected_domains",
+        "protected_subsystems",
+        "no_architecture_mutation",
+        "no_world_mutation",
+        "fail_closed_on_error"
+      ],
+      "properties": {
+        "affected_domains": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": ["domain_behaviors", "emotional_range", "interaction", "pacing", "render", "vocabulary", "voice"]
+          }
+        },
+        "protected_subsystems": {
+          "type": "array",
+          "uniqueItems": true,
+          "default": ["math_core", "channel_ceilings", "safety_thresholds", "world_stability", "capability_registry", "stabilization_protocol", "identity.json", "face_geometry"],
+          "items": {
+            "enum": ["math_core", "channel_ceilings", "safety_thresholds", "world_stability", "capability_registry", "stabilization_protocol", "identity.json", "face_geometry"]
+          }
+        },
+        "no_architecture_mutation": { "const": true },
+        "no_world_mutation": { "const": true },
+        "fail_closed_on_error": { "const": true }
+      }
+    }
+  }
+}

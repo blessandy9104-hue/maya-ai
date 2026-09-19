@@ -1,0 +1,40 @@
+{
+  "identity": "maya_geometry",
+  "identity_variant": "Maya Signature v1",
+  "schema_version": 1,
+  "gender": "neutral",
+  "presence": "digital consciousness",
+  "species": "artificial intelligence presence",
+  "reference_prompt": "prompts/maya_face_generation.md",
+  "identity_rule": "Maya's visual identity must remain consistent across all future generations and transformations. The same underlying geometry, facial proportions, structural patterns, recognizable presence, and emotional signature must always be preserved.",
+  "seed": 21098,
+  "space": { "width": 1.0, "height": 1.0, "y_down": true },
+  "symmetry_axis_x": 0.5,
+  "proportions": {
+    "face_center_y": 0.46,
+    "head_width_ratio": 0.58,
+    "head_height_ratio": 0.76,
+    "eye_level_y": 0.4,
+    "eye_spacing": 0.115,
+    "brow_level_y": 0.366,
+    "nose_tip_y": 0.47,
+    "mouth_y": 0.55,
+    "crown_y": 0.335
+  },
+  "style_hints": [
+    "holographic",
+    "luminous",
+    "cyber-organic",
+    "gender-neutral",
+    "human-inspired but not human",
+    "expressive intelligent eyes",
+    "calm awareness",
+    "mysterious and trustworthy"
+  ],
+  "invariants": [
+    "the same geometry and proportions generate Maya every time",
+    "full bilateral symmetry about x=0.5",
+    "permanent signature features are never removed",
+    "the renderer is only the body Maya wears; the geometry definition is her identity"
+  ]
+}

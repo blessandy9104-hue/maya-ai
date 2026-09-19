@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "engine": "procedural_hologram",
+  "hologram": { "enabled": true, "layers": 3, "layer_glow": true },
+  "glow": { "core": "#6d7cff", "edge": "#38bdf8", "soft": "#4d5bb5", "levels": [0.22, 0.5, 0.85] },
+  "light_field": { "beams": 2, "softness": 0.85, "angle": 0.12 },
+  "particles": { "count": 200, "life": 120, "drift": 0.0015 },
+  "distortion": { "enabled": true, "ripple": 0.003, "frequency": 2.0 },
+  "symbol_overlay": { "capacity": 5, "grace_ms": 900, "never_modifies_identity": true }
+}

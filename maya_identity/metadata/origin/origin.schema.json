@@ -1,0 +1,84 @@
+{
+  "schema_name": "founder_origin",
+  "schema_version": "1.0.0",
+  "description": "Founder Origin Record schema v1 (8N-E). Master record structure. Founder Origin Data is distinct from Runtime Instruction Data.",
+  "canonicalization": {
+    "encoding": "UTF-8",
+    "line_terminator": "\n",
+    "json_separators": [",", ":"],
+    "sort_keys": true,
+    "ensure_ascii": false
+  },
+  "digest": {
+    "algorithm": "SHA-256",
+    "encoding": "hex"
+  },
+  "field_order": [
+    "core_principles",
+    "creation_provenance",
+    "founder_confirmation",
+    "founder_philosophy",
+    "founding_intent",
+    "founding_purpose",
+    "integrity_metadata",
+    "origin_version",
+    "protected_constraints",
+    "schema_version"
+  ],
+  "fields": {
+    "origin_version": { "type": "string", "required": true, "bounded": { "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" }, "owner": "origin", "classification": "governance", "purpose": "monotonic record instance version" },
+    "schema_version": { "type": "string", "required": true, "bounded": { "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" }, "owner": "origin", "classification": "governance", "purpose": "pinned schema used to validate the record" },
+    "creation_provenance": { "type": "object", "required": true, "owner": "founder", "classification": "provenance", "required_subkeys": ["founder", "role", "created_at"], "purpose": "who/when/why the record was created" },
+    "founder_confirmation": { "type": "object", "required": true, "owner": "founder", "classification": "provenance", "required_subkeys": ["statement", "identity", "timestamp", "schema_version", "digest"], "purpose": "explicit founder sign-off evidence set" },
+    "founding_intent": { "type": "object", "required": true, "owner": "founder", "classification": "philosophy", "kind": "philosophical_inspiration", "required_subkeys": ["kind", "status", "statement", "classification"], "purpose": "founder-confirmed origin statement" },
+    "founding_purpose": { "type": "object", "required": true, "owner": "founder", "classification": "philosophy", "kind": "philosophical_inspiration", "required_subkeys": ["kind", "statements", "classification"], "purpose": "purpose orientation statements" },
+    "founder_philosophy": { "type": "object", "required": true, "owner": "founder", "classification": "philosophy", "kind": "philosophical_inspiration", "required_subkeys": ["kind", "classification", "statement"], "purpose": "intelligence philosophy concept" },
+    "core_principles": { "type": "array", "required": true, "item_kind": "principle", "owner": "founder", "classification": "principles", "purpose": "constitutional principle references (never embedded policy)" },
+    "protected_constraints": { "type": "object", "required": true, "owner": "founder", "classification": "constraints", "required_subkeys": ["protection_rule", "protected_paths", "founder_negative_boundary"], "forbidden_subkeys": ["grants", "capabilities", "permissions", "allow_list", "deny_list", "policy_engine", "execution", "dispatch"], "purpose": "boundary definitions, restriction-shaped only" },
+    "integrity_metadata": { "type": "object", "required": true, "owner": "origin", "classification": "integrity", "required_subkeys": ["algorithm", "digest", "previous_digest", "state"], "purpose": "system-managed digest, lineage, activation state" }
+  },
+  "enums": {
+    "founding_intent.status": ["inferred", "founder_confirmed", "activated"],
+    "integrity_metadata.state": ["DRAFT", "SCHEMA_VALIDATED", "FOUNDER_REVIEW_REQUIRED", "FOUNDER_CONFIRMED", "INTEGRITY_REGISTERED", "ACTIVATED"],
+    "philosophy.classification": ["philosophical_inspiration", "founder_declaration"]
+  },
+  "allowed_kinds": [
+    "philosophical_inspiration",
+    "principle",
+    "constraint",
+    "governance",
+    "provenance",
+    "integrity"
+  ],
+  "philosophy_forbidden_keys": [
+    "behavior",
+    "capability",
+    "permission",
+    "action",
+    "directive",
+    "require",
+    "execute",
+    "allow",
+    "deny",
+    "mode",
+    "policy_ref",
+    "identity_edit",
+    "runtime_hook",
+    "callback",
+    "instruction",
+    "command"
+  ],
+  "runtime_fields_forbidden_everywhere": [
+    "runtime_hook",
+    "callback",
+    "mount",
+    "entrypoint",
+    "on_event",
+    "dispatch"
+  ],
+  "forbidden_transforms": {
+    "P2B1": { "code": "P2B1", "from": "philosophical_inspiration", "to": "behavior_rule" },
+    "P2B2": { "code": "P2B2", "from": "philosophical_inspiration", "to": "capability_requirement" },
+    "P2B3": { "code": "P2B3", "from": "philosophical_inspiration", "to": "autonomous_directive" }
+  }
+}

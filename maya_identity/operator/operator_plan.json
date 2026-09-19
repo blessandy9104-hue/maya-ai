@@ -1,0 +1,104 @@
+{
+  "blueprint_version": "1.0",
+  "milestone": "phase9",
+  "operator_mode": {
+    "can_automate": [
+      "operations", "onboarding_nonlegal", "setup_deployment_prep",
+      "monitoring_sweeps", "verification_moderation", "api_usage_monitoring"
+    ],
+    "cannot_automate": ["legal_tasks", "business_decisions", "liability", "payments"],
+    "authority_map": {
+      "founder": {
+        "owns": "legal authority, contract approval, pricing and negotiation, liability, final marketplace approval",
+        "cannot": ["delegate legal authority to the operator", "skip audit review"]
+      },
+      "operator": {
+        "owns": "deterministic execution of operations: onboarding, intake, setup, deployment prep, monitoring, verification, moderation pre-review",
+        "cannot": ["approve legal contracts", "commit to payments or pricing", "negotiate", "touch financial/medical/legal safety decisions", "act beyond non-legal operations"]
+      }
+    }
+  },
+  "automated_tasks": [
+    "client_onboarding", "requirements_intake", "persona_selection",
+    "project_setup", "embed_runtime_prep", "persona_config_prep",
+    "deployment_prep", "monitoring_sweeps", "tenant_onboarding",
+    "creator_onboarding", "marketplace_moderation", "api_usage_monitoring",
+    "kiosk_deployment_prep"
+  ],
+  "operator_engine": {
+    "orchestrator": "operator_orchestrator: binds operator tasks to their integration surfaces, runs them deterministically, and hands non-legal exceptions to the founder",
+    "task_registry": {
+      "scope": "operations",
+      "declarative": true
+    },
+    "task_scheduler": {
+      "deterministic": true,
+      "no_parallel_legal": true,
+      "ordering": [
+        "tenant_onboarding", "requirements_intake", "persona_selection",
+        "project_setup", "embed_runtime_prep", "persona_config_prep",
+        "deployment_prep", "verification_sweep"
+      ]
+    },
+    "safety_ceilings": {
+      "expression": 0.5, "viseme": 0.35, "micro": 0.012, "anatomical": 0.8,
+      "autonomy": "nonlegal_operations_only"
+    },
+    "audit_hooks": {
+      "record_all": true,
+      "founder_visible": true,
+      "operator_scoped": true
+    },
+    "fallback": {
+      "handoff_to_founder": true,
+      "no_legal_auto": true
+    }
+  },
+  "integration_points": [
+    "studio", "marketplace", "cloud_runtime", "api",
+    "embed_runtime", "isolation_runtime", "persona_loader", "identity_loader"
+  ],
+  "automation_boundaries": {
+    "legal_boundaries": ["contracts", "payments", "liability", "terms"],
+    "business_boundaries": ["pricing", "negotiation"],
+    "safety_boundaries": ["financial", "medical", "legal"],
+    "operator_only": {
+      "nonlegal_only": true,
+      "founder_escalation": true
+    }
+  },
+  "operator_roadmap": {
+    "stages": [
+      {
+        "id": "9.1",
+        "name": "internal_operator_mode",
+        "gates": ["isolation_runtime_verified", "operator_engine_ready", "platform_ready_gate"],
+        "kpis": ["operator_task_success_rate", "founder_handoff_rate"]
+      },
+      {
+        "id": "9.2",
+        "name": "automated_onboarding",
+        "gates": ["task_registry_live", "onboarding_templates_verified"],
+        "kpis": ["client_onboard_time", "requirements_intake_completion"]
+      },
+      {
+        "id": "9.3",
+        "name": "automated_deployment_prep",
+        "gates": ["project_setup_automated", "embed_persona_config_verified"],
+        "kpis": ["deploy_prep_time", "config_validation_rate"]
+      },
+      {
+        "id": "9.4",
+        "name": "automated_platform_maintenance",
+        "gates": ["monitoring_automated", "regression_sweep_automated"],
+        "kpis": ["sweep_pass_rate", "anomaly_detection_latency"]
+      },
+      {
+        "id": "9.5",
+        "name": "automated_ecosystem_operations",
+        "gates": ["marketplace_moderation_automated", "tenant_creator_onboarding_automated", "api_monitoring_automated"],
+        "kpis": ["personas_verified_week", "tenant_creator_onboard_time", "api_slo_rate"]
+      }
+    ]
+  }
+}
