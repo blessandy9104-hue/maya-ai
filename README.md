@@ -1,5 +1,7 @@
 # Maya
 
+_Project Veldt Meridian_
+
 Maya is a local, human-supervised Python assistant prototype. It runs from
 whichever folder contains the source — no account-specific paths are required —
 and stores its own in-memory and on-disk state beside the code, so moving or
@@ -75,6 +77,11 @@ Maya is a personal assistant prototype, not a product. It is not a
 replacement for human judgment. The market-pattern module computes indicators
 and pattern labels for reference and testing only; nothing in this repository
 constitutes financial advice.
+
+## Releases
+
+- **v0.1.0 — Initial public release** files and notes are published on the
+  [releases page](https://github.com/blessandy9104-hue/maya-ai/releases).
 
 ## License
 
